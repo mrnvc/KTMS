@@ -1,4 +1,4 @@
-﻿using KTMS.Application.Modules.Users.Commands.AddUser;
+﻿using KTMS.Application.Modules.Users.Commands.CreateUser;
 using KTMS.Application.Modules.Users.Commands.DeleteUser;
 using KTMS.Application.Modules.Users.Commands.UpdateUser;
 using KTMS.Application.Modules.Users.Queries.GetUsers;
@@ -19,8 +19,8 @@ namespace KTMS.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost("AddUser")]
-        public async Task<IActionResult> AddUser([FromBody] AddUserCommand command)
+        [HttpPost("CreateUser")]
+        public async Task<ActionResult> CreateUser([FromBody] CreateUserCommand command)
         {
             var result = await _mediator.Send(command);
 
@@ -28,7 +28,7 @@ namespace KTMS.API.Controllers
         }
 
         [HttpGet("GetUsers")]
-        public async Task<IActionResult> GetUsers()
+        public async Task<ActionResult> GetUsers()
         {
             var query = new GetUserQuery();
             var result = await _mediator.Send(query);
@@ -36,7 +36,7 @@ namespace KTMS.API.Controllers
         }
 
         [HttpGet("GetUserById/{id}")]
-        public async Task<IActionResult> GetUserById(int id)
+        public async Task<ActionResult> GetUserById(int id)
         {
             var query = new GetUsersByIdQuery(id);
             var result = await _mediator.Send(query);
@@ -44,7 +44,7 @@ namespace KTMS.API.Controllers
         }
 
         [HttpPut("UpdateUser")]
-        public async Task<IActionResult> UpdateUser(int id, [FromBody] UpdateUserCommand command)
+        public async Task<ActionResult> UpdateUser(int id, [FromBody] UpdateUserCommand command)
         {
             command.Id = id;
 
@@ -54,7 +54,7 @@ namespace KTMS.API.Controllers
         }
 
         [HttpDelete("DeleteUser/{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<ActionResult> DeleteUser(int id)
         {
             var command = new DeleteUserCommand { Id = id };
             var result = await _mediator.Send(command);

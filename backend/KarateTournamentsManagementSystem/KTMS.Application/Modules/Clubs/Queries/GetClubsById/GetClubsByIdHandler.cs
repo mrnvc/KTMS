@@ -3,7 +3,7 @@ using KTMS.Application.Modules.Clubs.Dtos;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace KTMS.Application.Modules.Clubs.GetClubs.GetClubsById
+namespace KTMS.Application.Modules.Clubs.Queries.GetClubsById
 {
     public class GetClubsByIdHandler : IRequestHandler<GetClubsByIdQuery, ClubDto>
     {

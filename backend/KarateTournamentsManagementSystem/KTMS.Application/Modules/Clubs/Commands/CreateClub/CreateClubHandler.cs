@@ -2,20 +2,20 @@
 using KTMS.Domain.Entities;
 using MediatR;
 
-namespace KTMS.Application.Modules.Clubs.Commands.AddClub
+namespace KTMS.Application.Modules.Clubs.Commands.CreateClub
 {
-    public class AddClubHandler : IRequestHandler<AddClubCommand, int>
+    public class CreateClubHandler : IRequestHandler<CreateClubCommand, int>
     {
         private readonly IAppDbContext _dbContext;
 
-        public AddClubHandler(IAppDbContext dbContext)
+        public CreateClubHandler(IAppDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<int> Handle (AddClubCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle (CreateClubCommand request, CancellationToken cancellationToken)
         {
-            var dto = request.AddClubDto;
+            var dto = request.CreateClubDto;
 
             var club = new Club
             {

@@ -1,7 +1,7 @@
 ﻿using KTMS.Application.Modules.Clubs.Dtos;
 using MediatR;
 
-namespace KTMS.Application.Modules.Clubs.GetClubs.GetClubsById
+namespace KTMS.Application.Modules.Clubs.Queries.GetClubsById
 {
     public class GetClubsByIdQuery : IRequest<ClubDto>
     {

@@ -2,17 +2,12 @@
 using KTMS.Application.Common.Security;
 using KTMS.Domain.Entities;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace KTMS.Application.Modules.Users.Commands.AddUser
+namespace KTMS.Application.Modules.Users.Commands.CreateUser
 {
-    public class AddUserHandler(IAppDbContext dbContext) :IRequestHandler<AddUserCommand, int>
+    public class CreateUserHandler(IAppDbContext dbContext) :IRequestHandler<CreateUserCommand, int>
     {
-        public async Task<int> Handle(AddUserCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             var user = new User
             {

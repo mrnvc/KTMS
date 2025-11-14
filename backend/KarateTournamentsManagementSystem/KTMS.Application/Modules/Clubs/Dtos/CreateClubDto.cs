@@ -1,6 +1,6 @@
 ﻿namespace KTMS.Application.Modules.Clubs.Dtos
 {
-    public class AddClubDto
+    public class CreateClubDto
     {
         public int CityId { get; set; }
         public int CountryId { get; set; }

@@ -1,8 +1,8 @@
 ﻿using MediatR;
 
-namespace KTMS.Application.Modules.Users.Commands.AddUser
+namespace KTMS.Application.Modules.Users.Commands.CreateUser
 {
-    public class AddUserCommand :IRequest<int>
+    public class CreateUserCommand :IRequest<int>
     {
         public int RoleId { get; set; }
         public int CityId { get; set; }

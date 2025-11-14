@@ -19,7 +19,7 @@ namespace KTMS.Application
             services.AddValidatorsFromAssembly(assembly);
 
             // Pipeline behaviors (npr. ValidationBehavior)
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
 
             // TimeProvider — if used by handlers
             services.AddSingleton(TimeProvider.System);
