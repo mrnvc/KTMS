@@ -56,10 +56,11 @@ namespace KTMS.Infrastructure.Database
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Enrollment>()
-                .HasOne(e => e.Tournament)
-                .WithMany(t => t.Enrollments)
-                .HasForeignKey(e => e.TournamentId)
-                .OnDelete(DeleteBehavior.Restrict);
+                 .HasOne(e => e.Tournament)
+                 .WithMany(t => t.Enrollments)
+                 .HasForeignKey(e => e.TournamentId)
+                 .OnDelete(DeleteBehavior.Cascade);
+
 
             modelBuilder.Entity<Enrollment>()
                 .HasOne(e => e.Discipline)
@@ -346,10 +347,10 @@ namespace KTMS.Infrastructure.Database
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Judge>()
-                .HasMany(j => j.TournamentJudges)
-                .WithOne(tj => tj.Judge)
-                .HasForeignKey(tj => tj.JudgeId)
-                .OnDelete(DeleteBehavior.Restrict);
+                 .HasMany(j => j.TournamentJudges)
+                 .WithOne(tj => tj.Judge)
+                 .HasForeignKey(tj => tj.JudgeId)
+                 .OnDelete(DeleteBehavior.Cascade);
 
 
             // ====================
@@ -585,14 +586,14 @@ namespace KTMS.Infrastructure.Database
                 .HasOne(tj => tj.Tournament)
                 .WithMany(t => t.TournamentJudges)
                 .HasForeignKey(tj => tj.TournamentId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<TournamentJudge>()
                 .HasOne(tj => tj.Judge)
                 .WithMany(j => j.TournamentJudges)
                 .HasForeignKey(tj => tj.JudgeId)
-                .OnDelete(DeleteBehavior.Restrict);
-
+                .OnDelete(DeleteBehavior.Cascade);
+            
 
             // ====================
             // USERS
