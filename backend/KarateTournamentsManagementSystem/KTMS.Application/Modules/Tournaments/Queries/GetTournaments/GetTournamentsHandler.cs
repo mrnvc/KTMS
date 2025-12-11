@@ -13,12 +13,14 @@ using System.Threading.Tasks;
 namespace KTMS.Application.Modules.Tournaments.Queries.GetTournaments
 {
     public class GetTournamentsHandler : IRequestHandler<GetTournamentsQuery, List<TournamentsDto>>
+
     {
         private readonly IAppDbContext _dbContext;
         public GetTournamentsHandler(IAppDbContext dbContext)
         {
             _dbContext = dbContext;
         }
+
         public async Task<List<TournamentsDto>> Handle(GetTournamentsQuery request, CancellationToken cancellationToken)
         {
             return await _dbContext.Tournaments

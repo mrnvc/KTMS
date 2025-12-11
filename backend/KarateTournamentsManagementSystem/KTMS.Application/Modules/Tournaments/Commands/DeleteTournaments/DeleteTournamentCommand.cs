@@ -6,11 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KTMS.Application.Modules.Tournaments.Queries.GetTournaments
+namespace KTMS.Application.Modules.Tournaments.Commands.DeleteTournaments
 {
-
-    public class GetTournamentsQuery : IRequest<List<TournamentsDto>>
+    public class DeleteTournamentCommand : IRequest<bool>
     {
+        public int Id { get; set; }
     }
-
 }
