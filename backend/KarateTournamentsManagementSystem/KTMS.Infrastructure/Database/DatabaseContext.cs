@@ -238,19 +238,19 @@ namespace KTMS.Infrastructure.Database
                 .HasOne(c => c.User)
                 .WithMany(u => u.Contestants)
                 .HasForeignKey(c => c.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Contestant>()
                 .HasOne(c => c.Club)
                 .WithMany(cl => cl.Contestants)
                 .HasForeignKey(c => c.ClubId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Contestant>()
                 .HasOne(c => c.Belt)
                 .WithMany(b => b.Contestants)
                 .HasForeignKey(c => c.BeltId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Contestant>()
                 .HasMany(c => c.Brackets)
@@ -268,7 +268,7 @@ namespace KTMS.Infrastructure.Database
                 .HasMany(c => c.Enrollments)
                 .WithOne(e => e.Contestant)
                 .HasForeignKey(e => e.ContestantId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Contestant>()
                 .HasMany(c => c.TournamentContestants)
