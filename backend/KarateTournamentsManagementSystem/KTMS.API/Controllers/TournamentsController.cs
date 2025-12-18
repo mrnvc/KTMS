@@ -3,6 +3,7 @@ using KTMS.Application.Modules.Tournaments.Commands.DeleteTournaments;
 using KTMS.Application.Modules.Tournaments.Commands.UpdateTournaments;
 using KTMS.Application.Modules.Tournaments.Queries.GetTournaments;
 using KTMS.Application.Modules.Tournaments.Queries.GetTournamentsById;
+using KTMS.Application.Modules.Tournaments.Queries.GetTournamentsFiltered;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -57,6 +58,14 @@ namespace KTMS.API.Controllers
             var query = new GetTournamentsByIdQuery(Id);
             var result = await _mediator.Send(query);
             return Ok(result);
+        }
+
+        [HttpGet("GetTournamentsFiltered")]
+        public async Task<IActionResult> GetTournamentsFiltered([FromQuery] GetTournamentsFilteredQuery query)
+        { 
+            var result= await _mediator.Send(query);
+            return Ok(result);
+
         }
     }
 }
