@@ -27,6 +27,24 @@ namespace KTMS.API
             //Register JWT Service for IJwtService  
             builder.Services.AddScoped<IJwtService, JwtService>();
 
+            // CORS policy to allow Angular dev server access
+            builder.Services.AddCors(options => 
+            { 
+                options.AddPolicy("AllowAngularDev", 
+                    policy => 
+                    { policy 
+                        .WithOrigins("http://localhost:4200") 
+                        .AllowAnyHeader() 
+                        .AllowAnyMethod() 
+                        .AllowCredentials(); 
+                    }); 
+            });
+
+            var app = builder.Build();
+
+            // UseCors obavezno prije UseAuthorization i UseAuthentification
+            app.UseCors("AllowAngularDev");
+
             // Add services to the container.
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
