@@ -33,7 +33,7 @@ namespace KTMS.API
                 options.AddPolicy("AllowAngularDev", 
                     policy => 
                     { policy 
-                        .WithOrigins("http://localhost:4200") 
+                        .WithOrigins("http://localhost:4200", "http://localhost:5500") 
                         .AllowAnyHeader() 
                         .AllowAnyMethod() 
                         .AllowCredentials(); 
