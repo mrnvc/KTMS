@@ -1,10 +1,13 @@
+//global
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
 }
+//end of global
 
+//first part of landing page
 /* Navbar */
 .navbar {
   position: absolute;
@@ -18,54 +21,55 @@
   justify-content: space-between;
 
   z-index: 10;
-}
 
-/* Logo */
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+  /* Logo */
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 
-.logo-icon {
-  background: red;
-  color: white;
-  font-size: 20px;
-  padding: 10px;
-  border-radius: 10px;
-}
+    &-icon {
+      background: red;
+      color: white;
+      font-size: 20px;
+      padding: 10px;
+      border-radius: 10px;
+    }
 
-.logo-text {
-  color: white;
-  font-size: 20px;
-  font-weight: bold;
-}
+    &-text {
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
 
-/* navigacija */
-.nav-links a {
-  color: white;
-  margin: 0 15px;
-  text-decoration: none;
-  font-size: 16px;
-}
+  /* Navigacija */
+  .nav-links {
+    a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-size: 16px;
 
-.nav-links a:hover {
-  text-decoration: underline;
-}
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 
-/* Login dugme */
-.login-btn {
-  background: red;
-  color: white;
-  border: none;
-  padding: 10px 25px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 16px;
+  /* Login dugme */
+  .login-btn {
+    background: red;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+  }
 }
 
 /* Hero sekcija */
-
 .hero {
   width: 100%;
   height: 100vh;
@@ -76,57 +80,148 @@
 
   display: flex;
   align-items: center;
-}
 
-/* Tamni overlay */
-.overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-}
+  /* Tamni overlay */
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
 
-/* Content */
-.hero-content {
-  position: relative;
-  max-width: 700px;
-  padding: 0 40px;
-  color: white;
-}
+  /* Content */
+  .hero-content {
+    position: relative;
+    max-width: 700px;
+    padding: 0 40px;
+    color: white;
 
-.subtitle {
-  font-size: 16px;
-  margin-bottom: 15px;
-  opacity: 0.9;
-}
+    .subtitle {
+      font-size: 16px;
+      margin-bottom: 15px;
+      opacity: 0.9;
+    }
 
-.hero-content h1 {
-  font-size: 36px;
-  line-height: 1.4;
-  margin-bottom: 30px;
-}
+    h1 {
+      font-size: 36px;
+      line-height: 1.4;
+      margin-bottom: 30px;
+    }
 
-/* Dugmad */
-.actions {
-  display: flex;
-  gap: 20px;
-}
+    /* Dugmad */
+    .actions {
+      display: flex;
+      gap: 20px;
 
-.register-btn {
-  background: red;
-  color: white;
-  border: none;
-  padding: 15px 35px;
-  border-radius: 30px;
-  font-size: 16px;
-  cursor: pointer;
-}
+      .register-btn {
+        background: red;
+        color: white;
+        border: none;
+        padding: 15px 35px;
+        border-radius: 30px;
+        font-size: 16px;
+        cursor: pointer;
+      }
 
-.guest-btn {
-  background: transparent;
-  color: white;
-  border: 2px solid white;
-  padding: 15px 35px;
-  border-radius: 30px;
-  font-size: 16px;
-  cursor: pointer;
+      .guest-btn {
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+        padding: 15px 35px;
+        border-radius: 30px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+    }
+  }
 }
+//end of first part of landing page
+
+
+//features section
+// Variables for features section
+$primary-color: #4f6ef7;
+$highlight-color: #ff4d4f;
+$text-dark: #1f2937;
+$text-muted: #6b7280;
+$border-light: #eef0f4;
+$icon-bg: #1e3a8a;
+
+.features-section {
+  padding: 80px 24px;
+  background-color: white;
+  text-align: center;
+
+  .features-header {
+    max-width: 800px;
+    margin: 0 auto 60px;
+
+    .subtitle {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: $primary-color;
+      margin-bottom: 12px;
+    }
+
+    p {
+      font-size: 20px;
+      font-weight: 400;
+      color: $text-dark;
+    }
+  }
+
+  .features-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+
+    .feature-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 28px 24px;
+      border: 1px solid $border-light;
+      text-align: left;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+        border-color: red;
+      }
+
+      .icon {
+        width: 44px;
+        height: 44px;
+        background-color: $icon-bg;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 16px;
+
+        img {
+          width: 22px;
+          height: 22px;
+          filter: invert(1);
+        }
+      }
+
+      h3 {
+        font-size: 16px;
+        font-weight: 400;
+        color: #212166;
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 14px;
+        color: $text-muted;
+        line-height: 1.6;
+      }
+    }
+  }
+}
+//end of features section
+
