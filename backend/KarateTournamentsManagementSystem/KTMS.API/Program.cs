@@ -40,13 +40,9 @@ namespace KTMS.API
                     }); 
             });
 
-            var app = builder.Build();
-
-            // UseCors obavezno prije UseAuthorization i UseAuthentification
-            app.UseCors("AllowAngularDev");
-
             // Add services to the container.
             builder.Services.AddControllers();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -56,6 +52,11 @@ namespace KTMS.API
 
             //Add Application
             builder.Services.AddApplication();
+
+            var app = builder.Build();
+
+            // UseCors obavezno prije UseAuthorization i UseAuthentification
+            app.UseCors("AllowAngularDev");
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
