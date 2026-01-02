@@ -5,9 +5,13 @@
       <img src="https://images.unsplash.com/photo-1555597673-b21d5c935865?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080" alt="Karate dojo" class="header-img" />
     </div>
     <div class="header-content">
-      <button class="back-button" (click)="onBack()">
-        &#8592; Back to Home
-      </button>
+      <div class="back-button">
+        <app-back-button
+          label="Nazad"
+          fallbackUrl="/"
+          [forceFallback]="true"
+        ></app-back-button>
+      </div>
       <div class="logo">
         <div class="logo-icon">空</div>
         <span>KTMS</span>
@@ -25,13 +29,44 @@
 
       <div class="card-content">
         <form (ngSubmit)="handleSubmit()">
+
+          @if (submitted && !canSubmit) {
+            <div class="form-alert">
+              Please fill in the required fields.
+            </div>
+          }
+
+          @if (authError) {
+            <div class="form-alert auth-error">
+              {{ authError }}
+            </div>
+          }
+
           <!-- Email -->
           <div class="form-group">
             <label for="email">Email or Username</label>
             <div class="input-wrapper">
               <span class="icon">@</span>
-              <input type="text" id="email" [(ngModel)]="email" name="email" placeholder="Enter your email or username" required>
+              <input
+                type="text"
+                id="email"
+                [(ngModel)]="email"
+                name="email"
+                placeholder="Enter your email or username"
+              />
             </div>
+
+            @if (submitted && emailEmpty) {
+              <small class="error">Please enter your email or username.</small>
+            } @else if (submitted && emailInvalid) {
+              <small class="error">
+                @if (emailLooksLikeEmail) {
+                  Please enter a valid email address.
+                } @else {
+                  Username must be at least 3 characters long.
+                }
+              </small>
+            }
           </div>
 
           <!-- Password -->
@@ -39,43 +74,27 @@
             <label for="password">Password</label>
             <div class="input-wrapper">
               <span class="icon">🔒</span>
-              <input [type]="showPassword ? 'text' : 'password'" id="password" [(ngModel)]="password" name="password" placeholder="Enter your password" required>
+              <input
+                [type]="showPassword ? 'text' : 'password'"
+                id="password"
+                [(ngModel)]="password"
+                name="password"
+                placeholder="Enter your password"
+              />
               <button type="button" class="toggle-password" (click)="togglePassword()">
                 {{ showPassword ? '🙈' : '👁️' }}
               </button>
             </div>
+
+            @if (submitted && !password.trim()) {
+              <small class="error">Please enter your password.</small>
+            }
           </div>
 
-          <!-- Remember Me -->
-          <div class="form-actions">
-            <label>
-              <input type="checkbox" [(ngModel)]="rememberMe" name="rememberMe">
-              Remember me
-            </label>
-            <a href="#forgot-password">Forgot password?</a>
-          </div>
+          <!-- Remember Me ... -->
 
-          <!-- Submit -->
           <button type="submit" class="btn-primary">Sign In</button>
-
-          <!-- Social Login -->
-          <div class="social-login">
-            <button type="button" class="btn-outline">Google</button>
-            <button type="button" class="btn-outline">Facebook</button>
-          </div>
-
-          <!-- Sign up -->
-          <p class="signup-text">
-            Don't have an account?
-            <a href="#register">Sign up here</a>
-          </p>
         </form>
-      </div>
-
-      <!-- Demo Access -->
-      <div class="demo-access">
-        <span>ℹ️</span>
-        Use <strong>demo@ktms.com</strong>/<strong>demo123</strong> to explore
       </div>
     </div>
   </div>

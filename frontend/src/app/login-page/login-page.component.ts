@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
@@ -9,14 +9,12 @@ import { AuthService } from '../services/auth.service';
   styleUrl: './login-page.component.scss',
 })
 export class LoginPageComponent {
+  submitted = false;
+  authError: string | null = null;
   showPassword = false;
   email = '';
   password = '';
   rememberMe = false;
-
-  onBack(): void {
-    console.log('Back to home clicked');
-  }
 
   constructor(private auth: AuthService, private router: Router) {}
 
@@ -24,23 +22,66 @@ export class LoginPageComponent {
     this.showPassword = !this.showPassword;
   }
 
-  handleSubmit(): void {
-    this.auth.login(this.email, this.password).subscribe({
-      next: (res) => {
-        console.log('LOGIN RESPONSE:', res);
+  // ---- VALIDATION HELPERS (ključ za warnings) ----
+  get emailValue(): string {
+    return (this.email ?? '').trim();
+  }
 
+  get passwordValue(): string {
+    return (this.password ?? '').trim();
+  }
+
+  get emailEmpty(): boolean {
+    return this.emailValue.length === 0;
+  }
+
+  get passwordEmpty(): boolean {
+    return this.passwordValue.length === 0;
+  }
+
+  get emailLooksLikeEmail(): boolean {
+    return this.emailValue.includes('@');
+  }
+
+  get emailInvalid(): boolean {
+    if (this.emailEmpty) return false; // empty ima svoju poruku
+    if (!this.emailLooksLikeEmail) return this.emailValue.length < 3; // username min 3
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return !emailRegex.test(this.emailValue);
+  }
+
+  get canSubmit(): boolean {
+    return !this.emailEmpty && !this.passwordEmpty && !this.emailInvalid;
+  }
+  // -----------------------------------------------
+
+  handleSubmit(): void {
+    this.submitted = true;
+    this.authError = null;
+
+    // Ako forma nije validna -> ne zovi API
+    if (!this.canSubmit) {
+      console.log("User did not enter credentials!");
+      return;
+    }
+
+    this.auth.login(this.emailValue, this.password).subscribe({
+      next: (res) => {
         if (res && res.token) {
           localStorage.setItem('token', res.token);
-          console.log('Login successful');
           // this.router.navigate(['/dashboard']);
+          console.log("login successfull");
         } else {
-          console.log('Login failed');
+          this.authError = 'Invalid email/username or password.';
         }
       },
       error: (err) => {
-        console.error(err);
-        alert('Error connecting to server');
-      }
+        if (err?.status === 401 || err?.status === 400) {
+          this.authError = 'Invalid email/username or password.';
+        } else {
+          this.authError = 'Unable to sign in. Please try again later.';
+        }
+      },
     });
   }
 }

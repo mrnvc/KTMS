@@ -7,13 +7,15 @@ import { FooterComponent } from './footer/footer.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import {FormsModule} from '@angular/forms';
 import { provideHttpClient } from '@angular/common/http';
+import { BackButtonComponent } from './shared/back-button/back-button.component';
 
 @NgModule({
   declarations: [
     App,
     LandingPageComponent,
     FooterComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    BackButtonComponent
   ],
   imports: [
     BrowserModule,
