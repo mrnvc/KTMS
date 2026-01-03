@@ -13,4 +13,8 @@ export class LandingPageComponent {
   goToLogin() {
     this.router.navigate(['/login']);
   }
+
+  goToRegister(): void {
+    this.router.navigate(['/register']);
+  }
 }

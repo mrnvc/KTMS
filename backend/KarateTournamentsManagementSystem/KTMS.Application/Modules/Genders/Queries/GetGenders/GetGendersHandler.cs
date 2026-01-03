@@ -20,6 +20,7 @@ namespace KTMS.Application.Modules.Genders.Queries.GetGenders
             var genders = await _dbContext.Genders
                                           .Select(g => new GenderDto
                                           {
+                                              Id = g.Id,
                                               Name = g.Name
                                           })
                                           .ToListAsync(cancellationToken);

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpResponse} from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {RegisterRequest} from '../models/register-request.model';
 
 interface LoginResponse {
   success: boolean;
@@ -25,8 +26,10 @@ export class AuthService {
     });
   }
 
-  register(email: string, password: string) {
-    return this.http.post<any>(`${this.apiUrl}/register`, { email, password });
+  register(payload: RegisterRequest) {
+    return this.http.post<void>(`${this.apiUrl}/register`, {
+      user: payload
+    });
   }
 
   saveToken(token: string, rememberMe: boolean) {

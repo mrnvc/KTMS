@@ -19,6 +19,7 @@ namespace KTMS.Application.Modules.Roles.Queries.GetRoles
             return await _dbContext.Roles
                                   .Select(role => new RoleDto
                                   {
+                                      Id = role.Id,
                                       Title = role.Title,
                                       Description = role.Description,
                                       Status = role.Status

@@ -1,0 +1,298 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #f6f7fb;
+  padding: 24px;
+}
+
+.page {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #e7e9f2;
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(16, 24, 40, 0.08);
+  overflow: hidden;
+}
+
+.topbar {
+  padding: 18px 22px;
+  border-bottom: 1px solid #eef0f6;
+}
+
+.header {
+  padding: 26px 22px 18px;
+  background: #eef7ff;
+  border-bottom: 1px solid #e7eef9;
+  text-align: center;
+
+  h1 {
+    margin: 0;
+    font-size: 34px;
+    letter-spacing: -0.5px;
+    color: #0b1220;
+  }
+
+  p {
+    margin: 10px 0 0;
+    color: #4a5a73;
+    font-size: 18px;
+  }
+}
+
+.form {
+  padding: 24px 22px 26px;
+}
+
+.section {
+  margin-bottom: 18px;
+}
+
+.section-title {
+  font-size: 18px;
+  color: #0b1220;
+  margin-bottom: 12px;
+}
+
+.type-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.type-card {
+  width: 100%;
+  text-align: left;
+  border: 2px solid #e3e7ef;
+  background: #fff;
+  border-radius: 14px;
+  padding: 18px 16px;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 12px;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+
+  &:hover {
+    border-color: #cdd8f5;
+    box-shadow: 0 10px 22px rgba(16, 24, 40, 0.08);
+  }
+
+  &.active {
+    border-color: #1d4ed8;
+    box-shadow: 0 12px 26px rgba(29, 78, 216, 0.16);
+  }
+}
+
+.type-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: #eef2ff;
+  color: #1d4ed8;
+  font-size: 18px;
+}
+
+.type-name {
+  font-weight: 800;
+  font-size: 22px;
+  color: #0b1220;
+}
+
+.type-desc {
+  margin-top: 4px;
+  color: #5b6b84;
+  font-size: 16px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 18px;
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-group {
+  display: grid;
+  gap: 8px;
+}
+
+label {
+  font-size: 18px;
+  color: #0b1220;
+}
+
+.input {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  align-items: center;
+  background: #f3f4f6;
+  border: 1px solid #eef0f6;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  color: #94a3b8;
+  font-size: 18px;
+}
+
+input,
+select {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 14px 14px;
+  font-size: 18px;
+  color: #0b1220;
+}
+
+select {
+  appearance: none;
+}
+
+input::placeholder {
+  color: #9aa7b8;
+}
+
+/* Focus */
+.input:has(input:focus),
+.input:has(select:focus) {
+  border-color: rgba(29, 78, 216, 0.5);
+  box-shadow: 0 0 0 4px rgba(29, 78, 216, 0.12);
+  background: #f8fafc;
+}
+
+/* Invalid (Angular classes) */
+input.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched,
+form.ng-submitted input.ng-invalid,
+form.ng-submitted select.ng-invalid {
+  /* only border on wrapper */
+}
+
+.form-group:has(input.ng-invalid.ng-touched) .input,
+.form-group:has(select.ng-invalid.ng-touched) .input,
+form.ng-submitted .form-group:has(input.ng-invalid) .input,
+form.ng-submitted .form-group:has(select.ng-invalid) .input {
+  border-color: rgba(239, 68, 68, 0.65);
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.10);
+}
+
+/* Errors always in DOM, CSS shows when invalid */
+.field-error {
+  font-size: 14px;
+  color: #ef4444;
+  display: none;
+}
+
+.form-group:has(input.ng-invalid.ng-touched) .field-error,
+.form-group:has(select.ng-invalid.ng-touched) .field-error,
+form.ng-submitted .form-group:has(input.ng-invalid) .field-error,
+form.ng-submitted .form-group:has(select.ng-invalid) .field-error {
+  display: block;
+}
+
+/* Terms */
+.terms {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid #eef0f6;
+}
+
+.check {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-size: 16px;
+  color: #0b1220;
+
+  input {
+    width: 20px;
+    height: 20px;
+    accent-color: #1d4ed8;
+  }
+
+  a {
+    color: #1d4ed8;
+    text-decoration: none;
+  }
+}
+
+.terms-error {
+  margin-top: 8px;
+}
+
+/* show terms error when unchecked + submitted */
+form.ng-submitted .terms:has(input.ng-invalid) .terms-error {
+  display: block;
+}
+
+/* Submit */
+.submit {
+  margin-top: 18px;
+  width: 100%;
+  border: none;
+  border-radius: 14px;
+  padding: 16px 18px;
+  background: #1d4ed8;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: filter 150ms ease, transform 120ms ease;
+}
+
+.submit:hover {
+  filter: brightness(1.03);
+  transform: translateY(-1px);
+}
+
+.submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.footer {
+  margin-top: 14px;
+  text-align: center;
+  color: #5b6b84;
+  font-size: 15px;
+
+  a {
+    color: #1d4ed8;
+    text-decoration: none;
+    font-weight: 700;
+  }
+}
+
+/* Server error without ngIf */
+.server-error {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  background: rgba(239, 68, 68, 0.08);
+  color: #b91c1c;
+  display: none;
+}
+
+.server-error.visible {
+  display: block;
+}

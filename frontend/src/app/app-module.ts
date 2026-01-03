@@ -5,9 +5,10 @@ import { App } from './app';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { FooterComponent } from './footer/footer.component';
 import { LoginPageComponent } from './login-page/login-page.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { provideHttpClient } from '@angular/common/http';
 import { BackButtonComponent } from './shared/back-button/back-button.component';
+import { RegisterPageComponent } from './register-page/register-page.component';
 
 @NgModule({
   declarations: [
@@ -15,12 +16,14 @@ import { BackButtonComponent } from './shared/back-button/back-button.component'
     LandingPageComponent,
     FooterComponent,
     LoginPageComponent,
-    BackButtonComponent
+    BackButtonComponent,
+    RegisterPageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),

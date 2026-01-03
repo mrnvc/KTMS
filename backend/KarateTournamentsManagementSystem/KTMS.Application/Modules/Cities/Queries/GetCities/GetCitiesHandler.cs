@@ -20,6 +20,7 @@ namespace KTMS.Application.Modules.Cities.Queries.GetCities
                                     .Include(c => c.Country)
                                     .Select(c => new CityDto
                                     {
+                                        Id = c.Id,
                                         CityName = c.Name,
                                         Country = c.Country.Name
                                     })
