@@ -1,13 +1,16 @@
 <div class="page">
   <div class="card">
+    <div class ="header">
+      <div class="header-row">
+        <app-back-button label="Back to Home"></app-back-button>
 
-    <div class="topbar">
-      <app-back-button label="Back" fallbackUrl="/" [forceFallback]="true"></app-back-button>
-    </div>
+        <div class="header-text">
+          <h1>Create Your Account</h1>
+          <p>Join KTMS and start managing tournaments</p>
+        </div>
 
-    <div class="header">
-      <h1>Create Your Account</h1>
-      <p>Join KTMS and start managing tournaments</p>
+        <div class="header-spacer"></div>
+      </div>
     </div>
 
     <form class="form" [formGroup]="form" (ngSubmit)="submit()">
