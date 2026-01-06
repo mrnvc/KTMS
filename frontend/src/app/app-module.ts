@@ -9,6 +9,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { provideHttpClient } from '@angular/common/http';
 import { BackButtonComponent } from './shared/back-button/back-button.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
+import { TournamentsPageComponent } from './tournaments-page/tournaments-page.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { RegisterPageComponent } from './register-page/register-page.component';
     FooterComponent,
     LoginPageComponent,
     BackButtonComponent,
-    RegisterPageComponent
+    RegisterPageComponent,
+    TournamentsPageComponent
   ],
   imports: [
     BrowserModule,
@@ -28,6 +30,9 @@ import { RegisterPageComponent } from './register-page/register-page.component';
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideHttpClient()
+  ],
+  exports: [
+    BackButtonComponent
   ],
   bootstrap: [App]
 })

@@ -1,13 +1,16 @@
 <div class="page">
   <div class="card">
+    <div class ="header">
+      <div class="header-row">
+        <app-back-button label="Back to Home"></app-back-button>
 
-    <div class="topbar">
-      <app-back-button label="Back" fallbackUrl="/" [forceFallback]="true"></app-back-button>
-    </div>
+        <div class="header-text">
+          <h1>Create Your Account</h1>
+          <p>Join KTMS and start managing tournaments</p>
+        </div>
 
-    <div class="header">
-      <h1>Create Your Account</h1>
-      <p>Join KTMS and start managing tournaments</p>
+        <div class="header-spacer"></div>
+      </div>
     </div>
 
     <form class="form" [formGroup]="form" (ngSubmit)="submit()">
@@ -48,7 +51,6 @@
         <div class="form-group">
           <label>First name *</label>
           <div class="input">
-            <span class="icon">👤</span>
             <input formControlName="name" placeholder="John" />
           </div>
           <div class="field-error">First name is required</div>
@@ -57,7 +59,6 @@
         <div class="form-group">
           <label>Last name *</label>
           <div class="input">
-            <span class="icon">👤</span>
             <input formControlName="surname" placeholder="Doe" />
           </div>
           <div class="field-error">Last name is required</div>
@@ -66,7 +67,6 @@
         <div class="form-group">
           <label>Email *</label>
           <div class="input">
-            <span class="icon">✉️</span>
             <input formControlName="email" placeholder="john@example.com" />
           </div>
           <div class="field-error">Enter a valid email</div>
@@ -75,7 +75,6 @@
         <div class="form-group">
           <label>Phone number *</label>
           <div class="input">
-            <span class="icon">📞</span>
             <input formControlName="phoneNumber" placeholder="+387..." />
           </div>
           <div class="field-error">Phone number is required</div>
@@ -84,7 +83,6 @@
         <div class="form-group">
           <label>City *</label>
           <div class="input">
-            <span class="icon">📍</span>
             <select formControlName="cityId">
               <option [ngValue]="null" disabled>Select city</option>
               @for (c of cities; track c.id) {
@@ -98,7 +96,6 @@
         <div class="form-group">
           <label>Gender *</label>
           <div class="input">
-            <span class="icon">⚧️</span>
             <select formControlName="genderId">
               <option [ngValue]="null" disabled>Select gender</option>
               @for (g of genders; track g.id) {
@@ -112,7 +109,6 @@
         <div class="form-group">
           <label>Date of birth *</label>
           <div class="input">
-            <span class="icon">📅</span>
             <input type="date" formControlName="dateOfBirth" />
           </div>
           <div class="field-error">Date of birth is required</div>
@@ -121,7 +117,6 @@
         <div class="form-group">
           <label>Username *</label>
           <div class="input">
-            <span class="icon">🧾</span>
             <input formControlName="username" placeholder="johndoe" />
           </div>
           <div class="field-error">Username is required</div>
@@ -130,7 +125,6 @@
         <div class="form-group">
           <label>Password *</label>
           <div class="input">
-            <span class="icon">🔒</span>
             <input type="password" formControlName="password" placeholder="Min. 8 characters" />
           </div>
           <div class="field-error">Password is required</div>
@@ -139,7 +133,6 @@
         <div class="form-group">
           <label>Confirm Password *</label>
           <div class="input">
-            <span class="icon">🔒</span>
             <input type="password" formControlName="confirmPassword" placeholder="Re-enter password" />
           </div>
           <div class="field-error">Passwords must match</div>

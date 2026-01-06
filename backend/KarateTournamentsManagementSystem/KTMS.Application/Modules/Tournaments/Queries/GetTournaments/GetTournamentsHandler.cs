@@ -29,7 +29,7 @@ namespace KTMS.Application.Modules.Tournaments.Queries.GetTournaments
                 .ThenInclude(c => c.Country)
                 .Select(t => new TournamentsDto
                 {
-                    Location = $"{t.Location.Address},{t.Location.Country.Name}, {t.Location.City.Name}",
+                    Location = $"{t.Location.Address}, {t.Location.Country.Name}, {t.Location.City.Name}",
                     Title = t.Title,
                     Date = t.Date,
                     StartTime = t.StartTime,

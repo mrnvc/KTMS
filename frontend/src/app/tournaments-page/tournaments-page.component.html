@@ -1,0 +1,134 @@
+<div class="page">
+  <!-- Header -->
+  <header class="header">
+    <div class="header__overlay"></div>
+    <div class="header__content">
+      <div class="back-wrap">
+        <app-back-button
+          label="Back to Home"
+          fallbackUrl="/"
+          [forceFallback]="true"
+        ></app-back-button>
+      </div>
+
+      <h1>List of Karate Tournaments</h1>
+      <p>
+        Explore upcoming and ongoing karate competitions. Watch live matches, view tournament brackets, and follow your
+        favorite competitors.
+      </p>
+    </div>
+  </header>
+
+  <!-- Filters -->
+  <section class="filters">
+    <div class="tabs">
+      <button
+        type="button"
+        class="tab"
+        [class.tab--active]="statusFilter() === 'All'"
+        (click)="setStatus('All')"
+      >
+        All Tournaments
+      </button>
+
+      <button
+        type="button"
+        class="tab"
+        [class.tab--active]="statusFilter() === 'Active'"
+        (click)="setStatus('Active')"
+      >
+        Active
+      </button>
+
+      <button
+        type="button"
+        class="tab"
+        [class.tab--active]="statusFilter() === 'Completed'"
+        (click)="setStatus('Completed')"
+      >
+        Completed
+      </button>
+    </div>
+
+    <div class="filter-card">
+      <h3>Filter by Date &amp; Time</h3>
+
+      <div class="filter-grid">
+        <!-- Date Range -->
+        <div class="filter-block">
+          <div class="filter-title">📅 Date Range</div>
+          <div class="two-cols">
+            <div class="field">
+              <label>From</label>
+              <input type="date" [ngModel]="dateFromFilter()" (ngModelChange)="dateFromFilter.set($event)" />
+            </div>
+
+            <div class="field">
+              <label>To</label>
+              <input type="date" [ngModel]="dateToFilter()" (ngModelChange)="dateToFilter.set($event)" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Time Range -->
+        <div class="filter-block">
+          <div class="filter-title">🕒 Time Range</div>
+          <div class="two-cols">
+            <div class="field">
+              <label>From</label>
+              <input type="time" [ngModel]="timeFromFilter()" (ngModelChange)="timeFromFilter.set($event)" />
+            </div>
+
+            <div class="field">
+              <label>To</label>
+              <input type="time" [ngModel]="timeToFilter()" (ngModelChange)="timeToFilter.set($event)" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- List -->
+  <main class="content">
+    <div class="content__top">
+      <p class="muted">
+        Showing {{ filteredAndSortedTournaments().length }}
+        tournament{{ filteredAndSortedTournaments().length === 1 ? "" : "s" }}
+      </p>
+    </div>
+
+    @if (filteredAndSortedTournaments().length > 0) {
+      <div class="grid">
+        @for (t of filteredAndSortedTournaments(); track $index) {
+          <article class="card" (click)="onTournamentClick(t)" tabindex="0">
+            <div class="card__header">
+              <div class="card__title">
+                <h3>{{ t.title }}</h3>
+              </div>
+
+              <span class="badge" [class.badge--active]="t.status === 'active'">
+                {{ (t.status ?? "")[0]?.toUpperCase() + (t.status ?? "").slice(1) }}
+              </span>
+            </div>
+
+            <div class="card__body">
+              <div class="row"><span>📅</span> <span>{{ formatDate(t.date) }}</span></div>
+              <div class="row"><span>🕒</span> <span>{{ t.startTime }}</span></div>
+              <div class="row"><span>📍</span> <span>{{ t.location }}</span></div>
+
+              <button class="primary-btn" type="button" (click)="onTournamentClick(t)">
+                View Details
+              </button>
+            </div>
+          </article>
+        }
+      </div>
+    } @else {
+      <div class="empty">
+        <p>No tournaments found matching your filters.</p>
+        <button class="outline-btn" type="button" (click)="clearFilters()">Clear Filters</button>
+      </div>
+    }
+  </main>
+</div>
