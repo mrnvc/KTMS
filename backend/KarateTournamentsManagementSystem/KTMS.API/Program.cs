@@ -1,9 +1,12 @@
+using KTMS.API.Configuration;
 using KTMS.Application;
 using KTMS.Application.Abstractions;
+using KTMS.Application.Modules.StripePayment.Commands;
 using KTMS.Infrastructure.Common;
 using KTMS.Infrastructure.Database;
 using KTMS.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
 namespace KTMS.API
@@ -14,7 +17,9 @@ namespace KTMS.API
         public static void Main(string[] args)
         {
            var builder = WebApplication.CreateBuilder(args);
-
+            //Stripe payment
+            Stripe.StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
+            builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
             //Register DbContext
             builder.Services.AddDbContext<DatabaseContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -52,7 +57,7 @@ namespace KTMS.API
 
             //Add Application
             builder.Services.AddApplication();
-
+        
             var app = builder.Build();
 
             // UseCors obavezno prije UseAuthorization i UseAuthentification
