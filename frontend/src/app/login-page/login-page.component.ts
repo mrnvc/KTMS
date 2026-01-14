@@ -68,8 +68,8 @@ export class LoginPageComponent {
     this.auth.login(this.emailValue, this.password).subscribe({
       next: (res) => {
         if (res && res.token) {
-          localStorage.setItem('token', res.token);
-          // this.router.navigate(['/dashboard']);
+          this.auth.saveToken(res.token, this.rememberMe);
+          this.router.navigate(['/tournaments']);
           console.log("login successfull");
         } else {
           this.authError = 'Invalid email/username or password.';

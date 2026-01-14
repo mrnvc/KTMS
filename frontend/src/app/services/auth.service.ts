@@ -17,6 +17,20 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
+  private guestKey = 'guest_mode';
+
+  enterGuestMode(): void {
+    sessionStorage.setItem(this.guestKey, '1');
+  }
+
+  exitGuestMode(): void {
+    sessionStorage.removeItem(this.guestKey);
+  }
+
+  isGuest(): boolean {
+    return sessionStorage.getItem(this.guestKey) === '1';
+  }
+
   login(email: string, password: string) {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, {
       user: {
@@ -33,6 +47,8 @@ export class AuthService {
   }
 
   saveToken(token: string, rememberMe: boolean) {
+    this.exitGuestMode();
+
     if (rememberMe) {
       localStorage.setItem('token', token);
     } else {
@@ -40,9 +56,14 @@ export class AuthService {
     }
   }
 
+  isLoggedIn(): boolean {
+    return !!this.getToken();
+  }
+
   logout() {
     localStorage.removeItem('token');
     sessionStorage.removeItem('token');
+    this.exitGuestMode();
   }
 
   getToken(): string | null {

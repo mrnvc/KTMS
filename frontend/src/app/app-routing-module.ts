@@ -4,6 +4,7 @@ import {LandingPageComponent} from './landing-page/landing-page.component';
 import {LoginPageComponent} from './login-page/login-page.component';
 import {RegisterPageComponent} from './register-page/register-page.component';
 import {TournamentsPageComponent} from './tournaments-page/tournaments-page.component';
+import {ProfilePageComponent} from './profile-page/profile-page.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent},
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterPageComponent }, //Register page
   { path: "tournaments", component: TournamentsPageComponent },
   { path: "tournaments/:status", component: TournamentsPageComponent },
+  { path: 'profile', component: ProfilePageComponent }, //Profile page
   { path: '**', redirectTo: '' } // fallback
 ];
 

@@ -1,0 +1,17 @@
+.profile-icon {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid #e7e9f2;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  z-index: 3000;
+  box-shadow: 0 12px 30px rgba(16, 24, 40, 0.12);
+
+  svg { fill: #1f2937; }
+}

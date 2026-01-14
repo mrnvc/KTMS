@@ -63,9 +63,7 @@ export class RegisterPageComponent {
 
       const defaultRoleId = this.organizerRoleId ?? this.athleteRoleId ?? null;
 
-      Promise.resolve().then(() => {
-        this.form.patchValue({ roleId: defaultRoleId });
-      });
+      this.form.get('roleId')!.setValue(defaultRoleId, { emitEvent: false });
     });
 
     this.lookup.getCities().subscribe((cities) => (this.cities = cities));

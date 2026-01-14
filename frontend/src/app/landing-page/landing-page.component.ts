@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import {AuthService} from '../services/auth.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrl: './landing-page.component.scss',
 })
 export class LandingPageComponent {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private auth: AuthService) { }
 
   goToLogin() {
     this.router.navigate(['/login']);
@@ -19,6 +20,11 @@ export class LandingPageComponent {
   }
 
   goToTournaments(): void {
+    this.router.navigate(['/tournaments']);
+  }
+
+  watchAsGuest(): void {
+    this.auth.enterGuestMode();
     this.router.navigate(['/tournaments']);
   }
 }

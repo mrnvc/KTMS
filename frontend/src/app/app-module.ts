@@ -10,6 +10,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { BackButtonComponent } from './shared/back-button/back-button.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import { TournamentsPageComponent } from './tournaments-page/tournaments-page.component';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { TournamentsPageComponent } from './tournaments-page/tournaments-page.co
     LoginPageComponent,
     BackButtonComponent,
     RegisterPageComponent,
-    TournamentsPageComponent
+    TournamentsPageComponent,
+    ProfilePageComponent
   ],
   imports: [
     BrowserModule,
