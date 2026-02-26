@@ -17,6 +17,7 @@ namespace KTMS.API.Controllers
         }
 
         [HttpPost("register")]
+        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterUserCommand command)
         {
             var result = await _mediator.Send(command);
@@ -24,7 +25,8 @@ namespace KTMS.API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginUserCommand command)
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(LoginCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);

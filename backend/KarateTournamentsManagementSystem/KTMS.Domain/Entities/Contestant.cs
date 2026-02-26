@@ -1,4 +1,6 @@
-﻿namespace KTMS.Domain.Entities
+﻿using KTMS.Domain.Entities.Identity;
+
+namespace KTMS.Domain.Entities
 {
     public class Contestant
     {
@@ -8,7 +10,7 @@
         public int ClubId { get; set; }
 
         //Navigation Properties
-        public User User { get; set; }
+        public KTMSUserEntity User { get; set; }
         public Belt Belt { get; set; }
         public Club Club { get; set; }
 

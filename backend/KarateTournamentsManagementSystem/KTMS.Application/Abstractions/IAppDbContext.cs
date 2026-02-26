@@ -1,5 +1,4 @@
-﻿using KTMS.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace KTMS.Application.Abstractions
 {
@@ -28,7 +27,8 @@ namespace KTMS.Application.Abstractions
         public DbSet<Tournament> Tournaments { get; }
         public DbSet<TournamentContestant> TournamentContestants { get; }
         public DbSet<TournamentJudge> TournamentJudges { get; }
-        public DbSet<User> Users { get; }
+        public DbSet<KTMSUserEntity> Users { get; }
+        DbSet<RefreshTokenEntity> RefreshTokens { get; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

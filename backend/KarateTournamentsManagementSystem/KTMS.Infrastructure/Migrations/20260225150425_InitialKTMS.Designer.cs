@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KTMS.Infrastructure.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20251211162829_MakeTablesCascade")]
-    partial class MakeTablesCascade
+    [Migration("20260225150425_InitialKTMS")]
+    partial class InitialKTMS
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.10")
+                .HasAnnotation("ProductVersion", "8.0.21")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -344,6 +344,134 @@ namespace KTMS.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Genders");
+                });
+
+            modelBuilder.Entity("KTMS.Domain.Entities.Identity.KTMSUserEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateOnly>("DateOfBirth")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("GenderId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsCoach")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsContestant")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RegistrationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TokenVersion")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("GenderId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("KTMS.Domain.Entities.Identity.RefreshTokenEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiresAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Fingerprint")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsRevoked")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("RevokedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TokenHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
                 });
 
             modelBuilder.Entity("KTMS.Domain.Entities.Judge", b =>
@@ -723,67 +851,6 @@ namespace KTMS.Infrastructure.Migrations
                     b.ToTable("TournamentJudges");
                 });
 
-            modelBuilder.Entity("KTMS.Domain.Entities.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
-                    b.Property<DateOnly>("DateOfBirth")
-                        .HasColumnType("date");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("GenderId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("RegistrationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.Property<bool?>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CityId");
-
-                    b.HasIndex("GenderId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("Users");
-                });
-
             modelBuilder.Entity("KTMS.Domain.Entities.Bracket", b =>
                 {
                     b.HasOne("KTMS.Domain.Entities.Contestant", "ContestantOne")
@@ -882,7 +949,7 @@ namespace KTMS.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("KTMS.Domain.Entities.User", "User")
+                    b.HasOne("KTMS.Domain.Entities.Identity.KTMSUserEntity", "User")
                         .WithMany("Coaches")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -900,16 +967,16 @@ namespace KTMS.Infrastructure.Migrations
                     b.HasOne("KTMS.Domain.Entities.Belt", "Belt")
                         .WithMany("Contestants")
                         .HasForeignKey("BeltId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("KTMS.Domain.Entities.Club", "Club")
                         .WithMany("Contestants")
                         .HasForeignKey("ClubId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("KTMS.Domain.Entities.User", "User")
+                    b.HasOne("KTMS.Domain.Entities.Identity.KTMSUserEntity", "User")
                         .WithMany("Contestants")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -933,7 +1000,7 @@ namespace KTMS.Infrastructure.Migrations
                     b.HasOne("KTMS.Domain.Entities.Contestant", "Contestant")
                         .WithMany("Enrollments")
                         .HasForeignKey("ContestantId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("KTMS.Domain.Entities.Discipline", "Discipline")
@@ -957,9 +1024,47 @@ namespace KTMS.Infrastructure.Migrations
                     b.Navigation("Tournament");
                 });
 
+            modelBuilder.Entity("KTMS.Domain.Entities.Identity.KTMSUserEntity", b =>
+                {
+                    b.HasOne("KTMS.Domain.Entities.City", "City")
+                        .WithMany("Users")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("KTMS.Domain.Entities.Gender", "Gender")
+                        .WithMany("Users")
+                        .HasForeignKey("GenderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("KTMS.Domain.Entities.Role", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("City");
+
+                    b.Navigation("Gender");
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("KTMS.Domain.Entities.Identity.RefreshTokenEntity", b =>
+                {
+                    b.HasOne("KTMS.Domain.Entities.Identity.KTMSUserEntity", "User")
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("KTMS.Domain.Entities.Judge", b =>
                 {
-                    b.HasOne("KTMS.Domain.Entities.User", "User")
+                    b.HasOne("KTMS.Domain.Entities.Identity.KTMSUserEntity", "User")
                         .WithMany("Judges")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1006,7 +1111,7 @@ namespace KTMS.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("KTMS.Domain.Entities.User", "User")
+                    b.HasOne("KTMS.Domain.Entities.Identity.KTMSUserEntity", "User")
                         .WithMany("Organizers")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1158,33 +1263,6 @@ namespace KTMS.Infrastructure.Migrations
                     b.Navigation("Tournament");
                 });
 
-            modelBuilder.Entity("KTMS.Domain.Entities.User", b =>
-                {
-                    b.HasOne("KTMS.Domain.Entities.City", "City")
-                        .WithMany("Users")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("KTMS.Domain.Entities.Gender", "Gender")
-                        .WithMany("Users")
-                        .HasForeignKey("GenderId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("KTMS.Domain.Entities.Role", "Role")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("City");
-
-                    b.Navigation("Gender");
-
-                    b.Navigation("Role");
-                });
-
             modelBuilder.Entity("KTMS.Domain.Entities.Belt", b =>
                 {
                     b.Navigation("Coaches");
@@ -1258,6 +1336,19 @@ namespace KTMS.Infrastructure.Migrations
                     b.Navigation("Users");
                 });
 
+            modelBuilder.Entity("KTMS.Domain.Entities.Identity.KTMSUserEntity", b =>
+                {
+                    b.Navigation("Coaches");
+
+                    b.Navigation("Contestants");
+
+                    b.Navigation("Judges");
+
+                    b.Navigation("Organizers");
+
+                    b.Navigation("RefreshTokens");
+                });
+
             modelBuilder.Entity("KTMS.Domain.Entities.Judge", b =>
                 {
                     b.Navigation("Tatamis");
@@ -1301,17 +1392,6 @@ namespace KTMS.Infrastructure.Migrations
                     b.Navigation("TournamentContestants");
 
                     b.Navigation("TournamentJudges");
-                });
-
-            modelBuilder.Entity("KTMS.Domain.Entities.User", b =>
-                {
-                    b.Navigation("Coaches");
-
-                    b.Navigation("Contestants");
-
-                    b.Navigation("Judges");
-
-                    b.Navigation("Organizers");
                 });
 #pragma warning restore 612, 618
         }

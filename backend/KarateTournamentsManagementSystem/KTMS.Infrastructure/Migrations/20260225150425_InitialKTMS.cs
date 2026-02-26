@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace KTMS.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialKTMS : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -204,11 +204,19 @@ namespace KTMS.Infrastructure.Migrations
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateOfBirth = table.Column<DateOnly>(type: "date", nullable: false),
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RegistrationDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Status = table.Column<bool>(type: "bit", nullable: true)
+                    Status = table.Column<bool>(type: "bit", nullable: true),
+                    IsAdmin = table.Column<bool>(type: "bit", nullable: false),
+                    IsCoach = table.Column<bool>(type: "bit", nullable: false),
+                    IsContestant = table.Column<bool>(type: "bit", nullable: false),
+                    TokenVersion = table.Column<int>(type: "int", nullable: false),
+                    IsEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -313,13 +321,13 @@ namespace KTMS.Infrastructure.Migrations
                         column: x => x.BeltId,
                         principalTable: "Belts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Contestants_Clubs_ClubId",
                         column: x => x.ClubId,
                         principalTable: "Clubs",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Contestants_Users_UserId",
                         column: x => x.UserId,
@@ -347,6 +355,33 @@ namespace KTMS.Infrastructure.Migrations
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RefreshTokens",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TokenHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ExpiresAtUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsRevoked = table.Column<bool>(type: "bit", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Fingerprint = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RevokedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RefreshTokens", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RefreshTokens_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -401,7 +436,7 @@ namespace KTMS.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Applications",
+                name: "Enrollments",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -416,27 +451,27 @@ namespace KTMS.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Applications", x => x.Id);
+                    table.PrimaryKey("PK_Enrollments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Applications_Categories_CategoryId",
+                        name: "FK_Enrollments_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Applications_Contestants_ContestantId",
+                        name: "FK_Enrollments_Contestants_ContestantId",
                         column: x => x.ContestantId,
                         principalTable: "Contestants",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Applications_Disciplines_DisciplineId",
+                        name: "FK_Enrollments_Disciplines_DisciplineId",
                         column: x => x.DisciplineId,
                         principalTable: "Disciplines",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Applications_Tournaments_TournamentId",
+                        name: "FK_Enrollments_Tournaments_TournamentId",
                         column: x => x.TournamentId,
                         principalTable: "Tournaments",
                         principalColumn: "Id",
@@ -557,13 +592,13 @@ namespace KTMS.Infrastructure.Migrations
                         column: x => x.JudgeId,
                         principalTable: "Judges",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TournamentJudges_Tournaments_TournamentId",
                         column: x => x.TournamentId,
                         principalTable: "Tournaments",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -572,7 +607,7 @@ namespace KTMS.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ApplicationId = table.Column<int>(type: "int", nullable: false),
+                    EnrollmentId = table.Column<int>(type: "int", nullable: false),
                     Amount = table.Column<int>(type: "int", nullable: false),
                     PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PaymentMethod = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -582,9 +617,9 @@ namespace KTMS.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Payments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Payments_Applications_ApplicationId",
-                        column: x => x.ApplicationId,
-                        principalTable: "Applications",
+                        name: "FK_Payments_Enrollments_EnrollmentId",
+                        column: x => x.EnrollmentId,
+                        principalTable: "Enrollments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -668,26 +703,6 @@ namespace KTMS.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Applications_CategoryId",
-                table: "Applications",
-                column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Applications_ContestantId",
-                table: "Applications",
-                column: "ContestantId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Applications_DisciplineId",
-                table: "Applications",
-                column: "DisciplineId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Applications_TournamentId",
-                table: "Applications",
-                column: "TournamentId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Brackets_ContestantOneId",
                 table: "Brackets",
                 column: "ContestantOneId");
@@ -763,6 +778,26 @@ namespace KTMS.Infrastructure.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Enrollments_CategoryId",
+                table: "Enrollments",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Enrollments_ContestantId",
+                table: "Enrollments",
+                column: "ContestantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Enrollments_DisciplineId",
+                table: "Enrollments",
+                column: "DisciplineId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Enrollments_TournamentId",
+                table: "Enrollments",
+                column: "TournamentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Judges_UserId",
                 table: "Judges",
                 column: "UserId");
@@ -793,9 +828,14 @@ namespace KTMS.Infrastructure.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Payments_ApplicationId",
+                name: "IX_Payments_EnrollmentId",
                 table: "Payments",
-                column: "ApplicationId");
+                column: "EnrollmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RefreshTokens_UserId",
+                table: "RefreshTokens",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Results_CategoryId",
@@ -902,6 +942,9 @@ namespace KTMS.Infrastructure.Migrations
                 name: "Payments");
 
             migrationBuilder.DropTable(
+                name: "RefreshTokens");
+
+            migrationBuilder.DropTable(
                 name: "Results");
 
             migrationBuilder.DropTable(
@@ -914,7 +957,7 @@ namespace KTMS.Infrastructure.Migrations
                 name: "TournamentJudges");
 
             migrationBuilder.DropTable(
-                name: "Applications");
+                name: "Enrollments");
 
             migrationBuilder.DropTable(
                 name: "Tatamis");

@@ -1,83 +1,137 @@
+﻿using KTMS.API;
 using KTMS.API.Configuration;
+using KTMS.API.Middleware;
 using KTMS.Application;
 using KTMS.Application.Abstractions;
-using KTMS.Application.Modules.StripePayment.Commands;
-using KTMS.Infrastructure.Common;
+using KTMS.Infrastructure;
 using KTMS.Infrastructure.Database;
-using KTMS.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
-namespace KTMS.API
+public partial class Program
 {
-    public partial class Program
+    private static async Task Main(string[] args)
     {
-        
-        public static void Main(string[] args)
+        //
+        // 0) Bootstrap logger (very early, no full config yet)
+        //
+        Log.Logger = new LoggerConfiguration()
+            .WriteTo.Console() // minimal sink so we see startup errors
+            .CreateBootstrapLogger();
+
+        try
         {
-           var builder = WebApplication.CreateBuilder(args);
-            //Stripe payment
-            Stripe.StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
-            builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
-            //Register DbContext
-            builder.Services.AddDbContext<DatabaseContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
-                sqlOptions => sqlOptions.MigrationsAssembly("KTMS.Infrastructure"))
-            );
+            Log.Information("Starting KTMS API...");
 
-            //IAppDbContext so DI can resolve it in handlers
-            builder.Services.AddScoped<IAppDbContext>(provider => provider.GetService<DatabaseContext>());
+            //
+            // 1) Standard builder (includes appsettings.json, appsettings.{ENV}.json,
+            //    environment variables, user-secrets (Dev), and command-line args)
+            //
+            var builder = WebApplication.CreateBuilder(args);
 
-            //Register JWT Service for IJwtService  
-            builder.Services.AddScoped<IJwtService, JwtService>();
-
-            // CORS policy to allow Angular dev server access
-            builder.Services.AddCors(options => 
-            { 
-                options.AddPolicy("AllowAngularDev", 
-                    policy => 
-                    { policy 
-                        .WithOrigins("http://localhost:4200", "http://localhost:5500") 
-                        .AllowAnyHeader() 
-                        .AllowAnyMethod() 
-                        .AllowCredentials(); 
-                    }); 
+            // 2) Promote Serilog to full configuration from builder.Configuration
+            //    (reads "Serilog" section from appsettings + ENV overrides)
+            //
+            builder.Host.UseSerilog((ctx, services, cfg) =>
+            {
+                cfg.ReadFrom.Configuration(ctx.Configuration)   // Serilog section in appsettings
+                   .ReadFrom.Services(services)                 // DI enrichers if any
+                   .Enrich.FromLogContext()
+                   .Enrich.WithThreadId()
+                   .Enrich.WithProcessId()
+                   .Enrich.WithMachineName();
             });
 
-            // Add services to the container.
-            builder.Services.AddControllers();
+            // Optional: remove default providers to have only Serilog
+            builder.Logging.ClearProviders();
 
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            // ---------------------------------------------------------
+            // 2.1 Tvoji dodatni servisi i konfiguracije
+            // ---------------------------------------------------------
 
-            // Add Infrastructure Services
-            builder.Services.AddInfrastructure(builder.Configuration);
+            // Stripe payment
+            Stripe.StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
+            builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 
-            //Add Application
-            builder.Services.AddApplication();
-        
+            // Register DbContext
+            builder.Services.AddDbContext<DatabaseContext>(options =>
+                options.UseSqlServer(
+                    builder.Configuration.GetConnectionString("Main"),
+                    sqlOptions => sqlOptions.MigrationsAssembly("KTMS.Infrastructure"))
+            );
+
+            // IAppDbContext so DI can resolve it in handlers
+            builder.Services.AddScoped<IAppDbContext>(provider =>
+                provider.GetRequiredService<DatabaseContext>());
+
+            // CORS policy to allow Angular dev server access
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAngularDev",
+                    policy =>
+                    {
+                        policy
+                            .WithOrigins("http://localhost:4200", "http://localhost:5500")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowCredentials();
+                    });
+            });
+
+            // ---------------------------------------------------------
+            // 3. Layer registrations
+            // ---------------------------------------------------------
+            builder.Services
+                .AddAPI(builder.Configuration, builder.Environment)
+                .AddInfrastructure(builder.Configuration, builder.Environment)
+                .AddApplication();
+
             var app = builder.Build();
 
-            // UseCors obavezno prije UseAuthorization i UseAuthentification
-            app.UseCors("AllowAngularDev");
-
-            // Configure the HTTP request pipeline.
+            // ---------------------------------------------------------
+            // 4. Middleware pipeline
+            // ---------------------------------------------------------
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
+            // Global exception handler (IExceptionHandler)
+            app.UseExceptionHandler();
+            app.UseMiddleware<RequestResponseLoggingMiddleware>();
+
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            // UseCors ide prije UseAuthorization i UseAuthentification
+            app.UseCors("AllowAngularDev"); // koristi tvoju CORS politiku
 
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.MapControllers();
 
+            // Database migrations + seeding
+            await app.Services.InitializeDatabaseAsync(app.Environment);
+
+            Log.Information("KTMS API started successfully.");
             app.Run();
+        }
+        catch (HostAbortedException)
+        {
+            // EF Core tools abortiraju host nakon što uzmu DbContext.
+            // Ovo nije runtime greška – samo tiho izađi.
+            Log.Information("Host aborted by EF Core tooling (design-time) - it's ok.");
+        }
+        catch (Exception ex)
+        {
+            // Any startup failure will be logged here
+            Log.Fatal(ex, "KTMS API terminated unexpectedly.");
+        }
+        finally
+        {
+            // Ensure all logs are flushed before the app exits
+            Log.CloseAndFlush();
         }
     }
 }

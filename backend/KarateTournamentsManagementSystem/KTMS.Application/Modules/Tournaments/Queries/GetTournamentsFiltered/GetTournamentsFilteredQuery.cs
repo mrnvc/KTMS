@@ -18,8 +18,5 @@ namespace KTMS.Application.Modules.Tournaments.Queries.GetTournamentsFiltered
         public int? Year { get; set;}
         public int? Month { get; set;}
         public int? Day { get; set;}
-
-
-
     }
 }

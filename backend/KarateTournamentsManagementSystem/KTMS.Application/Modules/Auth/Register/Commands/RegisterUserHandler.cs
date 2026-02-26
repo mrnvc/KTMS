@@ -17,7 +17,7 @@ namespace KTMS.Application.Modules.Auth.Register.Commands
         public async Task<int> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
             var existingMail = await _dbContext.Users
-                .FirstOrDefaultAsync(u => u.Email == request.User.Email, cancellationToken);
+                .FirstOrDefaultAsync((System.Linq.Expressions.Expression<Func<KTMSUserEntity, bool>>)(u => u.Email == request.User.Email), cancellationToken);
             var existingUsername = await _dbContext.Users
                 .FirstOrDefaultAsync(u => u.Username == request.User.Username, cancellationToken);  
 
@@ -29,7 +29,7 @@ namespace KTMS.Application.Modules.Auth.Register.Commands
             //hash the password
             string hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.User.Password);
 
-            var user = new User
+            var user = new KTMSUserEntity
             {
                 RoleId = request.User.RoleId,
                 CityId = request.User.CityId,

@@ -9,7 +9,7 @@ namespace KTMS.Application.Modules.Users.Commands.CreateUser
     {
         public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            var user = new User
+            var user = new KTMSUserEntity
             {
                 RoleId = request.RoleId,
                 CityId = request.CityId,

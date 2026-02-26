@@ -1,4 +1,6 @@
-﻿namespace KTMS.Domain.Entities
+﻿using KTMS.Domain.Entities.Identity;
+
+namespace KTMS.Domain.Entities
 {
     public class Organizer
     {
@@ -9,7 +11,7 @@
         public string? ObligationDescription { get; set; }   
 
         //Navigation Properties
-        public User User { get; set; }
+        public KTMSUserEntity User { get; set; }
         public Tournament Tournament { get; set; }
     }
 }

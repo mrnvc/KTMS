@@ -1,10 +1,11 @@
 ﻿using KTMS.Application.Abstractions;
 using KTMS.Domain.Entities;
+using KTMS.Domain.Entities.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace KTMS.Infrastructure.Database
 {
-    public class DatabaseContext : DbContext, IAppDbContext
+    public partial class DatabaseContext : DbContext, IAppDbContext
     {
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
@@ -34,7 +35,14 @@ namespace KTMS.Infrastructure.Database
         public DbSet<Tournament> Tournaments { get; set; }
         public DbSet<TournamentContestant> TournamentContestants { get; set; }
         public DbSet<TournamentJudge> TournamentJudges { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<KTMSUserEntity> Users { get; set; }
+        public DbSet<RefreshTokenEntity> RefreshTokens { get; set; }
+
+        private readonly TimeProvider _clock;
+        public DatabaseContext(DbContextOptions<DatabaseContext> options, TimeProvider clock) : base(options)
+        {
+            _clock = clock;
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -598,43 +606,43 @@ namespace KTMS.Infrastructure.Database
             // ====================
             // USERS
             // ====================
-            modelBuilder.Entity<User>()
+            modelBuilder.Entity<KTMSUserEntity>()
                 .HasOne(u => u.Role)
                 .WithMany(r => r.Users)
                 .HasForeignKey(u => u.RoleId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<User>()
+            modelBuilder.Entity<KTMSUserEntity>()
                 .HasOne(u => u.City)
                 .WithMany(c => c.Users)
                 .HasForeignKey(u => u.CityId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<User>()
+            modelBuilder.Entity<KTMSUserEntity>()
                 .HasOne(u => u.Gender)
                 .WithMany(g => g.Users)
                 .HasForeignKey(u => u.GenderId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<User>()
+            modelBuilder.Entity<KTMSUserEntity>()
                 .HasMany(u => u.Contestants)
                 .WithOne(c => c.User)
                 .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<User>()
+            modelBuilder.Entity<KTMSUserEntity>()
                 .HasMany(u => u.Coaches)
                 .WithOne(c => c.User)
                 .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<User>()
+            modelBuilder.Entity<KTMSUserEntity>()
                 .HasMany(u => u.Judges)
                 .WithOne(j => j.User)
                 .HasForeignKey(j => j.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<User>()
+            modelBuilder.Entity<KTMSUserEntity>()
                 .HasMany(u => u.Organizers)
                 .WithOne(o => o.User)
                 .HasForeignKey(o => o.UserId)

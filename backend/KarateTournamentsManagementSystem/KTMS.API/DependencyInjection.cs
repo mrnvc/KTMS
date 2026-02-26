@@ -61,6 +61,8 @@ public static class DependencyInjection
                 ValidateLifetime = true,
                 ClockSkew = TimeSpan.Zero
             };
+
+            
         });
 
         services.AddAuthorization(o =>

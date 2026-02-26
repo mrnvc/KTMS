@@ -1,0 +1,44 @@
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace KTMS.Application.Modules.Auth.Login.Commands
+{
+    public sealed class LoginCommandHandler(
+    IAppDbContext ctx,
+    IJwtTokenService jwt,
+    IPasswordHasher<KTMSUserEntity> hasher)
+    : IRequestHandler<LoginCommand, LoginCommandDto>
+    {
+        public async Task<LoginCommandDto> Handle(LoginCommand request, CancellationToken ct)
+        {
+            var email = request.Email.Trim().ToLowerInvariant();
+
+            var user = await ctx.Users
+                .FirstOrDefaultAsync(x => x.Email.ToLower() == email && x.IsEnabled && !x.IsDeleted, ct)
+                ?? throw new KTMSNotFoundException("Korisnik nije pronađen ili je onemogućen.");
+
+            var verify = hasher.VerifyHashedPassword(user, user.Password, request.Password);
+            if (verify == PasswordVerificationResult.Failed)
+                throw new KTMSConflictException("Pogrešni kredencijali.");
+
+            var tokens = jwt.IssueTokens(user);
+
+            ctx.RefreshTokens.Add(new RefreshTokenEntity
+            {
+                TokenHash = tokens.RefreshTokenHash,
+                ExpiresAtUtc = tokens.RefreshTokenExpiresAtUtc,
+                UserId = user.Id
+            });
+
+            await ctx.SaveChangesAsync(ct);
+
+            return new LoginCommandDto
+            {
+                AccessToken = tokens.AccessToken,
+                RefreshToken = tokens.RefreshTokenRaw,
+                ExpiresAtUtc = tokens.RefreshTokenExpiresAtUtc, // Backward compatibility
+                AccessExpiresAtUtc = tokens.AccessTokenExpiresAtUtc,
+                RefreshExpiresAtUtc = tokens.RefreshTokenExpiresAtUtc
+            };
+        }
+    }
+}

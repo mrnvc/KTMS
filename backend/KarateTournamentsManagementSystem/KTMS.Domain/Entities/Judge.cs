@@ -1,4 +1,6 @@
-﻿namespace KTMS.Domain.Entities
+﻿using KTMS.Domain.Entities.Identity;
+
+namespace KTMS.Domain.Entities
 {
     public class Judge
     {
@@ -8,7 +10,7 @@
         public string? Rank { get; set; }
 
         //Navigation Properties
-        public User User { get; set; }
+        public KTMSUserEntity User { get; set; }
 
         //Collections
         public ICollection<Tatami> Tatamis { get; set; } = new List<Tatami>();
