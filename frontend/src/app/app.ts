@@ -1,4 +1,4 @@
-import {Component, computed, OnInit, signal} from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
