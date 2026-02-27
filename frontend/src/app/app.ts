@@ -1,7 +1,5 @@
-import {Component, computed, signal} from '@angular/core';
-import {NavigationEnd, Router} from '@angular/router';
-import { filter } from 'rxjs';
-import {AuthApiService} from './api-services/auth/auth-api.service';
+import {Component, computed, OnInit, signal} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -9,33 +7,59 @@ import {AuthApiService} from './api-services/auth/auth-api.service';
   standalone: false,
   styleUrl: './app.scss'
 })
-export class App {
+export class App implements OnInit {
   protected readonly title = signal('frontend');
 
   private currentUrl = signal<string>('/');
 
-  readonly showProfileIcon = computed(() => {
-    const url = this.currentUrl();
-    const hideOn =
-      url === '/' ||
-      url.startsWith('/?') ||
-      url.startsWith('/login') ||
-      url.startsWith('/register');
+  currentLang: string = 'bs';
+  constructor(private translate: TranslateService) {
+    console.log('AppComponent constructor - initializing TranslateService');
 
-    return this.auth.isLoggedIn() && !this.auth.isGuest?.() && !hideOn;
-  });
+    // Inicijalizacija translate servisa
+    this.translate.addLangs(['en', 'bs']);
+    this.translate.setDefaultLang('bs');
 
-  constructor(public auth: AuthApiService, private router: Router) {
-    // set initial
-    this.currentUrl.set(this.router.url);
+    // Učitaj jezik iz localStorage ili koristi default
+    const savedLang = localStorage.getItem('language') || 'bs';
+    this.currentLang = savedLang;
 
-    // update on navigation end (stabilno)
-    this.router.events
-      .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
-      .subscribe(e => this.currentUrl.set(e.urlAfterRedirects));
+    this.translate.use(savedLang).subscribe({
+      next: (translations) => {
+        console.log('Translations loaded successfully for language:', savedLang);
+        console.log('Available keys:', Object.keys(translations));
+      },
+      error: (error) => {
+        console.error('Error loading translations:', error);
+        console.error('Check if files exist at: /i18n/' + savedLang + '.json');
+      }
+    });
   }
 
-  goToProfile(): void {
-    this.router.navigate(['/profile']);
+  ngOnInit(): void {
+    // Test translation
+    this.translate.get('PRODUCTS.TITLE').subscribe((res: string) => {
+      console.log('Translation for PRODUCTS.TITLE:', res);
+      if (res === 'PRODUCTS.TITLE') {
+        console.error('⚠️ Translation not working! Key returned instead of value.');
+        console.error('Possible causes:');
+        console.error('1. Translation files not in /i18n/ folder');
+        console.error('2. JSON files have syntax errors');
+        console.error('3. TranslateService not properly initialized');
+      }
+    });
+  }
+
+  switchLanguage(lang: string): void {
+    this.currentLang = lang;
+    localStorage.setItem('language', lang);
+    this.translate.use(lang).subscribe({
+      next: () => {
+        console.log('Language switched to:', lang);
+      },
+      error: (error) => {
+        console.error('Error switching language:', error);
+      }
+    });
   }
 }

@@ -14,7 +14,7 @@ import {MatOption, MatSelect} from '@angular/material/select';
 import {MatDialogActions, MatDialogContent} from '@angular/material/dialog';
 import {MatButton} from '@angular/material/button';
 import { LoginComponent } from './modules/auth/login/login.component';
-import {TranslatePipe} from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { RegisterComponent } from './modules/auth/register/register.component';
 import {loadingBarInterceptor} from './core/interceptors/loading-bar-interceptor.service';
 import {authInterceptor} from './core/interceptors/auth-interceptor.service';
@@ -22,6 +22,8 @@ import {errorLoggingInterceptor} from './core/interceptors/error-logging-interce
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {materialModules} from './modules/shared/material-modules';
 import {SharedModule} from './modules/shared/shared-module';
+import { HttpClient } from '@angular/common/http';
+import {CustomTranslateLoader} from './core/services/custom-translate-loader';
 
 @NgModule({
   declarations: [
@@ -31,9 +33,7 @@ import {SharedModule} from './modules/shared/shared-module';
     LoginComponent,
     BackButtonComponent,
     RegisterComponent,
-    TournamentsPageComponent,
-    LoginComponent,
-    RegisterComponent
+    TournamentsPageComponent
   ],
   imports: [
     BrowserModule,
@@ -47,8 +47,14 @@ import {SharedModule} from './modules/shared/shared-module';
     MatDialogContent,
     MatDialogActions,
     MatButton,
-    TranslatePipe,
     MatProgressSpinner,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => new CustomTranslateLoader(http),
+        deps: [HttpClient]
+      }
+    }),
     materialModules,
     SharedModule
   ],

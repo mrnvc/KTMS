@@ -347,7 +347,7 @@ namespace KTMS.Infrastructure.Database.Seeders
                 Email = "admin@ktms.local",
                 DateOfBirth = new DateOnly(1990, 1, 1),
                 Username = "admin",
-                Password = "Admin123!",     // ako koristiš hash, stavi već hashiranu vrijednost
+                Password = "Admin123!",
                 RegistrationDate = DateTime.UtcNow.AddDays(-30),
                 Status = true,
                 IsAdmin = true,
@@ -516,17 +516,25 @@ namespace KTMS.Infrastructure.Database.Seeders
                 IsEnabled = true
             };
 
-            context.Users.AddRange(
-                admin,
-                organizer,
-                coach1,
-                coach2,
-                judgeUser,
-                contestantUser1,
-                contestantUser2,
-                dummyForSwagger,
-                dummyForTests
-            );
+            var users = new[]
+            {
+               admin,
+               organizer,
+               coach1,
+               coach2,
+               judgeUser,
+               contestantUser1,
+               contestantUser2,
+               dummyForSwagger,
+               dummyForTests
+            };
+
+            foreach (var u in users)
+            {
+                u.Password = hasher.HashPassword(u, u.Password);
+            }
+
+            context.Users.AddRange(users);
 
             await context.SaveChangesAsync();
             Console.WriteLine("✅ Dynamic seed: demo users added.");
