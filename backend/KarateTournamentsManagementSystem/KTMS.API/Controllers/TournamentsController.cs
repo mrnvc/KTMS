@@ -45,6 +45,7 @@ namespace KTMS.API.Controllers
             var result = await _mediator.Send(command);
             return Ok(result);
         }
+        [AllowAnonymous]
         [HttpGet("GetTournaments")]
         public async Task<IActionResult> GetTournaments()
         {
@@ -52,6 +53,7 @@ namespace KTMS.API.Controllers
             var result = await _mediator.Send(query);
             return Ok(result);
         }
+        [AllowAnonymous]
         [HttpGet("GetTournamentsById/{Id}")]
         public async Task<IActionResult> GetTournamentsById(int Id)
         {

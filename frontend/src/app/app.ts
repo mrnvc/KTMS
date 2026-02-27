@@ -1,7 +1,7 @@
 import {Component, computed, signal} from '@angular/core';
-import {AuthService} from './services/auth.service';
 import {NavigationEnd, Router} from '@angular/router';
 import { filter } from 'rxjs';
+import {AuthApiService} from './api-services/auth/auth-api.service';
 
 @Component({
   selector: 'app-root',
@@ -25,7 +25,7 @@ export class App {
     return this.auth.isLoggedIn() && !this.auth.isGuest?.() && !hideOn;
   });
 
-  constructor(public auth: AuthService, private router: Router) {
+  constructor(public auth: AuthApiService, private router: Router) {
     // set initial
     this.currentUrl.set(this.router.url);
 

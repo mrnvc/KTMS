@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { RoleDto } from '../models/role.model';
-import { CityDto } from '../models/city.model';
-import { GenderDto } from '../models/gender.model';
+import {CityDto} from '../api-services/cities/city-api.model';
+import {GenderDto} from '../api-services/genders/gender-api.model';
+import {RoleDto} from '../api-services/roles/role-api.model';
 
 @Injectable({ providedIn: 'root' })
 export class LookupService {
