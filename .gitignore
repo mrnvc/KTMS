@@ -21,6 +21,9 @@ publish/
 *.log
 appsettings.*.json
 secrets.json
+**/appsettings.Development.json
+**/appsettings.*.json
+!**/appsettings.json
 
 # ===========================
 
