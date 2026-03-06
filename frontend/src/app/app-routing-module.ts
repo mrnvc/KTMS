@@ -4,6 +4,8 @@ import {LandingPageComponent} from './modules/landing-page/landing-page.componen
 import {TournamentsPageComponent} from './modules/tournaments-page/tournaments-page.component';
 import {LoginComponent} from './modules/auth/login/login.component';
 import {RegisterComponent} from './modules/auth/register/register.component';
+import {AdminDashboardComponent} from './modules/admin/admin-dashboard/admin-dashboard.component';
+import {myAuthGuard, myAuthData} from './core/guards/my-auth-guard';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent},
@@ -11,6 +13,10 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent }, //Register page
   { path: "tournaments", component: TournamentsPageComponent },
   { path: "tournaments/:status", component: TournamentsPageComponent },
+  { path: 'admin', component: AdminDashboardComponent, canActivate: [myAuthGuard], data: myAuthData({requireAuth: true, requireAdmin: true}), children: [
+    { path: 'tournaments', component: TournamentsPageComponent },
+    { path: '', redirectTo: 'tournaments', pathMatch: 'full' }
+  ] },
   { path: '**', redirectTo: '' } // fallback
 ];
 

@@ -24,6 +24,6 @@ export class CurrentUserService {
     if (!user) return '/auth/login';
 
     if (user.isAdmin) return '/admin';
-    return '/client/orders';
+    return '/tournaments';
   }
 }

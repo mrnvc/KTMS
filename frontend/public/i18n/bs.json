@@ -1,7 +1,7 @@
 {
   "APP": {
-    "TITLE": "Dobrodošli u našu aplikaciju",
-    "DESCRIPTION": "Ovo je primjer lokalizacije."
+    "TITLE": "KTMS Sistem Turnira",
+    "DESCRIPTION": "Upravljajte turnirima, učesnicima i takmičenjima."
   },
   "AUTH": {
     "LOGIN": {
@@ -14,6 +14,17 @@
       "BUTTON": "Prijavi se",
       "LOADING": "Prijavljivanje..."
     },
+    "REGISTER": {
+      "TITLE": "Registracija",
+      "EMAIL_LABEL": "Email",
+      "EMAIL_PLACEHOLDER": "Unesite email",
+      "PASSWORD_LABEL": "Lozinka",
+      "PASSWORD_PLACEHOLDER": "Unesite lozinku",
+      "CONFIRM_PASSWORD_LABEL": "Potvrdi Lozinku",
+      "CONFIRM_PASSWORD_PLACEHOLDER": "Potvrdite lozinku",
+      "BUTTON": "Registruj se",
+      "LOADING": "Registracija..."
+    },
     "LOGOUT": {
       "TITLE": "Odjava",
       "MESSAGE": "Odjavljivanje sa sistema...",
@@ -24,149 +35,183 @@
     "TITLE": "Admin Panel",
     "ROLES": {
       "ADMIN": "Administrator",
-      "MANAGER": "Menadžer",
-      "EMPLOYEE": "Zaposlenik"
+      "COACH": "Trener",
+      "CONTESTANT": "Takmičar"
     },
     "MENU": {
-      "CATALOG": "KATALOG",
-      "CATEGORIES": "Kategorije Proizvoda",
-      "PRODUCTS": "Proizvodi",
-      "ORDERS_SECTION": "NARUDŽBE",
-      "ORDERS": "Pregled Narudžbi",
+      "TOURNAMENTS": "Turniri",
+      "CITIES": "Gradovi",
+      "GENDERS": "Polovi",
+      "ROLES": "Uloge",
       "SYSTEM": "SISTEM",
       "SETTINGS": "Postavke",
       "LOGOUT": "Odjava"
     }
   },
-
-  "PRODUCTS": {
-    "TITLE": "Proizvodi",
-    "SUBTITLE": "Upravljanje proizvodima",
-    "SEARCH_PLACEHOLDER": "Pretraži proizvode",
-    "SEARCH_INPUT_PLACEHOLDER": "Unesite naziv proizvoda...",
-    "NEW_PRODUCT": "Novi Proizvod",
-    "ADD_NEW": "Dodaj Proizvod",
-    "LOADING": "Učitavanje proizvoda...",
-    "NO_DATA": "Nema proizvoda za prikaz",
+  "TOURNAMENTS": {
+    "TITLE": "Turniri",
+    "SUBTITLE": "Upravljanje turnirima",
+    "SEARCH_PLACEHOLDER": "Pretraži turnire",
+    "SEARCH_INPUT_PLACEHOLDER": "Unesite naziv turnira...",
+    "NEW_TOURNAMENT": "Novi Turnir",
+    "ADD_NEW": "Dodaj Turnir",
+    "LOADING": "Učitavanje turnira...",
+    "NO_DATA": "Nema turnira za prikaz",
     "NO_DATA_FILTER": "Nema rezultata za pretragu",
     "TABLE": {
       "NAME": "Naziv",
-      "CATEGORY": "Kategorija",
-      "PRICE": "Cijena (KM)",
-      "STOCK": "Zaliha",
-      "ACTIVE": "Aktivan",
+      "STATUS": "Status",
+      "CITY": "Grad",
+      "START_DATE": "Datum Početka",
+      "END_DATE": "Datum Kraja",
       "ACTIONS": "Akcije"
     },
     "ACTIONS": {
-      "EDIT_TOOLTIP": "Uredi proizvod",
-      "DELETE_TOOLTIP": "Obriši proizvod"
-    },
-    "ADD": {
-      "TITLE": "Dodaj Novi Proizvod",
-      "SAVING": "Čuvanje proizvoda..."
-    },
-    "EDIT": {
-      "TITLE": "Uredi Proizvod",
-      "LOADING": "Učitavanje proizvoda..."
+      "EDIT_TOOLTIP": "Uredi turnir",
+      "DELETE_TOOLTIP": "Obriši turnir"
     },
     "FORM": {
-      "NAME": "Naziv Proizvoda",
-      "NAME_PLACEHOLDER": "Unesite naziv proizvoda",
+      "NAME": "Naziv Turnira",
+      "NAME_PLACEHOLDER": "Unesite naziv turnira",
       "DESCRIPTION": "Opis",
-      "DESCRIPTION_PLACEHOLDER": "Unesite opis proizvoda",
-      "PRICE": "Cijena",
-      "PRICE_PLACEHOLDER": "0.00",
-      "CATEGORY": "Kategorija",
-      "STOCK": "Zaliha",
-      "STOCK_PLACEHOLDER": "0",
+      "DESCRIPTION_PLACEHOLDER": "Unesite opis",
+      "CITY": "Grad",
+      "START_DATE": "Datum Početka",
+      "END_DATE": "Datum Kraja",
+      "STATUS": "Status",
       "CANCEL": "Otkaži",
       "SAVE": "Sačuvaj",
       "UPDATE": "Ažuriraj"
     },
     "DIALOGS": {
-      "DELETE_TITLE": "Brisanje Proizvoda",
-      "DELETE_MESSAGE": "Da li ste sigurni da želite obrisati proizvod \"{{name}}\"?",
-      "SUCCESS_CREATE": "Proizvod uspješno kreiran.",
-      "SUCCESS_UPDATE": "Proizvod uspješno ažuriran.",
-      "SUCCESS_DELETE": "Proizvod uspješno obrisan.",
-      "ERROR_CREATE": "Greška pri kreiranju proizvoda.",
-      "ERROR_UPDATE": "Greška pri ažuriranju proizvoda.",
-      "ERROR_DELETE": "Greška pri brisanju proizvoda.",
-      "UNSAVED_CHANGES": "Imate nesačuvane izmjene u formi.",
-      "CONFIRM_CANCEL": "Da li želite otkazati izmjene i vratiti se nazad?"
+      "DELETE_TITLE": "Brisanje Turnira",
+      "DELETE_MESSAGE": "Da li ste sigurni da želite obrisati turnir \"{{name}}\"?",
+      "SUCCESS_CREATE": "Turnir uspješno kreiran.",
+      "SUCCESS_UPDATE": "Turnir uspješno ažuriran.",
+      "SUCCESS_DELETE": "Turnir uspješno obrisan.",
+      "ERROR_CREATE": "Greška pri kreiranju turnira.",
+      "ERROR_UPDATE": "Greška pri ažuriranju turnira.",
+      "ERROR_DELETE": "Greška pri brisanju turnira."
     }
   },
-  "ORDERS": {
-    "TITLE": "Narudžbe",
-    "FILTER_STATUS": "Filtriraj po Statusu",
-    "ALL_STATUSES": "Svi Statusi",
-    "SEARCH_PLACEHOLDER": "Pretraži narudžbe...",
-    "SEARCH_INPUT_PLACEHOLDER": "Broj narudžbe, ime kupca, adresa...",
-    "SEARCH_MIN_LENGTH": "Unesite najmanje 3 znaka za pretragu",
-    "CLEAR_FILTERS": "Očisti Filtere",
-    "LOADING": "Učitavanje narudžbi...",
-    "RETRY": "Pokušaj Ponovo",
-    "ERROR_TITLE": "Greška pri Učitavanju Narudžbi",
-    "NO_DATA": "Nema narudžbi",
-    "NO_DATA_FILTER": "Nema narudžbi koje odgovaraju filterima",
-    "STATUS": {
-      "DRAFT": "Nacrt",
-      "CONFIRMED": "Potvrđena",
-      "PAID": "Plaćena",
-      "COMPLETED": "Završena",
-      "CANCELLED": "Otkazana",
-      "UNKNOWN": "Nepoznato"
-    },
-    "STATUS_DESCRIPTION": {
-      "DRAFT": "Narudžba kreirana ali nije potvrđena",
-      "CONFIRMED": "Narudžba potvrđena i čeka plaćanje",
-      "PAID": "Plaćanje primljeno i narudžba se procesira",
-      "COMPLETED": "Narudžba isporučena",
-      "CANCELLED": "Narudžba otkazana"
-    },
+  "CITIES": {
+    "TITLE": "Gradovi",
+    "SUBTITLE": "Upravljanje gradovima",
+    "SEARCH_PLACEHOLDER": "Pretraži gradove",
+    "SEARCH_INPUT_PLACEHOLDER": "Unesite naziv grada...",
+    "NEW_CITY": "Novi Grad",
+    "ADD_NEW": "Dodaj Grad",
+    "LOADING": "Učitavanje gradova...",
+    "NO_DATA": "Nema gradova za prikaz",
+    "NO_DATA_FILTER": "Nema rezultata za pretragu",
     "TABLE": {
-      "ORDER_NUMBER": "Broj Narudžbe",
-      "CUSTOMER": "Kupac",
-      "TOTAL_AMOUNT": "Ukupno",
-      "STATUS": "Status",
-      "ORDER_DATE": "Datum Narudžbe",
-      "PAID_DATE": "Datum Plaćanja",
+      "NAME": "Naziv",
+      "COUNTRY": "Država",
       "ACTIONS": "Akcije"
     },
     "ACTIONS": {
-      "VIEW_DETAILS": "Pogledaj Detalje",
-      "CHANGE_STATUS": "Promijeni Status"
+      "EDIT_TOOLTIP": "Uredi grad",
+      "DELETE_TOOLTIP": "Obriši grad"
     },
-    "DETAILS": {
-      "TITLE": "Detalji Narudžbe",
-      "LOADING": "Učitavanje detalja narudžbe...",
-      "ORDERED_AT": "Naručeno",
-      "PAID_AT": "Plaćeno",
-      "CUSTOMER_INFO": "Informacije o Kupcu",
-      "CUSTOMER_NAME": "Ime",
-      "ADDRESS": "Adresa",
-      "ORDER_ITEMS": "Stavke Narudžbe",
-      "PRODUCT": "Proizvod",
-      "QUANTITY": "Količina",
-      "UNIT_PRICE": "Jedinična Cijena",
-      "DISCOUNT": "Popust",
-      "TOTAL": "Ukupno",
-      "ORDER_TOTAL": "Ukupna Narudžba",
-      "NOTE": "Napomena"
+    "FORM": {
+      "NAME": "Naziv Grada",
+      "NAME_PLACEHOLDER": "Unesite naziv grada",
+      "COUNTRY": "Država",
+      "COUNTRY_PLACEHOLDER": "Unesite državu",
+      "CANCEL": "Otkaži",
+      "SAVE": "Sačuvaj",
+      "UPDATE": "Ažuriraj"
     },
-    "CHANGE_STATUS": {
-      "TITLE": "Promijeni Status Narudžbe",
-      "CURRENT_STATUS": "Trenutni Status",
-      "NEW_STATUS": "Novi Status",
-      "NO_TRANSITIONS": "Nema dostupnih prijelaza statusa za ovu narudžbu",
-      "CANCEL_WARNING": "Upozorenje: Otkazivanje narudžbe ne može se poništiti!"
-    },
-    "MESSAGES": {
-      "STATUS_UPDATED": "Status narudžbe uspješno ažuriran",
-      "CANNOT_CHANGE_STATUS": "Status ove narudžbe ne može se promijeniti"
+    "DIALOGS": {
+      "DELETE_TITLE": "Brisanje Grada",
+      "DELETE_MESSAGE": "Da li ste sigurni da želite obrisati grad \"{{name}}\"?",
+      "SUCCESS_CREATE": "Grad uspješno kreiran.",
+      "SUCCESS_UPDATE": "Grad uspješno ažuriran.",
+      "SUCCESS_DELETE": "Grad uspješno obrisan.",
+      "ERROR_CREATE": "Greška pri kreiranju grada.",
+      "ERROR_UPDATE": "Greška pri ažuriranju grada.",
+      "ERROR_DELETE": "Greška pri brisanju grada."
     }
   },
-  "COMMON": {
+  "GENDERS": {
+    "TITLE": "Polovi",
+    "SUBTITLE": "Upravljanje polovima",
+    "SEARCH_PLACEHOLDER": "Pretraži polove",
+    "SEARCH_INPUT_PLACEHOLDER": "Unesite naziv pola...",
+    "NEW_GENDER": "Novi Pol",
+    "ADD_NEW": "Dodaj Pol",
+    "LOADING": "Učitavanje polova...",
+    "NO_DATA": "Nema polova za prikaz",
+    "NO_DATA_FILTER": "Nema rezultata za pretragu",
+    "TABLE": {
+      "NAME": "Naziv",
+      "ACTIONS": "Akcije"
+    },
+    "ACTIONS": {
+      "EDIT_TOOLTIP": "Uredi pol",
+      "DELETE_TOOLTIP": "Obriši pol"
+    },
+    "FORM": {
+      "NAME": "Naziv Pola",
+      "NAME_PLACEHOLDER": "Unesite naziv pola",
+      "CANCEL": "Otkaži",
+      "SAVE": "Sačuvaj",
+      "UPDATE": "Ažuriraj"
+    },
+    "DIALOGS": {
+      "DELETE_TITLE": "Brisanje Pola",
+      "DELETE_MESSAGE": "Da li ste sigurni da želite obrisati pol \"{{name}}\"?",
+      "SUCCESS_CREATE": "Pol uspješno kreiran.",
+      "SUCCESS_UPDATE": "Pol uspješno ažuriran.",
+      "SUCCESS_DELETE": "Pol uspješno obrisan.",
+      "ERROR_CREATE": "Greška pri kreiranju pola.",
+      "ERROR_UPDATE": "Greška pri ažuriranju pola.",
+      "ERROR_DELETE": "Greška pri brisanju pola."
+    }
+  },
+  "ROLES": {
+    "TITLE": "Uloge",
+    "SUBTITLE": "Upravljanje ulogama",
+    "SEARCH_PLACEHOLDER": "Pretraži uloge",
+    "SEARCH_INPUT_PLACEHOLDER": "Unesite naziv uloge...",
+    "NEW_ROLE": "Nova Uloga",
+    "ADD_NEW": "Dodaj Ulogu",
+    "LOADING": "Učitavanje uloga...",
+    "NO_DATA": "Nema uloga za prikaz",
+    "NO_DATA_FILTER": "Nema rezultata za pretragu",
+    "TABLE": {
+      "NAME": "Naziv",
+      "DESCRIPTION": "Opis",
+      "ACTIONS": "Akcije"
+    },
+    "ACTIONS": {
+      "EDIT_TOOLTIP": "Uredi ulogu",
+      "DELETE_TOOLTIP": "Obriši ulogu"
+    },
+    "FORM": {
+      "NAME": "Naziv Uloge",
+      "NAME_PLACEHOLDER": "Unesite naziv uloge",
+      "DESCRIPTION": "Opis",
+      "DESCRIPTION_PLACEHOLDER": "Unesite opis",
+      "CANCEL": "Otkaži",
+      "SAVE": "Sačuvaj",
+      "UPDATE": "Ažuriraj"
+    },
+    "DIALOGS": {
+      "DELETE_TITLE": "Brisanje Uloge",
+      "DELETE_MESSAGE": "Da li ste sigurni da želite obrisati ulogu \"{{name}}\"?",
+      "SUCCESS_CREATE": "Uloga uspješno kreirana.",
+      "SUCCESS_UPDATE": "Uloga uspješno ažurirana.",
+      "SUCCESS_DELETE": "Uloga uspješno obrisana.",
+      "ERROR_CREATE": "Greška pri kreiranju uloge.",
+      "ERROR_UPDATE": "Greška pri ažuriranju uloge.",
+      "ERROR_DELETE": "Greška pri brisanju uloge."
+    }
+  },
+  "COACH": "Trener",
+  "CONTESTANT": "Takmičar",
+  "ADMIN": "Admin",
+ "COMMON": {
     "YES": "Da",
     "NO": "Ne",
     "CANCEL": "Otkaži",

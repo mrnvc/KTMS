@@ -24,6 +24,7 @@ import {materialModules} from './modules/shared/material-modules';
 import {SharedModule} from './modules/shared/shared-module';
 import { HttpClient } from '@angular/common/http';
 import {CustomTranslateLoader} from './core/services/custom-translate-loader';
+import { AdminDashboardComponent } from './modules/admin/admin-dashboard/admin-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import {CustomTranslateLoader} from './core/services/custom-translate-loader';
     LoginComponent,
     BackButtonComponent,
     RegisterComponent,
-    TournamentsPageComponent
+    TournamentsPageComponent,
+    AdminDashboardComponent
   ],
   imports: [
     BrowserModule,

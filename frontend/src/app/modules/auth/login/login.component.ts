@@ -43,8 +43,11 @@ export class LoginComponent extends BaseComponent {
         if (returnUrl) {
           this.router.navigateByUrl(returnUrl);
         } else {
-          const target = this.currentUser.getDefaultRoute();
-          this.router.navigate([target]);
+          if (this.auth.isAdmin()) {
+            this.router.navigate(['/admin']);
+          } else {
+            this.router.navigate(['/tournaments']);
+          }
         }
       },
       error: (err) => {

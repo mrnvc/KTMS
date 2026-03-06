@@ -1,0 +1,216 @@
+{
+  "APP": {
+    "TITLE": "KTMS Tournament System",
+    "DESCRIPTION": "Manage tournaments, participants, and competitions."
+  },
+  "AUTH": {
+    "LOGIN": {
+      "TITLE": "Login",
+      "EMAIL_LABEL": "Email",
+      "EMAIL_PLACEHOLDER": "Enter email",
+      "PASSWORD_LABEL": "Password",
+      "PASSWORD_PLACEHOLDER": "Enter password",
+      "REMEMBER_ME": "Remember me",
+      "BUTTON": "Login",
+      "LOADING": "Logging in..."
+    },
+    "REGISTER": {
+      "TITLE": "Register",
+      "EMAIL_LABEL": "Email",
+      "EMAIL_PLACEHOLDER": "Enter email",
+      "PASSWORD_LABEL": "Password",
+      "PASSWORD_PLACEHOLDER": "Enter password",
+      "CONFIRM_PASSWORD_LABEL": "Confirm Password",
+      "CONFIRM_PASSWORD_PLACEHOLDER": "Confirm password",
+      "BUTTON": "Register",
+      "LOADING": "Registering..."
+    },
+    "LOGOUT": {
+      "TITLE": "Logout",
+      "MESSAGE": "Logging you out of the system...",
+      "REDIRECT_IN": "Redirecting in {{seconds}}s"
+    }
+  },
+  "ADMIN_PANEL": {
+    "TITLE": "Admin Panel",
+    "ROLES": {
+      "ADMIN": "Administrator",
+      "COACH": "Coach",
+      "CONTESTANT": "Contestant"
+    },
+    "MENU": {
+      "TOURNAMENTS": "Tournaments",
+      "CITIES": "Cities",
+      "GENDERS": "Genders",
+      "ROLES": "Roles",
+      "CATALOG": "Catalog",
+      "ORDERS_SECTION": "Orders",
+      "SYSTEM": "SYSTEM",
+      "SETTINGS": "Settings",
+      "LOGOUT": "Logout"
+    }
+  },
+  "TOURNAMENTS": {
+    "TITLE": "Tournaments",
+    "SUBTITLE": "Manage tournaments",
+    "SEARCH_PLACEHOLDER": "Search tournaments",
+    "SEARCH_INPUT_PLACEHOLDER": "Enter tournament name...",
+    "NEW_TOURNAMENT": "New Tournament",
+    "ADD_NEW": "Add Tournament",
+    "LOADING": "Loading tournaments...",
+    "NO_DATA": "No tournaments to display",
+    "NO_DATA_FILTER": "No results found for search",
+    "TABLE": {
+      "NAME": "Name",
+      "STATUS": "Status",
+      "CITY": "City",
+      "START_DATE": "Start Date",
+      "END_DATE": "End Date",
+      "ACTIONS": "Actions"
+    },
+    "ACTIONS": {
+      "EDIT_TOOLTIP": "Edit tournament",
+      "DELETE_TOOLTIP": "Delete tournament"
+    },
+    "FORM": {
+      "NAME": "Tournament Name",
+      "NAME_PLACEHOLDER": "Enter tournament name",
+      "DESCRIPTION": "Description",
+      "DESCRIPTION_PLACEHOLDER": "Enter description",
+      "CITY": "City",
+      "START_DATE": "Start Date",
+      "END_DATE": "End Date",
+      "STATUS": "Status",
+      "CANCEL": "Cancel",
+      "SAVE": "Save",
+      "UPDATE": "Update"
+    },
+    "DIALOGS": {
+      "DELETE_TITLE": "Delete Tournament",
+      "DELETE_MESSAGE": "Are you sure you want to delete tournament \"{{name}}\"?",
+      "SUCCESS_CREATE": "Tournament created successfully.",
+      "SUCCESS_UPDATE": "Tournament updated successfully.",
+      "SUCCESS_DELETE": "Tournament deleted successfully.",
+      "ERROR_CREATE": "Error creating tournament.",
+      "ERROR_UPDATE": "Error updating tournament.",
+      "ERROR_DELETE": "Error deleting tournament."
+    }
+  },
+  "CITIES": {
+    "TITLE": "Cities",
+    "SUBTITLE": "Manage cities",
+    "SEARCH_PLACEHOLDER": "Search cities",
+    "SEARCH_INPUT_PLACEHOLDER": "Enter city name...",
+    "NEW_CITY": "New City",
+    "ADD_NEW": "Add City",
+    "LOADING": "Loading cities...",
+    "NO_DATA": "No cities to display",
+    "NO_DATA_FILTER": "No results found for search",
+    "TABLE": {
+      "NAME": "Name",
+      "COUNTRY": "Country",
+      "ACTIONS": "Actions"
+    },
+    "ACTIONS": {
+      "EDIT_TOOLTIP": "Edit city",
+      "DELETE_TOOLTIP": "Delete city"
+    },
+    "FORM": {
+      "NAME": "City Name",
+      "NAME_PLACEHOLDER": "Enter city name",
+      "COUNTRY": "Country",
+      "COUNTRY_PLACEHOLDER": "Enter country",
+      "CANCEL": "Cancel",
+      "SAVE": "Save",
+      "UPDATE": "Update"
+    },
+    "DIALOGS": {
+      "DELETE_TITLE": "Delete City",
+      "DELETE_MESSAGE": "Are you sure you want to delete city \"{{name}}\"?",
+      "SUCCESS_CREATE": "City created successfully.",
+      "SUCCESS_UPDATE": "City updated successfully.",
+      "SUCCESS_DELETE": "City deleted successfully.",
+      "ERROR_CREATE": "Error creating city.",
+      "ERROR_UPDATE": "Error updating city.",
+      "ERROR_DELETE": "Error deleting city."
+    }
+  },
+  "GENDERS": {
+    "TITLE": "Genders",
+    "SUBTITLE": "Manage genders",
+    "SEARCH_PLACEHOLDER": "Search genders",
+    "SEARCH_INPUT_PLACEHOLDER": "Enter gender name...",
+    "NEW_GENDER": "New Gender",
+    "ADD_NEW": "Add Gender",
+    "LOADING": "Loading genders...",
+    "NO_DATA": "No genders to display",
+    "NO_DATA_FILTER": "No results found for search",
+    "TABLE": {
+      "NAME": "Name",
+      "ACTIONS": "Actions"
+    },
+    "ACTIONS": {
+      "EDIT_TOOLTIP": "Edit gender",
+      "DELETE_TOOLTIP": "Delete gender"
+    },
+    "FORM": {
+      "NAME": "Gender Name",
+      "NAME_PLACEHOLDER": "Enter gender name",
+      "CANCEL": "Cancel",
+      "SAVE": "Save",
+      "UPDATE": "Update"
+    },
+    "DIALOGS": {
+      "DELETE_TITLE": "Delete Gender",
+      "DELETE_MESSAGE": "Are you sure you want to delete gender \"{{name}}\"?",
+      "SUCCESS_CREATE": "Gender created successfully.",
+      "SUCCESS_UPDATE": "Gender updated successfully.",
+      "SUCCESS_DELETE": "Gender deleted successfully.",
+      "ERROR_CREATE": "Error creating gender.",
+      "ERROR_UPDATE": "Error updating gender.",
+      "ERROR_DELETE": "Error deleting gender."
+    }
+  },
+  "ROLES": {
+    "TITLE": "Roles",
+    "SUBTITLE": "Manage roles",
+    "SEARCH_PLACEHOLDER": "Search roles",
+    "SEARCH_INPUT_PLACEHOLDER": "Enter role name...",
+    "NEW_ROLE": "New Role",
+    "ADD_NEW": "Add Role",
+    "LOADING": "Loading roles...",
+    "NO_DATA": "No roles to display",
+    "NO_DATA_FILTER": "No results found for search",
+    "TABLE": {
+      "NAME": "Name",
+      "DESCRIPTION": "Description",
+      "ACTIONS": "Actions"
+    },
+    "ACTIONS": {
+      "EDIT_TOOLTIP": "Edit role",
+      "DELETE_TOOLTIP": "Delete role"
+    },
+    "FORM": {
+      "NAME": "Role Name",
+      "NAME_PLACEHOLDER": "Enter role name",
+      "DESCRIPTION": "Description",
+      "DESCRIPTION_PLACEHOLDER": "Enter description",
+      "CANCEL": "Cancel",
+      "SAVE": "Save",
+      "UPDATE": "Update"
+    },
+    "DIALOGS": {
+      "DELETE_TITLE": "Delete Role",
+      "DELETE_MESSAGE": "Are you sure you want to delete role \"{{name}}\"?",
+      "SUCCESS_CREATE": "Role created successfully.",
+      "SUCCESS_UPDATE": "Role updated successfully.",
+      "SUCCESS_DELETE": "Role deleted successfully.",
+      "ERROR_CREATE": "Error creating role.",
+      "ERROR_UPDATE": "Error updating role.",
+      "ERROR_DELETE": "Error deleting role."
+    }
+  },
+  "COACH": "Coach",
+  "CONTESTANT": "Contestant",
+  "ADMIN": "Admin"
+}

@@ -516,6 +516,26 @@ namespace KTMS.Infrastructure.Database.Seeders
                 IsEnabled = true
             };
 
+            var stringUser = new KTMSUserEntity
+            {
+                RoleId = organizerRole.Id,
+                CityId = sarajevo.Id,
+                GenderId = male.Id,
+                Name = "string",
+                Surname = "string",
+                PhoneNumber = "+38761111111",
+                Email = "string",
+                DateOfBirth = new DateOnly(1988, 5, 15),
+                Username = "string",
+                Password = "string",
+                RegistrationDate = DateTime.UtcNow.AddDays(-20),
+                Status = true,
+                IsAdmin = false,
+                IsCoach = false,
+                IsContestant = false,
+                IsEnabled = true
+            };
+
             var users = new[]
             {
                admin,
@@ -526,7 +546,8 @@ namespace KTMS.Infrastructure.Database.Seeders
                contestantUser1,
                contestantUser2,
                dummyForSwagger,
-               dummyForTests
+               dummyForTests,
+               stringUser
             };
 
             foreach (var u in users)
