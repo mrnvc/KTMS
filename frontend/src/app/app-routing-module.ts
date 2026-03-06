@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {LandingPageComponent} from './modules/landing-page/landing-page.component';
 import {TournamentsPageComponent} from './modules/tournaments-page/tournaments-page.component';
+import {ContestantsPageComponent} from './modules/contestants-page/contestants-page.component';
 import {LoginComponent} from './modules/auth/login/login.component';
 import {RegisterComponent} from './modules/auth/register/register.component';
 import {AdminDashboardComponent} from './modules/admin/admin-dashboard/admin-dashboard.component';
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: "tournaments/:status", component: TournamentsPageComponent },
   { path: 'admin', component: AdminDashboardComponent, canActivate: [myAuthGuard], data: myAuthData({requireAuth: true, requireAdmin: true}), children: [
     { path: 'tournaments', component: TournamentsPageComponent },
+    { path: 'contestants', component: ContestantsPageComponent },
     { path: '', redirectTo: 'tournaments', pathMatch: 'full' }
   ] },
   { path: '**', redirectTo: '' } // fallback

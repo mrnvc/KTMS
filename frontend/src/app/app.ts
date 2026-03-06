@@ -38,9 +38,10 @@ export class App implements OnInit {
 
   ngOnInit(): void {
     // Test translation
-    this.translate.get('PRODUCTS.TITLE').subscribe((res: string) => {
-      console.log('Translation for PRODUCTS.TITLE:', res);
-      if (res === 'PRODUCTS.TITLE') {
+    // verify at least one app-specific key is translated
+    this.translate.get('CONTESTANTS.TITLE').subscribe((res: string) => {
+      console.log('Translation for CONTESTANTS.TITLE:', res);
+      if (res === 'CONTESTANTS.TITLE') {
         console.error('⚠️ Translation not working! Key returned instead of value.');
         console.error('Possible causes:');
         console.error('1. Translation files not in /i18n/ folder');

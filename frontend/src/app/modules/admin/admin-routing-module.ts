@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {TournamentsPageComponent} from '../tournaments-page/tournaments-page.component';
+import {ContestantsPageComponent} from '../contestants-page/contestants-page.component';
 import {AdminDashboardComponent} from './admin-dashboard/admin-dashboard.component';
 // Assuming components exist or will be created
 // import { CitiesComponent } from '../cities/cities.component';
@@ -16,6 +17,11 @@ const routes: Routes = [
       {
         path: 'tournaments',
         component: TournamentsPageComponent,
+      },
+      // CONTESTANTS
+      {
+        path: 'contestants',
+        component: ContestantsPageComponent,
       },
       // CITIES
       {

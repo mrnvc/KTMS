@@ -212,5 +212,22 @@
   },
   "COACH": "Coach",
   "CONTESTANT": "Contestant",
-  "ADMIN": "Admin"
+  "ADMIN": "Admin",
+  "PRODUCTS": {
+    "TITLE": "Products",
+    "DIALOGS": {
+      "DELETE_MESSAGE": "Are you sure you want to delete product \"{{name}}\"?",
+      "UNSAVED_CHANGES": "You have unsaved changes!",
+      "CONFIRM_CANCEL": "Do you want to cancel?",
+      "SUCCESS_CREATE": "Product created successfully.",
+      "SUCCESS_UPDATE": "Product updated successfully.",
+      "SUCCESS_DELETE": "Product deleted successfully.",
+      "ERROR_CREATE": "Error creating product.",
+      "ERROR_UPDATE": "Error updating product.",
+      "ERROR_DELETE": "Error deleting product."
+    }
+  },
+  "CONTESTANTS": {
+    "TITLE": "Contestants"
+  }
 }

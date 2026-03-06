@@ -368,5 +368,22 @@
     "CONFLICT": "Ova akcija je u konfliktu sa postojećim podacima.",
     "VALIDATION": "Provjerite formu za greške.",
     "UNKNOWN": "Nepoznata greška."
+  },
+  "PRODUCTS": {
+    "TITLE": "Proizvodi",
+    "DIALOGS": {
+      "DELETE_MESSAGE": "Da li ste sigurni da želite obrisati proizvod \"{{name}}\"?",
+      "UNSAVED_CHANGES": "Imate nespremljene promjene!",
+      "CONFIRM_CANCEL": "Da li želite otkazati?",
+      "SUCCESS_CREATE": "Proizvod je uspješno kreiran.",
+      "SUCCESS_UPDATE": "Proizvod je uspješno ažuriran.",
+      "SUCCESS_DELETE": "Proizvod je uspješno obrisan.",
+      "ERROR_CREATE": "Greška pri kreiranju proizvoda.",
+      "ERROR_UPDATE": "Greška pri ažuriranju proizvoda.",
+      "ERROR_DELETE": "Greška pri brisanju proizvoda."
+    }
+  },
+  "CONTESTANTS": {
+    "TITLE": "Takmičari"
   }
 }

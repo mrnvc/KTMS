@@ -24,7 +24,8 @@ import {materialModules} from './modules/shared/material-modules';
 import {SharedModule} from './modules/shared/shared-module';
 import { HttpClient } from '@angular/common/http';
 import {CustomTranslateLoader} from './core/services/custom-translate-loader';
-import { AdminDashboardComponent } from './modules/admin/admin-dashboard/admin-dashboard.component';
+import { AdminModule } from './modules/admin/admin-module';
+import { ContestantsPageComponent } from './modules/contestants-page/contestants-page.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import { AdminDashboardComponent } from './modules/admin/admin-dashboard/admin-d
     BackButtonComponent,
     RegisterComponent,
     TournamentsPageComponent,
-    AdminDashboardComponent
+    ContestantsPageComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +59,8 @@ import { AdminDashboardComponent } from './modules/admin/admin-dashboard/admin-d
       }
     }),
     materialModules,
-    SharedModule
+    SharedModule,
+    AdminModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),

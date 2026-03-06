@@ -1,7 +1,6 @@
 import { Component, computed, inject, signal } from "@angular/core";
 import { toSignal } from "@angular/core/rxjs-interop";
 import { TournamentsApiService } from "../../api-services/tournaments/tournaments-api.service";
-import {ActivatedRoute, Router} from '@angular/router';
 import {Tournament} from '../../api-services/tournaments/tournament-api.model';
 
 @Component({
@@ -11,8 +10,6 @@ import {Tournament} from '../../api-services/tournaments/tournament-api.model';
   styleUrl: "./tournaments-page.component.scss",
 })
 export class TournamentsPageComponent {
-  private router = inject(Router);
-  private route = inject(ActivatedRoute);
   private readonly tournamentsService = inject(TournamentsApiService);
 
   // API -> signal (auto subscribe/unsubscribe)
@@ -79,12 +76,6 @@ export class TournamentsPageComponent {
 
   setStatus(status: "All" | "Active" | "Completed") {
     this.statusFilter.set(status);
-
-    if (status === "All") {
-      this.router.navigate(["/tournaments"]);
-    } else {
-      this.router.navigate(["/tournaments", status]);
-    }
   }
 
   clearFilters() {
