@@ -8,10 +8,14 @@ namespace KTMS.Application.Modules.Auth.Register.Commands
     public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, int>
     {
         private readonly IAppDbContext _dbContext;
+        private readonly IPasswordHasher<KTMSUserEntity> _passwordHasher;
 
-        public RegisterUserHandler(IAppDbContext dbContext)
+        public RegisterUserHandler(
+            IAppDbContext dbContext,
+            IPasswordHasher<KTMSUserEntity> passwordHasher)
         {
             _dbContext = dbContext;
+            _passwordHasher = passwordHasher;
         }
 
         public async Task<int> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
@@ -26,9 +30,6 @@ namespace KTMS.Application.Modules.Auth.Register.Commands
             if (existingUsername != null)
                 throw new InvalidOperationException("Username already taken.");
 
-            //hash the password
-            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.User.Password);
-
             var user = new KTMSUserEntity
             {
                 RoleId = request.User.RoleId,
@@ -40,8 +41,14 @@ namespace KTMS.Application.Modules.Auth.Register.Commands
                 DateOfBirth = request.User.DateOfBirth,
                 Username = request.User.Username,
                 Email = request.User.Email,
-                Password = hashedPassword
+                Password = string.Empty,
+                IsEnabled = true,
+                IsDeleted = false,
+                Status = true
             };
+
+            user.Password = _passwordHasher.HashPassword(user, request.User.Password);
+
 
             _dbContext.Users.Add(user);
             await _dbContext.SaveChangesAsync(cancellationToken);

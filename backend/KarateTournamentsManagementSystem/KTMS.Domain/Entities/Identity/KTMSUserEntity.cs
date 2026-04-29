@@ -21,7 +21,7 @@ namespace KTMS.Domain.Entities.Identity
         public bool IsCoach { get; set; }
         public bool IsContestant { get; set; }
         public int TokenVersion { get; set; } = 0;// For global revocation
-        public bool IsEnabled { get; set; }
+        public bool IsEnabled { get; set; } = true;
         public ICollection<RefreshTokenEntity> RefreshTokens { get; private set; } = new List<RefreshTokenEntity>();
 
         //Navigation Properties 
