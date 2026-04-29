@@ -5,4 +5,5 @@ export interface Contestant {
   club: string;
   category: string;
   belt: string;
+  user: string;
 }

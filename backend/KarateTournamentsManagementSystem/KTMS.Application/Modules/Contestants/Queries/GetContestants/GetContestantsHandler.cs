@@ -28,9 +28,10 @@ namespace KTMS.Application.Modules.Contestants.Queries.GetContestants
                 .ThenInclude(u => u.Role)
                 .Select(c => new ContestantsDto
                 {
-                    Belt=c.Belt.Name,
-                    Club=$"{c.Club.Name}, {c.Club.City.Name}, {c.Club.Country.Name}",
-                    User=$"{c.User.Name} {c.User.Surname}, {c.User.Role.Title}"
+                    Id = c.Id,
+                    Belt = c.Belt.Name,
+                    Club = $"{c.Club.Name}, {c.Club.City.Name}, {c.Club.Country.Name}",
+                    User = $"{c.User.Name} {c.User.Surname}, {c.User.Role.Title}"
 
                 }).ToListAsync(cancellationToken);
         }

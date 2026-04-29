@@ -1,13 +1,30 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   width: 100%;
   min-height: 100%;
   overflow-x: hidden;
+}
+
+body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* Sačuvaj box sizing, ali nemoj brisati padding i margin svima */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Dialog custom style */
+.cdk-overlay-pane.contestant-dialog-panel .mat-mdc-dialog-surface {
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 18px !important;
+  overflow: hidden !important;
 }

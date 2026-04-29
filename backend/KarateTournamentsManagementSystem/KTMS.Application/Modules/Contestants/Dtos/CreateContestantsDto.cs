@@ -1,15 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KTMS.Application.Modules.Contestants.Dtos
+﻿namespace KTMS.Application.Modules.Contestants.Dtos
 {
    public class CreateContestantsDto
     {
-        public required int UserId { get; set; }
-        public required int BeltId { get; set; }
-        public required int ClubId { get; set; }
+        public required string Name { get; set; }
+        public required string Surname { get; set; }
+        public required string PhoneNumber { get; set; }
+        public required string Email { get; set; }
+        public required DateOnly DateOfBirth { get; set; }
+        public required string Username { get; set; }
+        public required string Password { get; set; }
+
+        public int RoleId { get; set; }
+        public int CityId { get; set; }
+        public int GenderId { get; set; }
+
+        public int BeltId { get; set; }
+        public int ClubId { get; set; }
     }
 }

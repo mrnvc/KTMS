@@ -5,6 +5,7 @@ import { map } from "rxjs/operators";
 import { Contestant } from './contestant-api.model';
 import { ContestantApiResponse } from './contestant-api-response.model';
 import { environment } from '../../../enviroments/enviroment';
+import { CreateContestantRequest } from './create-contestant-request.model';
 
 @Injectable({ providedIn: "root" })
 export class ContestantsApiService {
@@ -19,34 +20,40 @@ export class ContestantsApiService {
       );
   }
 
-  private mapApiResponseToContestants(apiResponse: ContestantApiResponse[]): Contestant[] {
-    return apiResponse.map((item, index) => {
-      // Parse "FirstName LastName, Contestant" format
-      const userParts = item.user.replace(', Contestant', '').trim().split(' ');
-      const firstName = userParts[0] || '';
-      const lastName = userParts.slice(1).join(' ') || '';
+ private mapApiResponseToContestants(apiResponse: ContestantApiResponse[]): Contestant[] {
+  return apiResponse.map((item, index) => {
+    // API returns user like: "Leki Kokic, Contestant"
+    // This removes everything after comma.
+    const cleanUser = item.user?.split(',')[0].trim() ?? '';
 
-      return {
-        id: index + 1, // Use index as ID since API doesn't provide one
-        firstName,
-        lastName,
-        belt: item.belt,
-        club: item.club,
-        category: '' // Default empty category since API doesn't provide one
-      };
-    });
-  }
+    const userParts = cleanUser.split(' ');
+    const firstName = userParts[0] || '';
+    const lastName = userParts.slice(1).join(' ') || '';
+
+    return {
+      id: item.id ?? index + 1,
+      user: cleanUser,
+      firstName,
+      lastName,
+      belt: item.belt,
+      club: item.club,
+      category: ''
+    };
+  });
+}
 
   getContestant(id: number): Observable<Contestant> {
     return this.http.get<Contestant>(`${this.apiUrl}${this.endpoint}/GetContestantsById/${id}`);
   }
 
-  createContestant(contestant: Partial<Contestant>): Observable<Contestant> {
-    return this.http.post<Contestant>(
-      `${this.apiUrl}${this.endpoint}/CreateContestants`,
-      contestant
-    );
-  }
+ createContestant(contestant: CreateContestantRequest): Observable<number> {
+  return this.http.post<number>(
+    `${this.apiUrl}${this.endpoint}/CreateContestants`,
+    {
+      createContestantsDto: contestant
+    }
+  );
+}
 
   updateContestant(id: number, contestant: Partial<Contestant>): Observable<Contestant> {
     return this.http.put<Contestant>(

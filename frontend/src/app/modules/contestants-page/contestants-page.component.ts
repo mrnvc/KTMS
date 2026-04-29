@@ -6,6 +6,9 @@ import { DialogButton } from '../shared/models/dialog-config.model';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { AddContestantFormComponent } from './add-contestant-form/add-contestant-form.component';
+import { CreateContestantRequest } from '../../api-services/contestants/create-contestant-request.model';
+import { ToasterService } from '../../core/services/toaster.service';
 
 @Component({
   selector: 'app-contestants-page',
@@ -17,6 +20,7 @@ export class ContestantsPageComponent implements OnInit, OnDestroy {
   private readonly contestantsService = inject(ContestantsApiService);
   private readonly dialogHelper = inject(DialogHelperService);
   private readonly dialog = inject(MatDialog);
+  private readonly toaster = inject(ToasterService);
   private readonly destroy$ = new Subject<void>();
 
   // API -> signal
@@ -104,8 +108,20 @@ export class ContestantsPageComponent implements OnInit, OnDestroy {
   }
 
   onAddContestant(): void {
-    // TODO: Open add contestant dialog
-    console.log('Add contestant clicked');
+    const dialogRef = this.dialog.open(AddContestantFormComponent, {
+    width: '820px',
+    maxWidth: '95vw',
+    maxHeight: '90vh',
+    disableClose: true,
+    panelClass: 'contestant-dialog-panel',
+    autoFocus: false
+  });
+
+    dialogRef.afterClosed().subscribe((wasCreated?: boolean) => {
+    if (wasCreated) {
+      this.loadContestants();
+        }
+    });
   }
 
   onEditContestant(contestant: Contestant): void {

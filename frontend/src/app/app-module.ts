@@ -26,6 +26,7 @@ import { HttpClient } from '@angular/common/http';
 import {CustomTranslateLoader} from './core/services/custom-translate-loader';
 import { AdminModule } from './modules/admin/admin-module';
 import { ContestantsPageComponent } from './modules/contestants-page/contestants-page.component';
+import { AddContestantFormComponent } from './modules/contestants-page/add-contestant-form/add-contestant-form.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ContestantsPageComponent } from './modules/contestants-page/contestants
     BackButtonComponent,
     RegisterComponent,
     TournamentsPageComponent,
-    ContestantsPageComponent
+    ContestantsPageComponent,
+    AddContestantFormComponent
   ],
   imports: [
     BrowserModule,
