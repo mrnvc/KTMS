@@ -21,13 +21,19 @@
       <div class="form-row">
         <mat-form-field appearance="outline" class="half-width">
           <mat-label>First Name</mat-label>
-          <input
-            matInput
-            type="text"
-            formControlName="name"
-            placeholder="Enter first name"
-          />
+
+          <input matInput type="text" [formControl]="firstNameSearchControl" placeholder="Enter first name"
+            [matAutocomplete]="firstNameAuto" />
+
+          <mat-autocomplete #firstNameAuto="matAutocomplete"
+            (optionSelected)="onFirstNameSelected($event.option.value)">
+            <mat-option *ngFor="let firstName of filteredFirstNames" [value]="firstName">
+              {{ firstName }}
+            </mat-option>
+          </mat-autocomplete>
+
           <mat-icon matSuffix>person</mat-icon>
+
           <mat-error *ngIf="hasError('name')">
             {{ getErrorMessage('name') }}
           </mat-error>
@@ -35,13 +41,18 @@
 
         <mat-form-field appearance="outline" class="half-width">
           <mat-label>Last Name</mat-label>
-          <input
-            matInput
-            type="text"
-            formControlName="surname"
-            placeholder="Enter last name"
-          />
+
+          <input matInput type="text" [formControl]="lastNameSearchControl" placeholder="Enter last name"
+            [matAutocomplete]="lastNameAuto" (focus)="filteredLastNames = lastNames" />
+
+          <mat-autocomplete #lastNameAuto="matAutocomplete" (optionSelected)="onLastNameSelected($event.option.value)">
+            <mat-option *ngFor="let lastName of filteredLastNames" [value]="lastName">
+              {{ lastName }}
+            </mat-option>
+          </mat-autocomplete>
+
           <mat-icon matSuffix>badge</mat-icon>
+
           <mat-error *ngIf="hasError('surname')">
             {{ getErrorMessage('surname') }}
           </mat-error>
@@ -52,12 +63,7 @@
       <div class="form-row">
         <mat-form-field appearance="outline" class="half-width">
           <mat-label>Phone Number</mat-label>
-          <input
-            matInput
-            type="text"
-            formControlName="phoneNumber"
-            placeholder="Enter phone number"
-          />
+          <input matInput type="text" formControlName="phoneNumber" placeholder="Enter phone number" />
           <mat-icon matSuffix>phone</mat-icon>
           <mat-error *ngIf="hasError('phoneNumber')">
             {{ getErrorMessage('phoneNumber') }}
@@ -66,12 +72,7 @@
 
         <mat-form-field appearance="outline" class="half-width">
           <mat-label>Email</mat-label>
-          <input
-            matInput
-            type="email"
-            formControlName="email"
-            placeholder="Enter email"
-          />
+          <input matInput type="email" formControlName="email" placeholder="Enter email" />
           <mat-icon matSuffix>mail</mat-icon>
           <mat-error *ngIf="hasError('email')">
             {{ getErrorMessage('email') }}
@@ -83,12 +84,7 @@
       <div class="form-row">
         <mat-form-field appearance="outline" class="half-width">
           <mat-label>Date of Birth</mat-label>
-          <input
-            matInput
-            type="date"
-            formControlName="dateOfBirth"
-            [max]="today"
-          />
+          <input matInput type="date" formControlName="dateOfBirth" [max]="today" />
           <mat-error *ngIf="hasError('dateOfBirth')">
             {{ getErrorMessage('dateOfBirth') }}
           </mat-error>
@@ -96,12 +92,7 @@
 
         <mat-form-field appearance="outline" class="half-width">
           <mat-label>Username</mat-label>
-          <input
-            matInput
-            type="text"
-            formControlName="username"
-            placeholder="Enter username"
-          />
+          <input matInput type="text" formControlName="username" placeholder="Enter username" />
           <mat-icon matSuffix>account_circle</mat-icon>
           <mat-error *ngIf="hasError('username')">
             {{ getErrorMessage('username') }}
@@ -113,12 +104,7 @@
       <div class="form-row">
         <mat-form-field appearance="outline" class="half-width">
           <mat-label>Password</mat-label>
-          <input
-            matInput
-            type="password"
-            formControlName="password"
-            placeholder="Enter password"
-          />
+          <input matInput type="password" formControlName="password" placeholder="Enter password" />
           <mat-icon matSuffix>lock</mat-icon>
           <mat-error *ngIf="hasError('password')">
             {{ getErrorMessage('password') }}
@@ -174,13 +160,17 @@
       <!-- Club -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Club</mat-label>
+
         <mat-select formControlName="clubId">
           <mat-option [value]="null" disabled>Select club</mat-option>
+
           <mat-option *ngFor="let club of clubs" [value]="club.id">
             {{ club.name }}
           </mat-option>
         </mat-select>
+
         <mat-icon matSuffix>groups</mat-icon>
+
         <mat-error *ngIf="hasError('clubId')">
           {{ getErrorMessage('clubId') }}
         </mat-error>
@@ -188,20 +178,12 @@
 
       <!-- Actions -->
       <div class="form-actions">
-        <button
-          type="button"
-          mat-stroked-button
-          (click)="onCancel()"
-        >
+        <button type="button" mat-stroked-button (click)="onCancel()">
           <mat-icon>close</mat-icon>
           Cancel
         </button>
 
-        <button
-          type="submit"
-          mat-raised-button
-          color="primary"
-        >
+        <button type="submit" mat-raised-button color="primary">
           <mat-icon>save</mat-icon>
           Save Contestant
         </button>

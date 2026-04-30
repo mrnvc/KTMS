@@ -1,8 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators, FormControl } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
-
 import { CreateContestantRequest } from '../../../api-services/contestants/create-contestant-request.model';
 import { ContestantsApiService } from '../../../api-services/contestants/contestants-api.service';
 import { ToasterService } from '../../../core/services/toaster.service';
@@ -17,6 +16,8 @@ interface AddContestantDialogData {
   cities: Option[];
   belts: Option[];
   clubs: Option[];
+  firstNames: string[];
+  lastNames: string[];
 }
 
 @Component({
@@ -41,8 +42,18 @@ export class AddContestantFormComponent implements OnInit {
   belts: Option[] = this.dialogData.belts;
   clubs: Option[] = this.dialogData.clubs;
 
+  firstNames: string[] = this.dialogData.firstNames ?? [];
+  firstNameSearchControl = new FormControl<string>('');
+  filteredFirstNames: string[] = [];
+
+  lastNames: string[] = this.dialogData.lastNames ?? [];
+  lastNameSearchControl = new FormControl<string>('');
+  filteredLastNames: string[] = [];
+
   ngOnInit(): void {
     this.initForm();
+    this.initFirstNameAutocomplete();
+    this.initLastNameAutocomplete();
   }
 
   private initForm(): void {
@@ -110,6 +121,54 @@ export class AddContestantFormComponent implements OnInit {
       beltId: [null, Validators.required],
       clubId: [null, Validators.required]
     });
+  }
+
+  private initFirstNameAutocomplete(): void {
+    this.filteredFirstNames = this.firstNames;
+
+    this.firstNameSearchControl.valueChanges.subscribe(value => {
+      const searchValue = (value ?? '').toLowerCase();
+
+      this.filteredFirstNames = this.firstNames.filter(firstName =>
+        firstName.toLowerCase().includes(searchValue)
+      );
+
+      this.form.patchValue({
+        name: value ?? ''
+      });
+    });
+  }
+
+  private initLastNameAutocomplete(): void {
+    this.filteredLastNames = this.lastNames;
+
+    this.lastNameSearchControl.valueChanges.subscribe(value => {
+      const searchValue = (value ?? '').toLowerCase();
+
+      this.filteredLastNames = this.lastNames.filter(lastName =>
+        lastName.toLowerCase().includes(searchValue)
+      );
+
+      this.form.patchValue({
+        surname: value ?? ''
+      });
+    });
+  }
+
+  onFirstNameSelected(firstName: string): void {
+    this.form.patchValue({
+      name: firstName
+    });
+
+    this.firstNameSearchControl.setValue(firstName, { emitEvent: false });
+  }
+
+  onLastNameSelected(lastName: string): void {
+    this.form.patchValue({
+      surname: lastName
+    });
+
+    this.lastNameSearchControl.setValue(lastName, { emitEvent: false });
   }
 
   private notFutureDateValidator(control: AbstractControl): ValidationErrors | null {
@@ -264,39 +323,39 @@ export class AddContestantFormComponent implements OnInit {
   }
 
   private applyBackendErrorToField(message: string): void {
-  const lowerMessage = message.toLowerCase();
+    const lowerMessage = message.toLowerCase();
 
-  if (lowerMessage.includes('email')) {
-    this.setBackendError('email', message);
-    return;
+    if (lowerMessage.includes('email')) {
+      this.setBackendError('email', message);
+      return;
+    }
+
+    if (lowerMessage.includes('username')) {
+      this.setBackendError('username', message);
+      return;
+    }
+
+    if (lowerMessage.includes('phone')) {
+      this.setBackendError('phoneNumber', message);
+      return;
+    }
   }
 
-  if (lowerMessage.includes('username')) {
-    this.setBackendError('username', message);
-    return;
+  private setBackendError(controlName: string, message: string): void {
+    const control = this.form.get(controlName);
+
+    if (!control) {
+      return;
+    }
+
+    control.setErrors({
+      ...(control.errors || {}),
+      backend: message
+    });
+
+    control.markAsTouched();
+    control.markAsDirty();
   }
-
-  if (lowerMessage.includes('phone')) {
-    this.setBackendError('phoneNumber', message);
-    return;
-  }
-}
-
-private setBackendError(controlName: string, message: string): void {
-  const control = this.form.get(controlName);
-
-  if (!control) {
-    return;
-  }
-
-  control.setErrors({
-    ...(control.errors || {}),
-    backend: message
-  });
-
-  control.markAsTouched();
-  control.markAsDirty();
-}
 
   private getFrontendValidationMessage(controlName: string): string {
     const control = this.form.get(controlName);

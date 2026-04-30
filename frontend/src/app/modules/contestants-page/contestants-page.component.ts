@@ -22,6 +22,8 @@ interface AddContestantDialogData {
   cities: Option[];
   belts: Option[];
   clubs: Option[];
+  firstNames: string[];
+  lastNames: string[];
 }
 
 @Component({
@@ -140,7 +142,21 @@ export class ContestantsPageComponent implements OnInit, OnDestroy {
             clubs: data.clubs.map((club, index) => ({
               id: club.id ?? index + 1,
               name: `${club.name}, ${club.city}, ${club.country}`
-            }))
+            })),
+            firstNames: Array.from(
+              new Set(
+                this.contestantsFromApi()
+                  .map(c => c.firstName)
+                  .filter(name => !!name)
+              )
+            ),
+            lastNames: Array.from(
+              new Set(
+                this.contestantsFromApi()
+                  .map(c => c.lastName)
+                  .filter(name => !!name)
+              )
+            )
           };
 
           const dialogRef = this.dialog.open(AddContestantFormComponent, {

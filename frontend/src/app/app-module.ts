@@ -28,6 +28,7 @@ import { AdminModule } from './modules/admin/admin-module';
 import { ContestantsPageComponent } from './modules/contestants-page/contestants-page.component';
 import { AddContestantFormComponent } from './modules/contestants-page/add-contestant-form/add-contestant-form.component';
 import { EditContestantFormComponent } from './modules/contestants-page/edit-contestant-form/edit-contestant-form.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { EditContestantFormComponent } from './modules/contestants-page/edit-con
     MatDialogActions,
     MatButton,
     MatProgressSpinner,
+    MatAutocompleteModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

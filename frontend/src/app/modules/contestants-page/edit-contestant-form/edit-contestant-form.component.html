@@ -8,7 +8,7 @@
   </div>
 
   <div class="form-card">
-    <form [formGroup]="form" (ngSubmit)="save()">
+    <form [formGroup]="form" (ngSubmit)="save()" autocomplete="on">
       <div *ngIf="isLoading" class="loading-overlay">
         <mat-spinner diameter="45"></mat-spinner>
         <p>Updating contestant...</p>
@@ -17,7 +17,7 @@
       <div class="form-row">
         <mat-form-field appearance="outline" class="half-width">
           <mat-label>First Name</mat-label>
-          <input matInput type="text" formControlName="name" placeholder="Enter first name" />
+          <input matInput type="text" formControlName="name" placeholder="Enter first name" autocomplete="given-name" />
           <mat-icon matSuffix>person</mat-icon>
           <mat-error *ngIf="hasError('name')">
             {{ getErrorMessage('name') }}
@@ -26,7 +26,7 @@
 
         <mat-form-field appearance="outline" class="half-width">
           <mat-label>Last Name</mat-label>
-          <input matInput type="text" formControlName="surname" placeholder="Enter last name" />
+          <input matInput type="text" formControlName="surname" placeholder="Enter last name" autocomplete="family-name" />
           <mat-icon matSuffix>badge</mat-icon>
           <mat-error *ngIf="hasError('surname')">
             {{ getErrorMessage('surname') }}
@@ -37,7 +37,7 @@
       <div class="form-row">
         <mat-form-field appearance="outline" class="half-width">
           <mat-label>Phone Number</mat-label>
-          <input matInput type="text" formControlName="phoneNumber" placeholder="Enter phone number" />
+          <input matInput type="text" formControlName="phoneNumber" placeholder="Enter phone number" autocomplete="tel" />
           <mat-icon matSuffix>phone</mat-icon>
           <mat-error *ngIf="hasError('phoneNumber')">
             {{ getErrorMessage('phoneNumber') }}
@@ -46,7 +46,7 @@
 
         <mat-form-field appearance="outline" class="half-width">
           <mat-label>Email</mat-label>
-          <input matInput type="email" formControlName="email" placeholder="Enter email" />
+          <input matInput type="email" formControlName="email" placeholder="Enter email" autocomplete="email" />
           <mat-icon matSuffix>mail</mat-icon>
           <mat-error *ngIf="hasError('email')">
             {{ getErrorMessage('email') }}
@@ -57,7 +57,7 @@
       <div class="form-row">
         <mat-form-field appearance="outline" class="half-width">
           <mat-label>Date of Birth</mat-label>
-          <input matInput type="date" formControlName="dateOfBirth" [max]="today" />
+          <input matInput type="date" formControlName="dateOfBirth" [max]="today" autocomplete="bday" />
           <mat-error *ngIf="hasError('dateOfBirth')">
             {{ getErrorMessage('dateOfBirth') }}
           </mat-error>
@@ -65,7 +65,7 @@
 
         <mat-form-field appearance="outline" class="half-width">
           <mat-label>Username</mat-label>
-          <input matInput type="text" formControlName="username" placeholder="Enter username" />
+          <input matInput type="text" formControlName="username" placeholder="Enter username" autocomplete="username" />
           <mat-icon matSuffix>account_circle</mat-icon>
           <mat-error *ngIf="hasError('username')">
             {{ getErrorMessage('username') }}
