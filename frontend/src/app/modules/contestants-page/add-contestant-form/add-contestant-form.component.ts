@@ -1,9 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import { HttpClient } from '@angular/common/http';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { finalize } from 'rxjs/operators';
 
-import { environment } from '../../../../enviroments/enviroment';
 import { CreateContestantRequest } from '../../../api-services/contestants/create-contestant-request.model';
 import { ContestantsApiService } from '../../../api-services/contestants/contestants-api.service';
 import { ToasterService } from '../../../core/services/toaster.service';
@@ -11,6 +10,13 @@ import { ToasterService } from '../../../core/services/toaster.service';
 interface Option {
   id: number;
   name: string;
+}
+
+interface AddContestantDialogData {
+  genders: Option[];
+  cities: Option[];
+  belts: Option[];
+  clubs: Option[];
 }
 
 @Component({
@@ -21,28 +27,22 @@ interface Option {
 })
 export class AddContestantFormComponent implements OnInit {
   private readonly dialogRef = inject(MatDialogRef<AddContestantFormComponent>);
-  private readonly http = inject(HttpClient);
   private readonly fb = inject(FormBuilder);
   private readonly contestantsApi = inject(ContestantsApiService);
   private readonly toaster = inject(ToasterService);
-
-  private readonly apiUrl = `${environment.apiUrl}/api`;
+  private readonly dialogData = inject<AddContestantDialogData>(MAT_DIALOG_DATA);
 
   form!: FormGroup;
   isLoading = false;
   today = new Date().toISOString().split('T')[0];
 
-  genders: Option[] = [];
-  cities: Option[] = [];
-  belts: Option[] = [];
-  clubs: Option[] = [];
+  genders: Option[] = this.dialogData.genders;
+  cities: Option[] = this.dialogData.cities;
+  belts: Option[] = this.dialogData.belts;
+  clubs: Option[] = this.dialogData.clubs;
 
   ngOnInit(): void {
     this.initForm();
-    this.loadCities();
-    this.loadGenders();
-    this.loadBelts();
-    this.loadClubs();
   }
 
   private initForm(): void {
@@ -126,63 +126,6 @@ export class AddContestantFormComponent implements OnInit {
     return selectedDate > today ? { futureDate: true } : null;
   }
 
-  private loadCities(): void {
-    this.http.get<any[]>(`${this.apiUrl}/City/GetCities`).subscribe({
-      next: data => {
-        this.cities = data.map(city => ({
-          id: city.id,
-          name: `${city.cityName}, ${city.country}`
-        }));
-      },
-      error: err => {
-        console.error('Error loading cities:', err);
-        this.toaster.error('Failed to load cities.');
-      }
-    });
-  }
-
-  private loadGenders(): void {
-    this.http.get<Option[]>(`${this.apiUrl}/Gender/GetGenders`).subscribe({
-      next: data => {
-        this.genders = data;
-      },
-      error: err => {
-        console.error('Error loading genders:', err);
-        this.toaster.error('Failed to load genders.');
-      }
-    });
-  }
-
-  private loadBelts(): void {
-    this.http.get<any[]>(`${this.apiUrl}/Belt/GetBelts`).subscribe({
-      next: data => {
-        this.belts = data.map((belt, index) => ({
-          id: belt.id ?? belt.rankOrder ?? index + 1,
-          name: belt.name
-        }));
-      },
-      error: err => {
-        console.error('Error loading belts:', err);
-        this.toaster.error('Failed to load belts.');
-      }
-    });
-  }
-
-  private loadClubs(): void {
-    this.http.get<any[]>(`${this.apiUrl}/Club/GetClubs`).subscribe({
-      next: data => {
-        this.clubs = data.map((club, index) => ({
-          id: club.id ?? index + 1,
-          name: `${club.name}, ${club.city}, ${club.country}`
-        }));
-      },
-      error: err => {
-        console.error('Error loading clubs:', err);
-        this.toaster.error('Failed to load clubs.');
-      }
-    });
-  }
-
   save(): void {
     if (this.isLoading) {
       return;
@@ -202,8 +145,6 @@ export class AddContestantFormComponent implements OnInit {
       return;
     }
 
-    this.isLoading = true;
-
     const value = this.form.getRawValue();
 
     const command: CreateContestantRequest = {
@@ -220,27 +161,40 @@ export class AddContestantFormComponent implements OnInit {
       clubId: value.clubId
     };
 
-    this.contestantsApi.createContestant(command).subscribe({
-      next: () => {
-        this.isLoading = false;
-        this.toaster.success('Contestant added successfully.');
-        this.dialogRef.close(true);
-      },
-      error: err => {
-        this.isLoading = false;
+    this.isLoading = true;
 
-        const message =
-          err?.error?.message ||
-          err?.error?.title ||
-          err?.error ||
-          'Error while adding contestant.';
+    this.contestantsApi.createContestant(command)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+        })
+      )
+      .subscribe({
+        next: () => {
+          this.toaster.success('Contestant added successfully.');
+          this.dialogRef.close(true);
+        },
+        error: err => {
+          console.error('Create contestant error:', err);
 
-        this.toaster.error(message);
-      }
-    });
+          const message =
+            err?.error?.message ||
+            err?.error?.title ||
+            err?.error?.detail ||
+            err?.error ||
+            'Error while adding contestant.';
+
+          this.toaster.error(message);
+          this.applyBackendErrorToField(message);
+        }
+      });
   }
 
   onCancel(): void {
+    if (this.isLoading) {
+      return;
+    }
+
     this.dialogRef.close();
   }
 
@@ -254,6 +208,10 @@ export class AddContestantFormComponent implements OnInit {
 
     if (!control || !control.errors) {
       return '';
+    }
+
+    if (control.errors['backend']) {
+      return control.errors['backend'];
     }
 
     if (control.errors['required']) {
@@ -304,6 +262,41 @@ export class AddContestantFormComponent implements OnInit {
 
     return null;
   }
+
+  private applyBackendErrorToField(message: string): void {
+  const lowerMessage = message.toLowerCase();
+
+  if (lowerMessage.includes('email')) {
+    this.setBackendError('email', message);
+    return;
+  }
+
+  if (lowerMessage.includes('username')) {
+    this.setBackendError('username', message);
+    return;
+  }
+
+  if (lowerMessage.includes('phone')) {
+    this.setBackendError('phoneNumber', message);
+    return;
+  }
+}
+
+private setBackendError(controlName: string, message: string): void {
+  const control = this.form.get(controlName);
+
+  if (!control) {
+    return;
+  }
+
+  control.setErrors({
+    ...(control.errors || {}),
+    backend: message
+  });
+
+  control.markAsTouched();
+  control.markAsDirty();
+}
 
   private getFrontendValidationMessage(controlName: string): string {
     const control = this.form.get(controlName);

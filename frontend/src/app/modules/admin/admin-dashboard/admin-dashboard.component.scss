@@ -18,7 +18,7 @@ $sidebar-width: 280px;
 
 // Sidenav Container
 .sidenav-container {
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   background: $background-page;
 
@@ -30,6 +30,10 @@ $sidebar-width: 280px;
     box-shadow: 4px 0 16px rgba(73, 118, 181, 0.08);
     display: flex;
     flex-direction: column;
+
+    mat-sidenav-content {
+        overflow: visible !important;
+      }
 
     // Sidebar Header
     .sidebar-header {
@@ -325,10 +329,10 @@ $sidebar-width: 280px;
   }
 
   // Main Content
-  .main-content {
-    background: linear-gradient(135deg, #f0f5fb 0%, #e3ecf7 100%);
-    min-height: 100vh;
-    overflow-y: auto;
+    .main-content {
+      background: linear-gradient(135deg, #f0f5fb 0%, #e3ecf7 100%);
+      min-height: 100vh;
+      overflow: visible;
 
     // Custom scrollbar
     &::-webkit-scrollbar {

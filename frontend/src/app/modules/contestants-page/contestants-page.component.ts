@@ -1,14 +1,28 @@
 import { Component, inject, signal, computed, OnInit, OnDestroy } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+import { forkJoin, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+import { environment } from '../../../enviroments/enviroment';
 import { ContestantsApiService } from '../../api-services/contestants/contestants-api.service';
 import { Contestant } from '../../api-services/contestants/contestant-api.model';
 import { DialogHelperService } from '../shared/services/dialog-helper.service';
 import { DialogButton } from '../shared/models/dialog-config.model';
-import { MatDialog } from '@angular/material/dialog';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { AddContestantFormComponent } from './add-contestant-form/add-contestant-form.component';
-import { CreateContestantRequest } from '../../api-services/contestants/create-contestant-request.model';
 import { ToasterService } from '../../core/services/toaster.service';
+
+interface Option {
+  id: number;
+  name: string;
+}
+
+interface AddContestantDialogData {
+  genders: Option[];
+  cities: Option[];
+  belts: Option[];
+  clubs: Option[];
+}
 
 @Component({
   selector: 'app-contestants-page',
@@ -20,19 +34,19 @@ export class ContestantsPageComponent implements OnInit, OnDestroy {
   private readonly contestantsService = inject(ContestantsApiService);
   private readonly dialogHelper = inject(DialogHelperService);
   private readonly dialog = inject(MatDialog);
+  private readonly http = inject(HttpClient);
   private readonly toaster = inject(ToasterService);
   private readonly destroy$ = new Subject<void>();
 
-  // API -> signal
+  private readonly apiUrl = `${environment.apiUrl}/api`;
+
   readonly contestantsFromApi = signal<Contestant[]>([]);
 
-  // Filters
-  firstNameFilter = signal<string>("");
-  lastNameFilter = signal<string>("");
-  beltFilter = signal<string>("All Belts");
-  clubFilter = signal<string>("All Clubs");
+  firstNameFilter = signal<string>('');
+  lastNameFilter = signal<string>('');
+  beltFilter = signal<string>('All Belts');
+  clubFilter = signal<string>('All Clubs');
 
-  // Get unique values for dropdowns
   uniqueBelts = computed(() => {
     const belts = new Set(this.contestantsFromApi().map(c => c.belt));
     return Array.from(belts).sort();
@@ -61,41 +75,34 @@ export class ContestantsPageComponent implements OnInit, OnDestroy {
         },
         error: (err) => {
           console.error('Error loading contestants:', err);
+          this.toaster.error('Failed to load contestants.');
         }
       });
   }
 
-  // Filtered contestants
   filteredContestants = computed(() => {
-    let filtered = this.contestantsFromApi();
+    let filtered = [...this.contestantsFromApi()];
 
-    // First name filter
     const firstName = this.firstNameFilter().toLowerCase();
     if (firstName) {
       filtered = filtered.filter(c => c.firstName.toLowerCase().includes(firstName));
     }
 
-    // Last name filter
     const lastName = this.lastNameFilter().toLowerCase();
     if (lastName) {
       filtered = filtered.filter(c => c.lastName.toLowerCase().includes(lastName));
     }
 
-    // Belt filter
-    if (this.beltFilter() !== "All Belts") {
+    if (this.beltFilter() !== 'All Belts') {
       filtered = filtered.filter(c => c.belt === this.beltFilter());
     }
 
-    // Club filter
-    if (this.clubFilter() !== "All Clubs") {
+    if (this.clubFilter() !== 'All Clubs') {
       filtered = filtered.filter(c => c.club === this.clubFilter());
     }
 
-
-    // Remove any contestants lacking a first name to avoid sort errors
     filtered = filtered.filter(c => !!c.firstName);
 
-    // Guard against missing names so we don't try to call localeCompare on undefined
     return filtered.sort((a, b) => {
       const aName = a.firstName ?? '';
       const bName = b.firstName ?? '';
@@ -104,28 +111,62 @@ export class ContestantsPageComponent implements OnInit, OnDestroy {
   });
 
   getFullName(contestant: Contestant): string {
-    return `${contestant.firstName} ${contestant.lastName}`;
+    return `${contestant.firstName} ${contestant.lastName}`.trim();
   }
 
   onAddContestant(): void {
-    const dialogRef = this.dialog.open(AddContestantFormComponent, {
-    width: '820px',
-    maxWidth: '95vw',
-    maxHeight: '90vh',
-    disableClose: true,
-    panelClass: 'contestant-dialog-panel',
-    autoFocus: false
-  });
+    forkJoin({
+      cities: this.http.get<any[]>(`${this.apiUrl}/City/GetCities`),
+      genders: this.http.get<any[]>(`${this.apiUrl}/Gender/GetGenders`),
+      belts: this.http.get<any[]>(`${this.apiUrl}/Belt/GetBelts`),
+      clubs: this.http.get<any[]>(`${this.apiUrl}/Club/GetClubs`)
+    })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: data => {
+          const dialogData: AddContestantDialogData = {
+            cities: data.cities.map(city => ({
+              id: city.id,
+              name: `${city.cityName}, ${city.country}`
+            })),
+            genders: data.genders.map(gender => ({
+              id: gender.id,
+              name: gender.name
+            })),
+            belts: data.belts.map((belt, index) => ({
+              id: belt.id ?? belt.rankOrder ?? index + 1,
+              name: belt.name
+            })),
+            clubs: data.clubs.map((club, index) => ({
+              id: club.id ?? index + 1,
+              name: `${club.name}, ${club.city}, ${club.country}`
+            }))
+          };
 
-    dialogRef.afterClosed().subscribe((wasCreated?: boolean) => {
-    if (wasCreated) {
-      this.loadContestants();
+          const dialogRef = this.dialog.open(AddContestantFormComponent, {
+            width: '820px',
+            maxWidth: '95vw',
+            maxHeight: '90vh',
+            disableClose: true,
+            panelClass: 'contestant-dialog-panel',
+            autoFocus: false,
+            data: dialogData
+          });
+
+          dialogRef.afterClosed().subscribe((wasCreated?: boolean) => {
+            if (wasCreated) {
+              this.loadContestants();
+            }
+          });
+        },
+        error: err => {
+          console.error('Error loading form data:', err);
+          this.toaster.error('Failed to load form data.');
         }
-    });
+      });
   }
 
   onEditContestant(contestant: Contestant): void {
-    // TODO: Open edit contestant dialog
     console.log('Edit contestant:', contestant);
   }
 
@@ -145,20 +186,20 @@ export class ContestantsPageComponent implements OnInit, OnDestroy {
     this.clubFilter.set(value);
   }
 
-
   onDeleteContestant(contestant: Contestant): void {
     this.dialogHelper.confirm(
-      `Delete Contestant?`,
+      'Delete Contestant?',
       `Are you sure you want to delete ${this.getFullName(contestant)}?`
     ).subscribe(result => {
       if (result?.button === DialogButton.YES) {
         this.contestantsService.deleteContestant(contestant.id).subscribe({
           next: () => {
-            // Refresh the list
-            window.location.reload();
+            this.loadContestants();
+            this.toaster.success('Contestant deleted successfully.');
           },
           error: (err) => {
             console.error('Error deleting contestant:', err);
+            this.toaster.error('Failed to delete contestant.');
           }
         });
       }

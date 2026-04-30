@@ -1,4 +1,5 @@
-﻿using KTMS.Application.Modules.Contestants.Commands.CreateContestants;
+﻿using KTMS.Application.Common.Exceptions;
+using KTMS.Application.Modules.Contestants.Commands.CreateContestants;
 using KTMS.Application.Modules.Contestants.Commands.DeleteContestants;
 using KTMS.Application.Modules.Contestants.Commands.UpdateContestants;
 using KTMS.Application.Modules.Contestants.Queries.GetContestants;
@@ -19,9 +20,25 @@ namespace KTMS.API.Controllers
         [HttpPost("CreateContestants")]
         public async Task<IActionResult> CreateContestants([FromBody] CreateContestantsCommand command)
         {
-            var result = await _mediator.Send(command);
-
-            return Ok(result);
+            try
+            {
+                var result = await _mediator.Send(command);
+                return Ok(result);
+            }
+            catch (KTMSConflictException ex)
+            {
+                return Conflict(new
+                {
+                    message = ex.Message
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    message = ex.Message
+                });
+            }
         }
 
         [HttpPut("UpdateContestants")]
