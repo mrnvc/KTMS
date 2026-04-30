@@ -27,6 +27,7 @@ import {CustomTranslateLoader} from './core/services/custom-translate-loader';
 import { AdminModule } from './modules/admin/admin-module';
 import { ContestantsPageComponent } from './modules/contestants-page/contestants-page.component';
 import { AddContestantFormComponent } from './modules/contestants-page/add-contestant-form/add-contestant-form.component';
+import { EditContestantFormComponent } from './modules/contestants-page/edit-contestant-form/edit-contestant-form.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { AddContestantFormComponent } from './modules/contestants-page/add-conte
     RegisterComponent,
     TournamentsPageComponent,
     ContestantsPageComponent,
-    AddContestantFormComponent
+    AddContestantFormComponent,
+    EditContestantFormComponent
   ],
   imports: [
     BrowserModule,

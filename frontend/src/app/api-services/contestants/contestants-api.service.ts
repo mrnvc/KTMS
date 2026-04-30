@@ -6,6 +6,8 @@ import { Contestant } from './contestant-api.model';
 import { ContestantApiResponse } from './contestant-api-response.model';
 import { environment } from '../../../enviroments/enviroment';
 import { CreateContestantRequest } from './create-contestant-request.model';
+import { ContestantDetails } from './contestant-details.model';
+import { UpdateContestantRequest } from './update-contestant-request.model';
 
 @Injectable({ providedIn: "root" })
 export class ContestantsApiService {
@@ -42,8 +44,10 @@ export class ContestantsApiService {
   });
 }
 
-  getContestant(id: number): Observable<Contestant> {
-    return this.http.get<Contestant>(`${this.apiUrl}${this.endpoint}/GetContestantsById/${id}`);
+  getContestant(id: number): Observable<ContestantDetails> {
+    return this.http.get<ContestantDetails>(
+      `${this.apiUrl}${this.endpoint}/GetContestantsById/${id}`
+    );
   }
 
  createContestant(contestant: CreateContestantRequest): Observable<number> {
@@ -55,10 +59,13 @@ export class ContestantsApiService {
   );
 }
 
-  updateContestant(id: number, contestant: Partial<Contestant>): Observable<Contestant> {
-    return this.http.put<Contestant>(
+  updateContestant(id: number, contestant: UpdateContestantRequest): Observable<number> {
+    return this.http.put<number>(
       `${this.apiUrl}${this.endpoint}/UpdateContestants?id=${id}`,
-      contestant
+      {
+        id: id,
+        updateContestantsDto: contestant
+      }
     );
   }
 

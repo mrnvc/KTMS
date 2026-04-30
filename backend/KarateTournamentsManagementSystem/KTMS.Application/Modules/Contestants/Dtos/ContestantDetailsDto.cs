@@ -1,7 +1,9 @@
 ﻿namespace KTMS.Application.Modules.Contestants.Dtos
 {
-    public class UpdateContestantsDto
+    public class ContestantDetailsDto
     {
+        public int Id { get; set; }
+
         public required string Name { get; set; }
         public required string Surname { get; set; }
         public required string PhoneNumber { get; set; }

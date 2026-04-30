@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
 import { environment } from '../../../enviroments/enviroment';
 import { ContestantsApiService } from '../../api-services/contestants/contestants-api.service';
 import { Contestant } from '../../api-services/contestants/contestant-api.model';
@@ -11,6 +10,7 @@ import { DialogHelperService } from '../shared/services/dialog-helper.service';
 import { DialogButton } from '../shared/models/dialog-config.model';
 import { AddContestantFormComponent } from './add-contestant-form/add-contestant-form.component';
 import { ToasterService } from '../../core/services/toaster.service';
+import { EditContestantFormComponent } from './edit-contestant-form/edit-contestant-form.component';
 
 interface Option {
   id: number;
@@ -167,7 +167,55 @@ export class ContestantsPageComponent implements OnInit, OnDestroy {
   }
 
   onEditContestant(contestant: Contestant): void {
-    console.log('Edit contestant:', contestant);
+    forkJoin({
+      cities: this.http.get<any[]>(`${this.apiUrl}/City/GetCities`),
+      genders: this.http.get<any[]>(`${this.apiUrl}/Gender/GetGenders`),
+      belts: this.http.get<any[]>(`${this.apiUrl}/Belt/GetBelts`),
+      clubs: this.http.get<any[]>(`${this.apiUrl}/Club/GetClubs`),
+      contestantDetails: this.contestantsService.getContestant(contestant.id)
+    })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: data => {
+          const dialogRef = this.dialog.open(EditContestantFormComponent, {
+            width: '820px',
+            maxWidth: '95vw',
+            maxHeight: '90vh',
+            disableClose: true,
+            panelClass: 'contestant-dialog-panel',
+            autoFocus: false,
+            data: {
+              contestant: data.contestantDetails,
+              cities: data.cities.map(city => ({
+                id: city.id,
+                name: `${city.cityName}, ${city.country}`
+              })),
+              genders: data.genders.map(gender => ({
+                id: gender.id,
+                name: gender.name
+              })),
+              belts: data.belts.map((belt, index) => ({
+                id: belt.id ?? belt.rankOrder ?? index + 1,
+                name: belt.name
+              })),
+              clubs: data.clubs.map((club, index) => ({
+                id: club.id ?? index + 1,
+                name: `${club.name}, ${club.city}, ${club.country}`
+              }))
+            }
+          });
+
+          dialogRef.afterClosed().subscribe((wasUpdated?: boolean) => {
+            if (wasUpdated) {
+              this.loadContestants();
+            }
+          });
+        },
+        error: err => {
+          console.error('Error loading contestant details:', err);
+          this.toaster.error('Failed to load contestant details.');
+        }
+      });
   }
 
   onFirstNameChange(value: string): void {

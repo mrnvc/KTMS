@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KTMS.Application.Modules.Contestants.Dtos
+﻿namespace KTMS.Application.Modules.Contestants.Dtos
 {
     public class ContestantsDto
     {

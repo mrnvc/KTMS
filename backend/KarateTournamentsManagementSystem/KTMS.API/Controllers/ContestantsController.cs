@@ -44,12 +44,33 @@ namespace KTMS.API.Controllers
         [HttpPut("UpdateContestants")]
         public async Task<IActionResult> UpdateContestants(int id, [FromBody] UpdateContestantsCommand command)
         {
-            if (id != command.Id)
+            try
             {
-                return BadRequest("Id does not match");
+                if (id != command.Id)
+                {
+                    return BadRequest(new
+                    {
+                        message = "Id does not match."
+                    });
+                }
+
+                var result = await _mediator.Send(command);
+                return Ok(result);
             }
-            var result = await _mediator.Send(command);
-            return Ok(result);
+            catch (KTMSConflictException ex)
+            {
+                return Conflict(new
+                {
+                    message = ex.Message
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    message = ex.Message
+                });
+            }
         }
 
         [HttpDelete("DeleteContestants")]
