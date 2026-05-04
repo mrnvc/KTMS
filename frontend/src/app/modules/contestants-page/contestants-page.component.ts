@@ -49,6 +49,9 @@ export class ContestantsPageComponent implements OnInit, OnDestroy {
   beltFilter = signal<string>('All Belts');
   clubFilter = signal<string>('All Clubs');
 
+  selectedQrValue: string | null = null;
+  selectedQrTitle: string | null = null;
+
   uniqueBelts = computed(() => {
     const belts = new Set(this.contestantsFromApi().map(c => c.belt));
     return Array.from(belts).sort();
@@ -288,5 +291,15 @@ export class ContestantsPageComponent implements OnInit, OnDestroy {
         });
       }
     });
+  }
+
+  showQrCode(contestant: Contestant): void {
+    this.selectedQrValue = `${window.location.origin}/admin/contestants?id=${contestant.id}`;
+    this.selectedQrTitle = this.getFullName(contestant);
+  }
+
+  closeQrCode(): void {
+    this.selectedQrValue = null;
+    this.selectedQrTitle = null;
   }
 }

@@ -31,6 +31,7 @@ import { EditContestantFormComponent } from './modules/contestants-page/edit-con
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { PhoneFormatPipe } from './modules/shared/pipes/phone-format.pipe';
 import { ClubWithoutCountryPipe } from './modules/shared/pipes/club-without-country-name.pipe';
+import { QRCodeComponent } from 'angularx-qrcode';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { ClubWithoutCountryPipe } from './modules/shared/pipes/club-without-coun
     MatButton,
     MatProgressSpinner,
     MatAutocompleteModule,
+    QRCodeComponent,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

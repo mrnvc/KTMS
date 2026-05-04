@@ -19,23 +19,15 @@
         <!-- First Name -->
         <div class="filter-block">
           <label>First Name</label>
-          <input
-            type="text"
-            placeholder="Search by name..."
-            [ngModel]="firstNameFilter()"
-            (input)="onFirstNameChange($event.target.value)"
-          />
+          <input type="text" placeholder="Search by name..." [ngModel]="firstNameFilter()"
+            (input)="onFirstNameChange($event.target.value)" />
         </div>
 
         <!-- Last Name -->
         <div class="filter-block">
           <label>Last Name</label>
-          <input
-            type="text"
-            placeholder="Search by surname..."
-            [ngModel]="lastNameFilter()"
-            (input)="onLastNameChange($event.target.value)"
-          />
+          <input type="text" placeholder="Search by surname..." [ngModel]="lastNameFilter()"
+            (input)="onLastNameChange($event.target.value)" />
         </div>
 
         <!-- Belt -->
@@ -83,7 +75,7 @@
           <tr>
             <th>Name</th>
             <th>Club</th>
-                <th>Belt</th>
+            <th>Belt</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -97,21 +89,14 @@
               </span>
             </td>
             <td class="actions">
-              <button
-                mat-icon-button
-                matTooltip="Edit"
-                (click)="onEditContestant(contestant)"
-                class="edit-btn"
-              >
+              <button mat-icon-button matTooltip="Edit" (click)="onEditContestant(contestant)" class="edit-btn">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button
-                mat-icon-button
-                matTooltip="Delete"
-                (click)="onDeleteContestant(contestant)"
-                class="delete-btn"
-              >
+              <button mat-icon-button matTooltip="Delete" (click)="onDeleteContestant(contestant)" class="delete-btn">
                 <mat-icon>delete</mat-icon>
+              </button>
+              <button mat-icon-button matTooltip="Share QR" (click)="showQrCode(contestant)" class="qr-btn">
+                <mat-icon>qr_code_2</mat-icon>
               </button>
             </td>
           </tr>
@@ -124,4 +109,26 @@
       </div>
     </div>
   </main>
+  <div class="qr-modal-backdrop" *ngIf="selectedQrValue">
+    <div class="qr-modal">
+      <div class="qr-modal__header">
+        <div>
+          <h2>Share Contestant</h2>
+          <p>{{ selectedQrTitle }}</p>
+        </div>
+
+        <button mat-icon-button type="button" (click)="closeQrCode()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+
+      <div class="qr-modal__body">
+        <qrcode [qrdata]="selectedQrValue" [width]="260" [errorCorrectionLevel]="'M'"></qrcode>
+
+        <p class="qr-info">
+          Scan this QR code to open contestant details.
+        </p>
+      </div>
+    </div>
+  </div>
 </div>

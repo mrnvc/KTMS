@@ -8,8 +8,7 @@
   position: relative;
   overflow: hidden;
   padding: 28px 0 46px;
-  background: url("https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&w=1600&q=80")
-    center/cover no-repeat;
+  background: url("https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&w=1600&q=80") center/cover no-repeat;
 
   &__overlay {
     position: absolute;
@@ -191,7 +190,8 @@
 
       td.name {
         font-weight: 500;
-        color: #000; /* black name text */
+        color: #000;
+        /* black name text */
       }
 
       td.actions {
@@ -273,6 +273,7 @@
   }
 }
 
+
 .empty-state {
   padding: 48px 24px;
   text-align: center;
@@ -289,5 +290,78 @@
   p {
     margin: 0;
     font-size: 16px;
+  }
+}
+
+/* QR MODAL */
+.qr-modal-backdrop {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(15, 23, 42, 0.55);
+  z-index: 99999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 24px;
+}
+
+.qr-modal {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.35);
+}
+
+.qr-modal__header {
+  padding: 20px 24px;
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  color: #ffffff;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+
+  h2 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 6px 0 0;
+    font-size: 14px;
+    color: #dbeafe;
+  }
+
+  button {
+    color: #ffffff;
+  }
+}
+
+.qr-modal__body {
+  padding: 32px 24px 28px;
+  text-align: center;
+
+  qrcode {
+    display: inline-block;
+  }
+}
+
+.qr-info {
+  margin: 18px 0 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.qr-btn {
+  color: #7c3aed;
+
+  &:hover {
+    background: rgba(124, 58, 237, 0.1);
+    color: #5b21b6;
   }
 }
