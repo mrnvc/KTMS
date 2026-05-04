@@ -29,6 +29,8 @@ import { ContestantsPageComponent } from './modules/contestants-page/contestants
 import { AddContestantFormComponent } from './modules/contestants-page/add-contestant-form/add-contestant-form.component';
 import { EditContestantFormComponent } from './modules/contestants-page/edit-contestant-form/edit-contestant-form.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { PhoneFormatPipe } from './modules/shared/pipes/phone-format.pipe';
+import { ClubWithoutCountryPipe } from './modules/shared/pipes/club-without-country-name.pipe';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     TournamentsPageComponent,
     ContestantsPageComponent,
     AddContestantFormComponent,
-    EditContestantFormComponent
+    EditContestantFormComponent,
+    PhoneFormatPipe,
+    ClubWithoutCountryPipe
   ],
   imports: [
     BrowserModule,

@@ -90,7 +90,7 @@
         <tbody>
           <tr *ngFor="let contestant of filteredContestants()">
             <td class="name">{{ getFullName(contestant) }}</td>
-            <td>{{ contestant.club }}</td>
+            <td>{{ contestant.club | clubWithoutCountry }}</td>
             <td>
               <span class="belt-badge" [ngClass]="contestant.belt.toLowerCase()">
                 {{ contestant.belt }}
