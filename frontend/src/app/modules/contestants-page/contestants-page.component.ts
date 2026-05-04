@@ -202,22 +202,42 @@ export class ContestantsPageComponent implements OnInit, OnDestroy {
             autoFocus: false,
             data: {
               contestant: data.contestantDetails,
+
               cities: data.cities.map(city => ({
                 id: city.id,
                 name: `${city.cityName}, ${city.country}`
               })),
+
               genders: data.genders.map(gender => ({
                 id: gender.id,
                 name: gender.name
               })),
+
               belts: data.belts.map((belt, index) => ({
                 id: belt.id ?? belt.rankOrder ?? index + 1,
                 name: belt.name
               })),
+
               clubs: data.clubs.map((club, index) => ({
                 id: club.id ?? index + 1,
                 name: `${club.name}, ${club.city}, ${club.country}`
-              }))
+              })),
+
+              firstNames: Array.from(
+                new Set(
+                  this.contestantsFromApi()
+                    .map(c => c.firstName)
+                    .filter(name => !!name)
+                )
+              ),
+
+              lastNames: Array.from(
+                new Set(
+                  this.contestantsFromApi()
+                    .map(c => c.lastName)
+                    .filter(name => !!name)
+                )
+              )
             }
           });
 

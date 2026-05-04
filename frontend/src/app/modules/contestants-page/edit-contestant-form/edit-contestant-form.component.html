@@ -17,17 +17,40 @@
       <div class="form-row">
         <mat-form-field appearance="outline" class="half-width">
           <mat-label>First Name</mat-label>
-          <input matInput type="text" formControlName="name" placeholder="Enter first name" autocomplete="given-name" />
+
+          <input matInput type="text" [formControl]="firstNameSearchControl" placeholder="Enter first name"
+            [matAutocomplete]="firstNameAuto" (focus)="filteredFirstNames = firstNames" />
+
+          <mat-autocomplete #firstNameAuto="matAutocomplete"
+            (optionSelected)="onFirstNameSelected($event.option.value)">
+            <mat-option *ngFor="let firstName of filteredFirstNames" [value]="firstName">
+              {{ firstName }}
+            </mat-option>
+          </mat-autocomplete>
+
           <mat-icon matSuffix>person</mat-icon>
+
           <mat-error *ngIf="hasError('name')">
             {{ getErrorMessage('name') }}
           </mat-error>
         </mat-form-field>
 
+
+
         <mat-form-field appearance="outline" class="half-width">
           <mat-label>Last Name</mat-label>
-          <input matInput type="text" formControlName="surname" placeholder="Enter last name" autocomplete="family-name" />
+
+          <input matInput type="text" [formControl]="lastNameSearchControl" placeholder="Enter last name"
+            [matAutocomplete]="lastNameAuto" (focus)="filteredLastNames = lastNames" />
+
+          <mat-autocomplete #lastNameAuto="matAutocomplete" (optionSelected)="onLastNameSelected($event.option.value)">
+            <mat-option *ngFor="let lastName of filteredLastNames" [value]="lastName">
+              {{ lastName }}
+            </mat-option>
+          </mat-autocomplete>
+
           <mat-icon matSuffix>badge</mat-icon>
+
           <mat-error *ngIf="hasError('surname')">
             {{ getErrorMessage('surname') }}
           </mat-error>
@@ -37,7 +60,8 @@
       <div class="form-row">
         <mat-form-field appearance="outline" class="half-width">
           <mat-label>Phone Number</mat-label>
-          <input matInput type="text" formControlName="phoneNumber" placeholder="Enter phone number" autocomplete="tel" />
+          <input matInput type="text" formControlName="phoneNumber" placeholder="Enter phone number"
+            autocomplete="tel" />
           <mat-icon matSuffix>phone</mat-icon>
           <mat-error *ngIf="hasError('phoneNumber')">
             {{ getErrorMessage('phoneNumber') }}

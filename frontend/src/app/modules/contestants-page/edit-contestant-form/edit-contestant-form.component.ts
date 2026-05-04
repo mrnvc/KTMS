@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { ContestantDetails } from '../../../api-services/contestants/contestant-details.model';
 import { UpdateContestantRequest } from '../../../api-services/contestants/update-contestant-request.model';
@@ -18,6 +18,8 @@ interface EditContestantDialogData {
   cities: Option[];
   belts: Option[];
   clubs: Option[];
+  firstNames: string[];
+  lastNames: string[];
 }
 
 @Component({
@@ -43,10 +45,19 @@ export class EditContestantFormComponent implements OnInit {
   cities: Option[] = this.dialogData.cities;
   belts: Option[] = this.dialogData.belts;
   clubs: Option[] = this.dialogData.clubs;
+  firstNames: string[] = this.dialogData.firstNames ?? [];
+  firstNameSearchControl = new FormControl<string>('');
+  filteredFirstNames: string[] = [];
+
+  lastNames: string[] = this.dialogData.lastNames ?? [];
+  lastNameSearchControl = new FormControl<string>('');
+  filteredLastNames: string[] = [];
 
   ngOnInit(): void {
     this.initForm();
     this.patchForm();
+    this.initFirstNameAutocomplete();
+    this.initLastNameAutocomplete();
   }
 
   private initForm(): void {
@@ -121,6 +132,9 @@ export class EditContestantFormComponent implements OnInit {
       beltId: this.contestant.beltId,
       clubId: this.contestant.clubId
     });
+
+    this.firstNameSearchControl.setValue(this.contestant.name, { emitEvent: false });
+    this.lastNameSearchControl.setValue(this.contestant.surname, { emitEvent: false });
   }
 
   private notFutureDateValidator(control: AbstractControl): ValidationErrors | null {
@@ -370,4 +384,54 @@ export class EditContestantFormComponent implements OnInit {
 
     return `${field} is invalid.`;
   }
+
+
+  private initFirstNameAutocomplete(): void {
+    this.filteredFirstNames = this.firstNames;
+
+    this.firstNameSearchControl.valueChanges.subscribe(value => {
+      const searchValue = (value ?? '').toLowerCase();
+
+      this.filteredFirstNames = this.firstNames.filter(firstName =>
+        firstName.toLowerCase().includes(searchValue)
+      );
+
+      this.form.patchValue({
+        name: value ?? ''
+      });
+    });
+  }
+
+  private initLastNameAutocomplete(): void {
+    this.filteredLastNames = this.lastNames;
+
+    this.lastNameSearchControl.valueChanges.subscribe(value => {
+      const searchValue = (value ?? '').toLowerCase();
+
+      this.filteredLastNames = this.lastNames.filter(lastName =>
+        lastName.toLowerCase().includes(searchValue)
+      );
+
+      this.form.patchValue({
+        surname: value ?? ''
+      });
+    });
+  }
+
+  onFirstNameSelected(firstName: string): void {
+    this.form.patchValue({
+      name: firstName
+    });
+
+    this.firstNameSearchControl.setValue(firstName, { emitEvent: false });
+  }
+
+  onLastNameSelected(lastName: string): void {
+    this.form.patchValue({
+      surname: lastName
+    });
+
+    this.lastNameSearchControl.setValue(lastName, { emitEvent: false });
+  }
+
 }
