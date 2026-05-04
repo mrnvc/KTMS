@@ -28,3 +28,90 @@ body {
   border-radius: 18px !important;
   overflow: hidden !important;
 }
+
+
+/* Theme */
+body.light-theme {
+  background: #f8fafc;
+  color: #111827;
+}
+
+body.dark-theme {
+  background: #111827;
+  color: #f9fafb;
+}
+
+body.dark-theme .page,
+body.dark-theme .filters,
+body.dark-theme .filter-card,
+body.dark-theme .table-wrapper,
+body.dark-theme .form-card,
+body.dark-theme .dialog {
+  background: #1f2937 !important;
+  color: #f9fafb !important;
+}
+
+body.dark-theme input,
+body.dark-theme select,
+body.dark-theme textarea {
+  background: #111827 !important;
+  color: #f9fafb !important;
+  border-color: #374151 !important;
+}
+
+body.dark-theme input::placeholder {
+  color: #9ca3af !important;
+}
+
+body.dark-theme table,
+body.dark-theme th,
+body.dark-theme td {
+  background: #1f2937 !important;
+  color: #f9fafb !important;
+  border-color: #374151 !important;
+}
+
+body.dark-theme .contestants-table thead {
+  background: #111827 !important;
+}
+
+body.dark-theme .contestants-table tbody tr:hover {
+  background: #374151 !important;
+}
+
+body.dark-theme .muted,
+body.dark-theme label {
+  color: #d1d5db !important;
+}
+
+body.dark-theme .footer {
+  background: #0f172a !important;
+}
+
+body.dark-theme .mat-mdc-form-field {
+  color: #f9fafb !important;
+}
+
+body.dark-theme .mat-mdc-text-field-wrapper {
+  background: #111827 !important;
+}
+
+body.dark-theme .mat-mdc-form-field-label,
+body.dark-theme .mat-mdc-floating-label {
+  color: #d1d5db !important;
+}
+
+body.dark-theme .mat-mdc-input-element {
+  color: #f9fafb !important;
+}
+
+body.dark-theme .mat-mdc-select-value,
+body.dark-theme .mat-mdc-select-arrow,
+body.dark-theme .mat-mdc-select-placeholder {
+  color: #f9fafb !important;
+}
+
+body.dark-theme .mat-mdc-option {
+  background: #1f2937 !important;
+  color: #f9fafb !important;
+}

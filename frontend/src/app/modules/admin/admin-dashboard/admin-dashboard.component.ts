@@ -1,6 +1,7 @@
-import {Component, inject} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
-import {AuthFacadeService} from '../../../core/services/auth/auth-facade.service';
+import { Component, inject } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { AuthFacadeService } from '../../../core/services/auth/auth-facade.service';
+import { ThemeService } from '../../../core/services/theme.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -10,6 +11,7 @@ import {AuthFacadeService} from '../../../core/services/auth/auth-facade.service
 })
 export class AdminDashboardComponent {
   private translate = inject(TranslateService);
+  private themeService = inject(ThemeService);
   auth = inject(AuthFacadeService);
 
   currentLang: string;
@@ -31,5 +33,10 @@ export class AdminDashboardComponent {
 
   getCurrentLanguage() {
     return this.languages.find(lang => lang.code === this.currentLang);
+  }
+
+
+  toggleTheme(): void {
+    this.themeService.toggleTheme();
   }
 }

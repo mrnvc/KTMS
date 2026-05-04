@@ -12,20 +12,20 @@
           <div class="user-email">{{ auth.currentUser()?.email }}</div>
           <div class="user-role">
             @if (auth.isAdmin()) {
-              <mat-chip class="role-chip admin">
-                <mat-icon>admin_panel_settings</mat-icon>
-                {{ 'ADMIN_PANEL.ROLES.ADMIN' | translate }}
-              </mat-chip>
+            <mat-chip class="role-chip admin">
+              <mat-icon>admin_panel_settings</mat-icon>
+              {{ 'ADMIN_PANEL.ROLES.ADMIN' | translate }}
+            </mat-chip>
             } @else if (auth.isCoach()) {
-              <mat-chip class="role-chip coach">
-                <mat-icon>manage_accounts</mat-icon>
-                {{ 'COACH' | translate }}
-              </mat-chip>
+            <mat-chip class="role-chip coach">
+              <mat-icon>manage_accounts</mat-icon>
+              {{ 'COACH' | translate }}
+            </mat-chip>
             } @else if (auth.isContestant()) {
-              <mat-chip class="role-chip contestant">
-                <mat-icon>badge</mat-icon>
-                {{ 'CONTESTANT' | translate }}
-              </mat-chip>
+            <mat-chip class="role-chip contestant">
+              <mat-icon>badge</mat-icon>
+              {{ 'CONTESTANT' | translate }}
+            </mat-chip>
             }
           </div>
         </div>
@@ -39,12 +39,8 @@
         </button>
 
         <mat-menu #langMenu="matMenu">
-          <button
-            mat-menu-item
-            *ngFor="let lang of languages"
-            (click)="switchLanguage(lang.code)"
-            [class.active-lang]="currentLang === lang.code"
-          >
+          <button mat-menu-item *ngFor="let lang of languages" (click)="switchLanguage(lang.code)"
+            [class.active-lang]="currentLang === lang.code">
             <span class="flag-icon">{{ lang.flag }}</span>
             <span>{{ lang.name }}</span>
             <mat-icon *ngIf="currentLang === lang.code" class="check-icon">check</mat-icon>
@@ -76,6 +72,11 @@
       <div class="nav-section-title">
         {{ 'ADMIN_PANEL.MENU.SYSTEM' | translate }}
       </div>
+
+      <a mat-list-item (click)="toggleTheme()" class="theme-toggle-item">
+        <mat-icon matListItemIcon>dark_mode</mat-icon>
+        <span matListItemTitle>Toggle Theme</span>
+      </a>
 
       <a mat-list-item routerLink="/admin/settings" routerLinkActive="active">
         <mat-icon matListItemIcon>settings</mat-icon>

@@ -1,5 +1,6 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
+import { ThemeService } from './core/services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,7 @@ export class App implements OnInit {
   protected readonly title = signal('frontend');
 
   private currentUrl = signal<string>('/');
+  private readonly themeService = inject(ThemeService);
 
   currentLang: string = 'bs';
   constructor(private translate: TranslateService) {
@@ -37,8 +39,6 @@ export class App implements OnInit {
   }
 
   ngOnInit(): void {
-    // Test translation
-    // verify at least one app-specific key is translated
     this.translate.get('CONTESTANTS.TITLE').subscribe((res: string) => {
       console.log('Translation for CONTESTANTS.TITLE:', res);
       if (res === 'CONTESTANTS.TITLE') {
@@ -49,6 +49,8 @@ export class App implements OnInit {
         console.error('3. TranslateService not properly initialized');
       }
     });
+
+    this.themeService.initTheme();
   }
 
   switchLanguage(lang: string): void {
