@@ -178,12 +178,18 @@
 
       <!-- Actions -->
       <div class="form-actions">
-        <button type="button" mat-stroked-button (click)="onCancel()">
+        <button type="button" mat-stroked-button color="warn" (click)="clearDraft()"
+          [disabled]="isLoading || !hasDraft">
+          <mat-icon>delete_sweep</mat-icon>
+          Clear Draft
+        </button>
+
+        <button type="button" mat-stroked-button (click)="onCancel()" [disabled]="isLoading">
           <mat-icon>close</mat-icon>
           Cancel
         </button>
 
-        <button type="submit" mat-raised-button color="primary">
+        <button type="submit" mat-raised-button color="primary" [disabled]="isLoading">
           <mat-icon>save</mat-icon>
           Save Contestant
         </button>

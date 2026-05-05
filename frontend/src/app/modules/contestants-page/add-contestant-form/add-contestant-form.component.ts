@@ -1,7 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators, FormControl } from '@angular/forms';
-import { finalize, debounceTime } from 'rxjs/operators';
+import { debounceTime, finalize, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
 import { CreateContestantRequest } from '../../../api-services/contestants/create-contestant-request.model';
 import { ContestantsApiService } from '../../../api-services/contestants/contestants-api.service';
 import { ToasterService } from '../../../core/services/toaster.service';
@@ -26,16 +28,19 @@ interface AddContestantDialogData {
   templateUrl: './add-contestant-form.component.html',
   styleUrl: './add-contestant-form.component.scss'
 })
-export class AddContestantFormComponent implements OnInit {
+export class AddContestantFormComponent implements OnInit, OnDestroy {
   private readonly dialogRef = inject(MatDialogRef<AddContestantFormComponent>);
   private readonly fb = inject(FormBuilder);
   private readonly contestantsApi = inject(ContestantsApiService);
   private readonly toaster = inject(ToasterService);
   private readonly dialogData = inject<AddContestantDialogData>(MAT_DIALOG_DATA);
+
+  private readonly destroy$ = new Subject<void>();
   private readonly autosaveKey = 'add-contestant-form-draft';
 
   form!: FormGroup;
   isLoading = false;
+  hasDraft = false;
   today = new Date().toISOString().split('T')[0];
 
   genders: Option[] = this.dialogData.genders;
@@ -55,8 +60,14 @@ export class AddContestantFormComponent implements OnInit {
     this.initForm();
     this.loadDraft();
     this.initAutosave();
+
     this.initFirstNameAutocomplete();
     this.initLastNameAutocomplete();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   private initForm(): void {
@@ -128,9 +139,13 @@ export class AddContestantFormComponent implements OnInit {
 
   private initAutosave(): void {
     this.form.valueChanges
-      .pipe(debounceTime(500))
+      .pipe(
+        debounceTime(500),
+        takeUntil(this.destroy$)
+      )
       .subscribe(value => {
         localStorage.setItem(this.autosaveKey, JSON.stringify(value));
+        this.hasDraft = true;
       });
   }
 
@@ -138,56 +153,90 @@ export class AddContestantFormComponent implements OnInit {
     const savedDraft = localStorage.getItem(this.autosaveKey);
 
     if (!savedDraft) {
+      this.hasDraft = false;
       return;
     }
 
-    const draft = JSON.parse(savedDraft);
+    try {
+      const draft = JSON.parse(savedDraft);
 
-    this.form.patchValue(draft);
+      this.form.patchValue(draft);
+      this.hasDraft = true;
 
-    if (draft.name) {
-      this.firstNameSearchControl.setValue(draft.name, { emitEvent: false });
-    }
+      if (draft.name) {
+        this.firstNameSearchControl.setValue(draft.name, { emitEvent: false });
+      }
 
-    if (draft.surname && this.lastNameSearchControl) {
-      this.lastNameSearchControl.setValue(draft.surname, { emitEvent: false });
+      if (draft.surname) {
+        this.lastNameSearchControl.setValue(draft.surname, { emitEvent: false });
+      }
+    } catch {
+      localStorage.removeItem(this.autosaveKey);
+      this.hasDraft = false;
     }
   }
 
-  private clearDraft(): void {
+  clearDraft(): void {
     localStorage.removeItem(this.autosaveKey);
+    this.hasDraft = false;
+
+    this.form.reset();
+
+    this.form.patchValue({
+      genderId: null,
+      cityId: null,
+      beltId: null,
+      clubId: null
+    });
+
+    this.firstNameSearchControl.setValue('', { emitEvent: false });
+    this.lastNameSearchControl.setValue('', { emitEvent: false });
+
+    this.filteredFirstNames = this.firstNames;
+    this.filteredLastNames = this.lastNames;
+
+    this.toaster.info('Draft cleared.');
+  }
+
+  private clearDraftAfterSave(): void {
+    localStorage.removeItem(this.autosaveKey);
+    this.hasDraft = false;
   }
 
   private initFirstNameAutocomplete(): void {
     this.filteredFirstNames = this.firstNames;
 
-    this.firstNameSearchControl.valueChanges.subscribe(value => {
-      const searchValue = (value ?? '').toLowerCase();
+    this.firstNameSearchControl.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(value => {
+        const searchValue = (value ?? '').toLowerCase();
 
-      this.filteredFirstNames = this.firstNames.filter(firstName =>
-        firstName.toLowerCase().includes(searchValue)
-      );
+        this.filteredFirstNames = this.firstNames.filter(firstName =>
+          firstName.toLowerCase().includes(searchValue)
+        );
 
-      this.form.patchValue({
-        name: value ?? ''
+        this.form.patchValue({
+          name: value ?? ''
+        });
       });
-    });
   }
 
   private initLastNameAutocomplete(): void {
     this.filteredLastNames = this.lastNames;
 
-    this.lastNameSearchControl.valueChanges.subscribe(value => {
-      const searchValue = (value ?? '').toLowerCase();
+    this.lastNameSearchControl.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(value => {
+        const searchValue = (value ?? '').toLowerCase();
 
-      this.filteredLastNames = this.lastNames.filter(lastName =>
-        lastName.toLowerCase().includes(searchValue)
-      );
+        this.filteredLastNames = this.lastNames.filter(lastName =>
+          lastName.toLowerCase().includes(searchValue)
+        );
 
-      this.form.patchValue({
-        surname: value ?? ''
+        this.form.patchValue({
+          surname: value ?? ''
+        });
       });
-    });
   }
 
   onFirstNameSelected(firstName: string): void {
@@ -261,11 +310,12 @@ export class AddContestantFormComponent implements OnInit {
       .pipe(
         finalize(() => {
           this.isLoading = false;
-        })
+        }),
+        takeUntil(this.destroy$)
       )
       .subscribe({
         next: () => {
-          this.clearDraft();
+          this.clearDraftAfterSave();
           this.toaster.success('Contestant added successfully.');
           this.dialogRef.close(true);
         },

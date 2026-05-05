@@ -8,7 +8,7 @@ import {
   Validators,
   FormControl
 } from '@angular/forms';
-import { finalize } from 'rxjs/operators';
+import { finalize, debounceTime } from 'rxjs/operators';
 import { JudgesApiService } from '../../../api-services/judges/judges-api.service';
 import { CreateJudgeRequest } from '../../../api-services/judges/create-judge-request.model';
 import { ToasterService } from '../../../core/services/toaster.service';
@@ -38,6 +38,8 @@ export class AddJudgeFormComponent implements OnInit {
   private readonly judgesApi = inject(JudgesApiService);
   private readonly toaster = inject(ToasterService);
   private readonly dialogData = inject<AddJudgeDialogData>(MAT_DIALOG_DATA);
+  private readonly autosaveKey = 'add-judge-form-draft';
+  hasDraft = false;
 
   form!: FormGroup;
   isLoading = false;
@@ -60,6 +62,9 @@ export class AddJudgeFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.loadDraft();
+    this.initAutosave();
+
     this.initFirstNameAutocomplete();
     this.initLastNameAutocomplete();
     this.initRankAutocomplete();
@@ -144,6 +149,76 @@ export class AddJudgeFormComponent implements OnInit {
     });
   }
 
+  private initAutosave(): void {
+    this.form.valueChanges
+      .pipe(debounceTime(500))
+      .subscribe(value => {
+        localStorage.setItem(this.autosaveKey, JSON.stringify(value));
+        this.hasDraft = true;
+      });
+  }
+
+  private loadDraft(): void {
+    const savedDraft = localStorage.getItem(this.autosaveKey);
+
+    if (!savedDraft) {
+      this.hasDraft = false;
+      return;
+    }
+
+    const draft = JSON.parse(savedDraft);
+
+    this.form.patchValue(draft);
+
+    this.hasDraft = true;
+
+    // Ako koristiš autocomplete na ovim poljima, ovo popuni i autocomplete inpute
+    if (draft.name && this.firstNameSearchControl) {
+      this.firstNameSearchControl.setValue(draft.name, { emitEvent: false });
+    }
+
+    if (draft.surname && this.lastNameSearchControl) {
+      this.lastNameSearchControl.setValue(draft.surname, { emitEvent: false });
+    }
+
+    if (draft.rank && this.rankSearchControl) {
+      this.rankSearchControl.setValue(draft.rank, { emitEvent: false });
+    }
+  }
+
+  clearDraft(): void {
+    localStorage.removeItem(this.autosaveKey);
+    this.hasDraft = false;
+
+    this.form.reset();
+
+    // Vrati dropdownove na null
+    this.form.patchValue({
+      genderId: null,
+      cityId: null
+    });
+
+    // Ako koristiš autocomplete
+    if (this.firstNameSearchControl) {
+      this.firstNameSearchControl.setValue('', { emitEvent: false });
+    }
+
+    if (this.lastNameSearchControl) {
+      this.lastNameSearchControl.setValue('', { emitEvent: false });
+    }
+
+    if (this.rankSearchControl) {
+      this.rankSearchControl.setValue('', { emitEvent: false });
+    }
+
+    this.toaster.info('Draft cleared.');
+  }
+
+  private clearDraftAfterSave(): void {
+    localStorage.removeItem(this.autosaveKey);
+    this.hasDraft = false;
+  }
+
   private notFutureDateValidator(control: AbstractControl): ValidationErrors | null {
     if (!control.value) {
       return null;
@@ -203,6 +278,7 @@ export class AddJudgeFormComponent implements OnInit {
       )
       .subscribe({
         next: () => {
+          this.clearDraftAfterSave();
           this.toaster.success('Judge added successfully.');
           this.dialogRef.close(true);
         },
