@@ -11,6 +11,8 @@ import { DialogButton } from '../shared/models/dialog-config.model';
 import { AddContestantFormComponent } from './add-contestant-form/add-contestant-form.component';
 import { ToasterService } from '../../core/services/toaster.service';
 import { EditContestantFormComponent } from './edit-contestant-form/edit-contestant-form.component';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 interface Option {
   id: number;
@@ -301,5 +303,73 @@ export class ContestantsPageComponent implements OnInit, OnDestroy {
   closeQrCode(): void {
     this.selectedQrValue = null;
     this.selectedQrTitle = null;
+  }
+
+  generatePdfReport(): void {
+    const contestants = this.filteredContestants();
+
+    if (contestants.length === 0) {
+      this.toaster.warning('No contestants available for PDF report.');
+      return;
+    }
+
+    const doc = new jsPDF();
+
+    const generatedDate = new Date().toLocaleString();
+
+    doc.setFontSize(18);
+    doc.text('Contestants Report', 14, 18);
+
+    doc.setFontSize(10);
+    doc.text(`Generated: ${generatedDate}`, 14, 26);
+
+    doc.text('Applied Filters:', 14, 36);
+
+    const filterText = [
+      `First Name: ${this.firstNameFilter() || 'All'}`,
+      `Last Name: ${this.lastNameFilter() || 'All'}`,
+      `Belt: ${this.beltFilter()}`,
+      `Club: ${this.clubFilter()}`
+    ];
+
+    doc.setFontSize(9);
+    filterText.forEach((filter, index) => {
+      doc.text(filter, 14, 43 + index * 6);
+    });
+
+    autoTable(doc, {
+      startY: 72,
+      head: [['#', 'Name', 'Club', 'Belt']],
+      body: contestants.map((contestant, index) => [
+        index + 1,
+        this.getFullName(contestant),
+        this.formatClubWithoutCountry(contestant.club),
+        contestant.belt
+      ]),
+      styles: {
+        fontSize: 9,
+        cellPadding: 3
+      },
+      headStyles: {
+        fillColor: [37, 99, 235],
+        textColor: 255
+      }
+    });
+
+    doc.save('contestants-report.pdf');
+  }
+
+  private formatClubWithoutCountry(club: string): string {
+    if (!club) {
+      return '';
+    }
+
+    const parts = club.split(',').map(part => part.trim());
+
+    if (parts.length < 3) {
+      return club;
+    }
+
+    return `${parts[0]}, ${parts[1]}`;
   }
 }

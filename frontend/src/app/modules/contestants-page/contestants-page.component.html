@@ -52,11 +52,16 @@
     </div>
   </section>
 
-  <!-- Add Contestant Button -->
+  <!-- Add Contestant and PDF Generate Button -->
   <div class="action-bar">
     <button mat-raised-button color="primary" class="add-contestant-btn" (click)="onAddContestant()">
       <mat-icon>add</mat-icon>
       Add Contestant
+    </button>
+
+    <button mat-raised-button class="pdf-report-btn" (click)="generatePdfReport()">
+      <mat-icon>picture_as_pdf</mat-icon>
+      Generate PDF
     </button>
   </div>
 
@@ -109,6 +114,7 @@
       </div>
     </div>
   </main>
+
   <div class="qr-modal-backdrop" *ngIf="selectedQrValue">
     <div class="qr-modal">
       <div class="qr-modal__header">
