@@ -22,27 +22,27 @@ export class ContestantsApiService {
       );
   }
 
- private mapApiResponseToContestants(apiResponse: ContestantApiResponse[]): Contestant[] {
-  return apiResponse.map((item, index) => {
-    // API returns user like: "Leki Kokic, Contestant"
-    // This removes everything after comma.
-    const cleanUser = item.user?.split(',')[0].trim() ?? '';
+  private mapApiResponseToContestants(apiResponse: ContestantApiResponse[]): Contestant[] {
+    return apiResponse.map((item, index) => {
+      // API returns user like: "Leki Kokic, Contestant"
+      // This removes everything after comma.
+      const cleanUser = item.user?.split(',')[0].trim() ?? '';
 
-    const userParts = cleanUser.split(' ');
-    const firstName = userParts[0] || '';
-    const lastName = userParts.slice(1).join(' ') || '';
+      const userParts = cleanUser.split(' ');
+      const firstName = userParts[0] || '';
+      const lastName = userParts.slice(1).join(' ') || '';
 
-    return {
-      id: item.id ?? index + 1,
-      user: cleanUser,
-      firstName,
-      lastName,
-      belt: item.belt,
-      club: item.club,
-      category: ''
-    };
-  });
-}
+      return {
+        id: item.id ?? index + 1,
+        user: cleanUser,
+        firstName,
+        lastName,
+        belt: item.belt,
+        club: item.club,
+        category: ''
+      };
+    });
+  }
 
   getContestant(id: number): Observable<ContestantDetails> {
     return this.http.get<ContestantDetails>(
@@ -50,20 +50,19 @@ export class ContestantsApiService {
     );
   }
 
- createContestant(contestant: CreateContestantRequest): Observable<number> {
-  return this.http.post<number>(
-    `${this.apiUrl}${this.endpoint}/CreateContestants`,
-    {
-      createContestantsDto: contestant
-    }
-  );
-}
+  createContestant(contestant: CreateContestantRequest): Observable<number> {
+    return this.http.post<number>(
+      `${this.apiUrl}${this.endpoint}/CreateContestants`,
+      {
+        createContestantsDto: contestant
+      }
+    );
+  }
 
   updateContestant(id: number, contestant: UpdateContestantRequest): Observable<number> {
     return this.http.put<number>(
-      `${this.apiUrl}${this.endpoint}/UpdateContestants?id=${id}`,
+      `${this.apiUrl}${this.endpoint}/UpdateContestants/${id}`,
       {
-        id: id,
         updateContestantsDto: contestant
       }
     );
@@ -71,7 +70,7 @@ export class ContestantsApiService {
 
   deleteContestant(id: number): Observable<void> {
     return this.http.delete<void>(
-      `${this.apiUrl}${this.endpoint}/DeleteContestants?id=${id}`
+      `${this.apiUrl}${this.endpoint}/DeleteContestants/${id}`
     );
   }
 }

@@ -41,18 +41,12 @@ namespace KTMS.API.Controllers
             }
         }
 
-        [HttpPut("UpdateContestants")]
+        [HttpPut("UpdateContestants/{id}")]
         public async Task<IActionResult> UpdateContestants(int id, [FromBody] UpdateContestantsCommand command)
         {
             try
             {
-                if (id != command.Id)
-                {
-                    return BadRequest(new
-                    {
-                        message = "Id does not match."
-                    });
-                }
+                command.Id = id;
 
                 var result = await _mediator.Send(command);
                 return Ok(result);
@@ -73,12 +67,11 @@ namespace KTMS.API.Controllers
             }
         }
 
-        [HttpDelete("DeleteContestants")]
-        
+        [HttpDelete("DeleteContestants/{id}")]
         public async Task<IActionResult> DeleteContestants(int id)
         {
-            var command = new DeleteContestantsCommand { Id = id};
-            var result=await _mediator.Send(command);
+            var command = new DeleteContestantsCommand { Id = id };
+            var result = await _mediator.Send(command);
             return Ok(result);
         }
 

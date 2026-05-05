@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KTMS.Application.Modules.Judges.Queries.GetJudgesById
 {
-    public class GetJudgesByIdHandler : IRequestHandler<GetJudgesByIdQuery, JudgeDto>
+    public class GetJudgesByIdHandler : IRequestHandler<GetJudgesByIdQuery, JudgeDetailsDto>
     {
         private readonly IAppDbContext _dbContext;
 
@@ -14,7 +14,7 @@ namespace KTMS.Application.Modules.Judges.Queries.GetJudgesById
             _dbContext = dbContext;
         }
 
-        public async Task<JudgeDto> Handle(GetJudgesByIdQuery request, CancellationToken cancellationToken)
+        public async Task<JudgeDetailsDto> Handle(GetJudgesByIdQuery request, CancellationToken cancellationToken)
         {
             var judge = await _dbContext.Judges
                 .Include(j => j.User)
@@ -22,19 +22,23 @@ namespace KTMS.Application.Modules.Judges.Queries.GetJudgesById
 
             if (judge == null)
             {
-                throw new Exception("Judge not found");
+                throw new Exception("Judge not found.");
             }
 
-            return new JudgeDto
+            return new JudgeDetailsDto
             {
                 Id = judge.Id,
-                UserId = judge.UserId,
+
                 Name = judge.User.Name,
                 Surname = judge.User.Surname,
                 PhoneNumber = judge.User.PhoneNumber,
                 Email = judge.User.Email,
+                DateOfBirth = judge.User.DateOfBirth,
+                Username = judge.User.Username,
+                CityId = judge.User.CityId,
+                GenderId = judge.User.GenderId,
                 License = judge.License,
-                Rank = judge.Rank ?? string.Empty
+                Rank = judge.Rank
             };
         }
     }

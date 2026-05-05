@@ -6,10 +6,7 @@ using KTMS.Application.Modules.Judges.Queries.GetJudges;
 using KTMS.Application.Modules.Judges.Queries.GetJudgesById;
 using KTMS.Application.Modules.Judges.Queries.GetJudgesFiltered;
 using KTMS.Application.Modules.Judges.Queries.GetPagedJudges;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics.Contracts;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using KTMS.Application.Common.Exceptions;
 
 namespace KTMS.API.Controllers
 {
@@ -27,9 +24,25 @@ namespace KTMS.API.Controllers
         [HttpPost("CreateJudge")]
         public async Task<IActionResult> CreateJudge([FromBody] CreateJudgeCommand command)
         {
-            var result = await _mediator.Send(command);
-
-            return Ok(result);
+            try
+            {
+                var result = await _mediator.Send(command);
+                return Ok(result);
+            }
+            catch (KTMSConflictException ex)
+            {
+                return Conflict(new
+                {
+                    message = ex.Message
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    message = ex.Message
+                });
+            }
         }
 
         [HttpGet("GetJudges")]
@@ -50,19 +63,33 @@ namespace KTMS.API.Controllers
             return Ok(result);
         }
 
-        [HttpPut("UpdateJudge")]
+        [HttpPut("UpdateJudge/{id}")]
         public async Task<IActionResult> UpdateJudge(int id, [FromBody] UpdateJudgeCommand command)
         {
-            if (id != command.Id)
+            try
             {
-                return BadRequest("ID does not match");
-            }
+                command.Id = id;
 
-            var result = await _mediator.Send(command);
-            return Ok(result);
+                var result = await _mediator.Send(command);
+                return Ok(result);
+            }
+            catch (KTMSConflictException ex)
+            {
+                return Conflict(new
+                {
+                    message = ex.Message
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    message = ex.Message
+                });
+            }
         }
 
-        [HttpDelete("DeleteJudge")]
+        [HttpDelete("DeleteJudge/{id}")]
         public async Task<IActionResult> DeleteJudge(int id)
         {
             var command = new DeleteJudgeCommand { Id = id };
