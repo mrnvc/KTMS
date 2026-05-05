@@ -10,7 +10,8 @@ import {
 } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import { JudgesApiService } from '../../../api-services/judges/judges-api.service';
-import { CreateJudgeRequest } from '../../../api-services/judges/create-judge-request.model';
+import { JudgeDetails } from '../../../api-services/judges/judge-details.model';
+import { UpdateJudgeRequest } from '../../../api-services/judges/update-judge-request.model';
 import { ToasterService } from '../../../core/services/toaster.service';
 
 interface Option {
@@ -18,7 +19,8 @@ interface Option {
   name: string;
 }
 
-interface AddJudgeDialogData {
+interface EditJudgeDialogData {
+  judge: JudgeDetails;
   genders: Option[];
   cities: Option[];
   firstNames: string[];
@@ -27,21 +29,23 @@ interface AddJudgeDialogData {
 }
 
 @Component({
-  selector: 'app-add-judge-form',
+  selector: 'app-edit-judge-form',
   standalone: false,
-  templateUrl: './add-judge-form.component.html',
-  styleUrl: './add-judge-form.component.scss'
+  templateUrl: './edit-judge-form.component.html',
+  styleUrl: './edit-judge-form.component.scss'
 })
-export class AddJudgeFormComponent implements OnInit {
-  private readonly dialogRef = inject(MatDialogRef<AddJudgeFormComponent>);
+export class EditJudgeFormComponent implements OnInit {
+  private readonly dialogRef = inject(MatDialogRef<EditJudgeFormComponent>);
   private readonly fb = inject(FormBuilder);
   private readonly judgesApi = inject(JudgesApiService);
   private readonly toaster = inject(ToasterService);
-  private readonly dialogData = inject<AddJudgeDialogData>(MAT_DIALOG_DATA);
+  private readonly dialogData = inject<EditJudgeDialogData>(MAT_DIALOG_DATA);
 
   form!: FormGroup;
   isLoading = false;
   today = new Date().toISOString().split('T')[0];
+
+  judge = this.dialogData.judge;
 
   genders: Option[] = this.dialogData.genders;
   cities: Option[] = this.dialogData.cities;
@@ -60,6 +64,7 @@ export class AddJudgeFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.patchForm();
     this.initFirstNameAutocomplete();
     this.initLastNameAutocomplete();
     this.initRankAutocomplete();
@@ -117,14 +122,6 @@ export class AddJudgeFormComponent implements OnInit {
           Validators.pattern(/^[a-zA-Z0-9._-]+$/)
         ]
       ],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(6),
-          Validators.maxLength(100)
-        ]
-      ],
       genderId: [null, Validators.required],
       cityId: [null, Validators.required],
       license: [
@@ -142,6 +139,25 @@ export class AddJudgeFormComponent implements OnInit {
         ]
       ]
     });
+  }
+
+  private patchForm(): void {
+    this.form.patchValue({
+      name: this.judge.name,
+      surname: this.judge.surname,
+      phoneNumber: this.judge.phoneNumber,
+      email: this.judge.email,
+      dateOfBirth: this.judge.dateOfBirth?.split('T')[0],
+      username: this.judge.username,
+      cityId: this.judge.cityId,
+      genderId: this.judge.genderId,
+      license: this.judge.license,
+      rank: this.judge.rank ?? ''
+    });
+
+    this.firstNameSearchControl.setValue(this.judge.name, { emitEvent: false });
+    this.lastNameSearchControl.setValue(this.judge.surname, { emitEvent: false });
+    this.rankSearchControl.setValue(this.judge.rank ?? '', { emitEvent: false });
   }
 
   private notFutureDateValidator(control: AbstractControl): ValidationErrors | null {
@@ -179,14 +195,13 @@ export class AddJudgeFormComponent implements OnInit {
 
     const value = this.form.getRawValue();
 
-    const command: CreateJudgeRequest = {
+    const command: UpdateJudgeRequest = {
       name: value.name.trim(),
       surname: value.surname.trim(),
       phoneNumber: value.phoneNumber.trim(),
       email: value.email.trim(),
       dateOfBirth: value.dateOfBirth,
       username: value.username.trim(),
-      password: value.password,
       cityId: value.cityId,
       genderId: value.genderId,
       license: value.license.trim(),
@@ -195,7 +210,7 @@ export class AddJudgeFormComponent implements OnInit {
 
     this.isLoading = true;
 
-    this.judgesApi.createJudge(command)
+    this.judgesApi.updateJudge(this.judge.id, command)
       .pipe(
         finalize(() => {
           this.isLoading = false;
@@ -203,18 +218,18 @@ export class AddJudgeFormComponent implements OnInit {
       )
       .subscribe({
         next: () => {
-          this.toaster.success('Judge added successfully.');
+          this.toaster.success('Judge updated successfully.');
           this.dialogRef.close(true);
         },
         error: err => {
-          console.error('Create judge error:', err);
+          console.error('Update judge error:', err);
 
           const message =
             err?.error?.message ||
             err?.error?.title ||
             err?.error?.detail ||
             err?.error ||
-            'Error while adding judge.';
+            'Error while updating judge.';
 
           this.toaster.error(message);
           this.applyBackendErrorToField(message);
@@ -421,7 +436,6 @@ export class AddJudgeFormComponent implements OnInit {
       email: 'Email',
       dateOfBirth: 'Date of birth',
       username: 'Username',
-      password: 'Password',
       genderId: 'Gender',
       cityId: 'City',
       license: 'License',

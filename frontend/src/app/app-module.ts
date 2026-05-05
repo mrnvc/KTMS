@@ -35,6 +35,7 @@ import { JudgeLicenseFormatPipe } from './modules/shared/pipes/licence-format.pi
 import { QRCodeComponent } from 'angularx-qrcode';
 import { JudgesPageComponent } from './modules/judges-page/judges-page.component';
 import { AddJudgeFormComponent } from './modules/judges-page/add-judge-form/add-judge-form.component';
+import { EditJudgeFormComponent } from './modules/judges-page/edit-judge-form/edit-judge-form.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { AddJudgeFormComponent } from './modules/judges-page/add-judge-form/add-
     ClubWithoutCountryPipe,
     JudgesPageComponent,
     AddJudgeFormComponent,
-    JudgeLicenseFormatPipe
+    JudgeLicenseFormatPipe,
+    EditJudgeFormComponent
   ],
   imports: [
     BrowserModule,

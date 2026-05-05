@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { forkJoin, Subject } from 'rxjs';
 import { environment } from '../../../enviroments/enviroment';
 import { AddJudgeFormComponent } from './add-judge-form/add-judge-form.component';
+import { EditJudgeFormComponent } from './edit-judge-form/edit-judge-form.component';
 
 @Component({
   selector: 'app-judges-page',
@@ -24,7 +25,7 @@ export class JudgesPageComponent implements OnInit, OnDestroy {
   private readonly toaster = inject(ToasterService);
   private readonly destroy$ = new Subject<void>();
   private readonly http = inject(HttpClient);
-private readonly apiUrl = `${environment.apiUrl}/api`;
+  private readonly apiUrl = `${environment.apiUrl}/api`;
 
   readonly judgesFromApi = signal<Judge[]>([]);
 
@@ -100,48 +101,127 @@ private readonly apiUrl = `${environment.apiUrl}/api`;
   }
 
   onAddJudge(): void {
-  forkJoin({
-    cities: this.http.get<any[]>(`${this.apiUrl}/City/GetCities`),
-    genders: this.http.get<any[]>(`${this.apiUrl}/Gender/GetGenders`)
-  })
-    .pipe(takeUntil(this.destroy$))
-    .subscribe({
-      next: data => {
-        const dialogRef = this.dialog.open(AddJudgeFormComponent, {
-          width: '820px',
-          maxWidth: '95vw',
-          maxHeight: '90vh',
-          disableClose: true,
-          panelClass: 'judge-dialog-panel',
-          autoFocus: false,
-          data: {
-            cities: data.cities.map(city => ({
-              id: city.id,
-              name: `${city.cityName}, ${city.country}`
-            })),
-            genders: data.genders.map(gender => ({
-              id: gender.id,
-              name: gender.name
-            }))
-          }
-        });
+    forkJoin({
+      cities: this.http.get<any[]>(`${this.apiUrl}/City/GetCities`),
+      genders: this.http.get<any[]>(`${this.apiUrl}/Gender/GetGenders`)
+    })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: data => {
+          const dialogRef = this.dialog.open(AddJudgeFormComponent, {
+            width: '820px',
+            maxWidth: '95vw',
+            maxHeight: '90vh',
+            disableClose: true,
+            panelClass: 'judge-dialog-panel',
+            autoFocus: false,
+            data: {
+              cities: data.cities.map(city => ({
+                id: city.id,
+                name: `${city.cityName}, ${city.country}`
+              })),
+              genders: data.genders.map(gender => ({
+                id: gender.id,
+                name: gender.name
+              })),
+              firstNames: Array.from(
+                new Set(
+                  this.judgesFromApi()
+                    .map(j => j.name)
+                    .filter(name => !!name)
+                )
+              ),
+              lastNames: Array.from(
+                new Set(
+                  this.judgesFromApi()
+                    .map(j => j.surname)
+                    .filter(name => !!name)
+                )
+              ),
+              ranks: Array.from(
+                new Set(
+                  this.judgesFromApi()
+                    .map(j => j.rank)
+                    .filter(rank => !!rank)
+                )
+              )
+            }
+          });
 
-        dialogRef.afterClosed().subscribe((wasCreated?: boolean) => {
-          if (wasCreated) {
-            this.loadJudges();
-          }
-        });
-      },
-      error: err => {
-        console.error('Error loading judge form data:', err);
-        this.toaster.error('Failed to load form data.');
-      }
-    });
-}
+          dialogRef.afterClosed().subscribe((wasCreated?: boolean) => {
+            if (wasCreated) {
+              this.loadJudges();
+            }
+          });
+        },
+        error: err => {
+          console.error('Error loading judge form data:', err);
+          this.toaster.error('Failed to load form data.');
+        }
+      });
+  }
 
   onEditJudge(judge: Judge): void {
-    // TODO: Open edit judge dialog
-    console.log('Edit judge:', judge);
+    forkJoin({
+      cities: this.http.get<any[]>(`${this.apiUrl}/City/GetCities`),
+      genders: this.http.get<any[]>(`${this.apiUrl}/Gender/GetGenders`),
+      judgeDetails: this.judgesService.getJudge(judge.id)
+    })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: data => {
+          const dialogRef = this.dialog.open(EditJudgeFormComponent, {
+            width: '820px',
+            maxWidth: '95vw',
+            maxHeight: '90vh',
+            disableClose: true,
+            panelClass: 'judge-dialog-panel',
+            autoFocus: false,
+            data: {
+              judge: data.judgeDetails,
+              cities: data.cities.map(city => ({
+                id: city.id,
+                name: `${city.cityName}, ${city.country}`
+              })),
+              genders: data.genders.map(gender => ({
+                id: gender.id,
+                name: gender.name
+              })),
+              firstNames: Array.from(
+                new Set(
+                  this.judgesFromApi()
+                    .map(j => j.name)
+                    .filter(name => !!name)
+                )
+              ),
+              lastNames: Array.from(
+                new Set(
+                  this.judgesFromApi()
+                    .map(j => j.surname)
+                    .filter(name => !!name)
+                )
+              ),
+              ranks: Array.from(
+                new Set(
+                  this.judgesFromApi()
+                    .map(j => j.rank)
+                    .filter(rank => !!rank)
+                )
+              )
+            }
+          });
+
+          dialogRef.afterClosed().subscribe((wasUpdated?: boolean) => {
+            if (wasUpdated) {
+              this.loadJudges();
+            }
+          });
+        },
+        error: err => {
+          console.error('Error loading judge details:', err);
+          this.toaster.error('Failed to load judge details.');
+        }
+      });
   }
 
   onFirstNameChange(value: string): void {
