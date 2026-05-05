@@ -1,12 +1,15 @@
 import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { JudgesApiService } from '../../api-services/judges/judges-api.service';
 import { Judge } from '../../api-services/judges/judge-api.model';
 import { DialogHelperService } from '../shared/services/dialog-helper.service';
 import { DialogButton } from '../shared/models/dialog-config.model';
 import { ToasterService } from '../../core/services/toaster.service';
+import { HttpClient } from '@angular/common/http';
+import { forkJoin, Subject } from 'rxjs';
+import { environment } from '../../../enviroments/enviroment';
+import { AddJudgeFormComponent } from './add-judge-form/add-judge-form.component';
 
 @Component({
   selector: 'app-judges-page',
@@ -20,6 +23,8 @@ export class JudgesPageComponent implements OnInit, OnDestroy {
   private readonly dialog = inject(MatDialog);
   private readonly toaster = inject(ToasterService);
   private readonly destroy$ = new Subject<void>();
+  private readonly http = inject(HttpClient);
+private readonly apiUrl = `${environment.apiUrl}/api`;
 
   readonly judgesFromApi = signal<Judge[]>([]);
 
@@ -95,9 +100,44 @@ export class JudgesPageComponent implements OnInit, OnDestroy {
   }
 
   onAddJudge(): void {
-    // TODO: Open add judge dialog
-    console.log('Add judge clicked');
-  }
+  forkJoin({
+    cities: this.http.get<any[]>(`${this.apiUrl}/City/GetCities`),
+    genders: this.http.get<any[]>(`${this.apiUrl}/Gender/GetGenders`)
+  })
+    .pipe(takeUntil(this.destroy$))
+    .subscribe({
+      next: data => {
+        const dialogRef = this.dialog.open(AddJudgeFormComponent, {
+          width: '820px',
+          maxWidth: '95vw',
+          maxHeight: '90vh',
+          disableClose: true,
+          panelClass: 'judge-dialog-panel',
+          autoFocus: false,
+          data: {
+            cities: data.cities.map(city => ({
+              id: city.id,
+              name: `${city.cityName}, ${city.country}`
+            })),
+            genders: data.genders.map(gender => ({
+              id: gender.id,
+              name: gender.name
+            }))
+          }
+        });
+
+        dialogRef.afterClosed().subscribe((wasCreated?: boolean) => {
+          if (wasCreated) {
+            this.loadJudges();
+          }
+        });
+      },
+      error: err => {
+        console.error('Error loading judge form data:', err);
+        this.toaster.error('Failed to load form data.');
+      }
+    });
+}
 
   onEditJudge(judge: Judge): void {
     // TODO: Open edit judge dialog

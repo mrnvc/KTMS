@@ -31,8 +31,10 @@ import { EditContestantFormComponent } from './modules/contestants-page/edit-con
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { PhoneFormatPipe } from './modules/shared/pipes/phone-format.pipe';
 import { ClubWithoutCountryPipe } from './modules/shared/pipes/club-without-country-name.pipe';
+import { JudgeLicenseFormatPipe } from './modules/shared/pipes/licence-format.pipe';
 import { QRCodeComponent } from 'angularx-qrcode';
 import { JudgesPageComponent } from './modules/judges-page/judges-page.component';
+import { AddJudgeFormComponent } from './modules/judges-page/add-judge-form/add-judge-form.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { JudgesPageComponent } from './modules/judges-page/judges-page.component
     EditContestantFormComponent,
     PhoneFormatPipe,
     ClubWithoutCountryPipe,
-    JudgesPageComponent
+    JudgesPageComponent,
+    AddJudgeFormComponent,
+    JudgeLicenseFormatPipe
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,143 @@
+<div class="dialog">
+  <div class="dialog-header">
+    <h2>Add Judge</h2>
+
+    <button type="button" class="close-btn" (click)="onCancel()" [disabled]="isLoading">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="form-card">
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>First Name</mat-label>
+          <input matInput type="text" formControlName="name" placeholder="Enter first name" />
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-error *ngIf="hasError('name')">
+            {{ getErrorMessage('name') }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Last Name</mat-label>
+          <input matInput type="text" formControlName="surname" placeholder="Enter last name" />
+          <mat-icon matSuffix>badge</mat-icon>
+          <mat-error *ngIf="hasError('surname')">
+            {{ getErrorMessage('surname') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Phone Number</mat-label>
+          <input matInput type="text" formControlName="phoneNumber" placeholder="Enter phone number" />
+          <mat-icon matSuffix>phone</mat-icon>
+          <mat-error *ngIf="hasError('phoneNumber')">
+            {{ getErrorMessage('phoneNumber') }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" placeholder="Enter email" />
+          <mat-icon matSuffix>mail</mat-icon>
+          <mat-error *ngIf="hasError('email')">
+            {{ getErrorMessage('email') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Date of Birth</mat-label>
+          <input matInput type="date" formControlName="dateOfBirth" [max]="today" />
+          <mat-error *ngIf="hasError('dateOfBirth')">
+            {{ getErrorMessage('dateOfBirth') }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Username</mat-label>
+          <input matInput type="text" formControlName="username" placeholder="Enter username" />
+          <mat-icon matSuffix>account_circle</mat-icon>
+          <mat-error *ngIf="hasError('username')">
+            {{ getErrorMessage('username') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password" placeholder="Enter password" />
+          <mat-icon matSuffix>lock</mat-icon>
+          <mat-error *ngIf="hasError('password')">
+            {{ getErrorMessage('password') }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Gender</mat-label>
+          <mat-select formControlName="genderId">
+            <mat-option [value]="null" disabled>Select gender</mat-option>
+            <mat-option *ngFor="let gender of genders" [value]="gender.id">
+              {{ gender.name }}
+            </mat-option>
+          </mat-select>
+          <mat-icon matSuffix>wc</mat-icon>
+          <mat-error *ngIf="hasError('genderId')">
+            {{ getErrorMessage('genderId') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>City</mat-label>
+          <mat-select formControlName="cityId">
+            <mat-option [value]="null" disabled>Select city</mat-option>
+            <mat-option *ngFor="let city of cities" [value]="city.id">
+              {{ city.name }}
+            </mat-option>
+          </mat-select>
+          <mat-icon matSuffix>location_city</mat-icon>
+          <mat-error *ngIf="hasError('cityId')">
+            {{ getErrorMessage('cityId') }}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>License</mat-label>
+          <input matInput type="text" formControlName="license" placeholder="Enter license" />
+          <mat-icon matSuffix>verified</mat-icon>
+          <mat-error *ngIf="hasError('license')">
+            {{ getErrorMessage('license') }}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Rank</mat-label>
+        <input matInput type="text" formControlName="rank" placeholder="Enter rank, for example National" />
+        <mat-icon matSuffix>military_tech</mat-icon>
+        <mat-error *ngIf="hasError('rank')">
+          {{ getErrorMessage('rank') }}
+        </mat-error>
+      </mat-form-field>
+
+      <div class="form-actions">
+        <button type="button" mat-stroked-button (click)="onCancel()" [disabled]="isLoading">
+          <mat-icon>close</mat-icon>
+          Cancel
+        </button>
+
+        <button type="submit" mat-raised-button color="primary" [disabled]="isLoading">
+          <mat-icon>save</mat-icon>
+          Save Judge
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

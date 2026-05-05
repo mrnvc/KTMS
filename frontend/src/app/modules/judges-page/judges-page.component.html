@@ -103,8 +103,8 @@
           <tr *ngFor="let judge of filteredJudges()">
             <td class="name">{{ getFullName(judge) }}</td>
             <td>{{ judge.email }}</td>
-            <td>{{ judge.phoneNumber }}</td>
-            <td>{{ judge.license }}</td>
+            <td>{{ judge.phoneNumber | phoneFormat }}</td>
+            <td>{{ judge.license | judgeLicenseFormat }}</td>
             <td>
               <span class="rank-badge">
                 {{ judge.rank || 'Not assigned' }}
