@@ -1,0 +1,142 @@
+<div class="page">
+  <!-- Header -->
+  <header class="header">
+    <div class="header__overlay"></div>
+    <div class="header__content">
+      <h1>Registered Judges</h1>
+    </div>
+  </header>
+
+  <!-- Filters Section -->
+  <section class="filters">
+    <div class="filter-title">
+      <mat-icon>filter_list</mat-icon>
+      <h3>Filter Judges</h3>
+    </div>
+
+    <div class="filter-card">
+      <div class="filter-grid">
+        <!-- First Name -->
+        <div class="filter-block">
+          <label>First Name</label>
+          <input
+            type="text"
+            placeholder="Search by name..."
+            [ngModel]="firstNameFilter()"
+            (input)="onFirstNameChange($any($event.target).value)"
+          />
+        </div>
+
+        <!-- Last Name -->
+        <div class="filter-block">
+          <label>Last Name</label>
+          <input
+            type="text"
+            placeholder="Search by surname..."
+            [ngModel]="lastNameFilter()"
+            (input)="onLastNameChange($any($event.target).value)"
+          />
+        </div>
+
+        <!-- License -->
+        <div class="filter-block">
+          <label>License</label>
+          <input
+            type="text"
+            placeholder="Search by license..."
+            [ngModel]="licenseFilter()"
+            (input)="onLicenseChange($any($event.target).value)"
+          />
+        </div>
+
+        <!-- Rank -->
+        <div class="filter-block">
+          <label>Rank</label>
+          <select
+            [ngModel]="rankFilter()"
+            (change)="onRankChange($any($event.target).value)"
+          >
+            <option>All Ranks</option>
+            <option *ngFor="let rank of uniqueRanks()">{{ rank }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Add Judge Button -->
+  <div class="action-bar">
+    <button
+      mat-raised-button
+      color="primary"
+      class="add-judge-btn"
+      (click)="onAddJudge()"
+    >
+      <mat-icon>add</mat-icon>
+      Add Judge
+    </button>
+  </div>
+
+  <!-- Judges Table -->
+  <main class="content">
+    <div class="content__top">
+      <p class="muted">
+        Showing {{ filteredJudges().length }}
+        judge{{ filteredJudges().length === 1 ? "" : "s" }}
+      </p>
+    </div>
+
+    <div class="table-wrapper">
+      <table class="judges-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>License</th>
+            <th>Rank</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let judge of filteredJudges()">
+            <td class="name">{{ getFullName(judge) }}</td>
+            <td>{{ judge.email }}</td>
+            <td>{{ judge.phoneNumber }}</td>
+            <td>{{ judge.license }}</td>
+            <td>
+              <span class="rank-badge">
+                {{ judge.rank || 'Not assigned' }}
+              </span>
+            </td>
+            <td class="actions">
+              <button
+                mat-icon-button
+                matTooltip="Edit"
+                (click)="onEditJudge(judge)"
+                class="edit-btn"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+
+              <button
+                mat-icon-button
+                matTooltip="Delete"
+                (click)="onDeleteJudge(judge)"
+                class="delete-btn"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div *ngIf="filteredJudges().length === 0" class="empty-state">
+        <mat-icon>gavel</mat-icon>
+        <p>No judges found</p>
+      </div>
+    </div>
+  </main>
+</div>

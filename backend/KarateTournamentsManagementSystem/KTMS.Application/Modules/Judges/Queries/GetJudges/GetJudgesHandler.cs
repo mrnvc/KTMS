@@ -17,6 +17,7 @@ namespace KTMS.Application.Modules.Judges.Queries.GetJudges
         {
             return await _dbContext.Judges
                         .Include(j => j.User)
+                        .Where(j => j.User.IsEnabled)
                         .Select(j => new JudgeDto
                         {
                             Id = j.Id,

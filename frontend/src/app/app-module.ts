@@ -32,6 +32,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { PhoneFormatPipe } from './modules/shared/pipes/phone-format.pipe';
 import { ClubWithoutCountryPipe } from './modules/shared/pipes/club-without-country-name.pipe';
 import { QRCodeComponent } from 'angularx-qrcode';
+import { JudgesPageComponent } from './modules/judges-page/judges-page.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { QRCodeComponent } from 'angularx-qrcode';
     AddContestantFormComponent,
     EditContestantFormComponent,
     PhoneFormatPipe,
-    ClubWithoutCountryPipe
+    ClubWithoutCountryPipe,
+    JudgesPageComponent
   ],
   imports: [
     BrowserModule,
