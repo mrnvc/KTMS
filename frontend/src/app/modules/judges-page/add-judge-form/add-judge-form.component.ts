@@ -264,7 +264,7 @@ export class AddJudgeFormComponent implements OnInit {
       password: value.password,
       cityId: value.cityId,
       genderId: value.genderId,
-      license: value.license.trim(),
+      license: value.license.trim()?.toUpperCase(),
       rank: value.rank?.trim() || null
     };
 

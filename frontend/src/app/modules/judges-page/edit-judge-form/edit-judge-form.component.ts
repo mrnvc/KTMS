@@ -151,7 +151,7 @@ export class EditJudgeFormComponent implements OnInit {
       username: this.judge.username,
       cityId: this.judge.cityId,
       genderId: this.judge.genderId,
-      license: this.judge.license,
+      license: this.judge.license?.toUpperCase(),
       rank: this.judge.rank ?? ''
     });
 
@@ -204,7 +204,7 @@ export class EditJudgeFormComponent implements OnInit {
       username: value.username.trim(),
       cityId: value.cityId,
       genderId: value.genderId,
-      license: value.license.trim(),
+      license: value.license.trim()?.toUpperCase(),
       rank: value.rank?.trim() || null
     };
 
@@ -213,7 +213,9 @@ export class EditJudgeFormComponent implements OnInit {
     this.judgesApi.updateJudge(this.judge.id, command)
       .pipe(
         finalize(() => {
-          this.isLoading = false;
+          setTimeout(() => {
+            this.isLoading = false;
+          });
         })
       )
       .subscribe({

@@ -122,7 +122,7 @@
       <div class="form-row">
         <mat-form-field appearance="outline" class="half-width">
           <mat-label>License</mat-label>
-          <input matInput type="text" formControlName="license" placeholder="Enter license" />
+          <input matInput type="text" formControlName="license" placeholder="Enter license" appUppercaseInput />
           <mat-icon matSuffix>verified</mat-icon>
           <mat-error *ngIf="hasError('license')">
             {{ getErrorMessage('license') }}
