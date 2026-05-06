@@ -14,45 +14,45 @@
 
           <div class="user-role">
             @if (auth.isAdmin()) {
-            <mat-chip class="role-chip admin">
-              <mat-icon>admin_panel_settings</mat-icon>
-              {{ 'ADMIN_PANEL.ROLES.ADMIN' | translate }}
-            </mat-chip>
+            <div class="role-pill admin">
+              <span class="role-dot"></span>
+              <span>{{ 'ADMIN_PANEL.ROLES.ADMIN' | translate }}</span>
+            </div>
             } @else if (auth.isCoach()) {
-            <mat-chip class="role-chip coach">
-              <mat-icon>manage_accounts</mat-icon>
-              {{ 'ADMIN_PANEL.ROLES.COACH' | translate }}
-            </mat-chip>
+            <div class="role-pill coach">
+              <span class="role-dot"></span>
+              <span>{{ 'ADMIN_PANEL.ROLES.COACH' | translate }}</span>
+            </div>
             } @else if (auth.isContestant()) {
-            <mat-chip class="role-chip contestant">
-              <mat-icon>badge</mat-icon>
-              {{ 'ADMIN_PANEL.ROLES.CONTESTANT' | translate }}
-            </mat-chip>
+            <div class="role-pill contestant">
+              <span class="role-dot"></span>
+              <span>{{ 'ADMIN_PANEL.ROLES.CONTESTANT' | translate }}</span>
+            </div>
             }
-          </div>
         </div>
       </div>
+    </div>
 
-      <!-- Language Selector -->
-      <div class="language-selector">
-        <button mat-icon-button [matMenuTriggerFor]="langMenu" class="lang-button">
-          <img class="flag-icon" [src]="getCurrentLanguage()?.flagUrl" [alt]="getCurrentLanguage()?.name" />
-          <span class="dropdown-arrow">▾</span>
+    <!-- Language Selector -->
+    <div class="language-selector">
+      <button mat-icon-button [matMenuTriggerFor]="langMenu" class="lang-button">
+        <img class="flag-icon" [src]="getCurrentLanguage()?.flagUrl" [alt]="getCurrentLanguage()?.name" />
+        <span class="dropdown-arrow">▾</span>
+      </button>
+
+      <mat-menu #langMenu="matMenu">
+        <button mat-menu-item *ngFor="let lang of languages" (click)="switchLanguage(lang.code)"
+          [class.active-lang]="currentLang === lang.code">
+          <span class="check-space">
+            <span *ngIf="currentLang === lang.code">✓</span>
+          </span>
+
+          <img class="flag-icon" [src]="lang.flagUrl" [alt]="lang.name" />
+
+          <span class="language-name">{{ lang.name }}</span>
         </button>
-
-        <mat-menu #langMenu="matMenu">
-          <button mat-menu-item *ngFor="let lang of languages" (click)="switchLanguage(lang.code)"
-            [class.active-lang]="currentLang === lang.code">
-            <span class="check-space">
-              <span *ngIf="currentLang === lang.code">✓</span>
-            </span>
-
-            <img class="flag-icon" [src]="lang.flagUrl" [alt]="lang.name" />
-
-            <span class="language-name">{{ lang.name }}</span>
-          </button>
-        </mat-menu>
-      </div>
+      </mat-menu>
+    </div>
     </div>
 
     <!-- NAVIGATION MENU -->

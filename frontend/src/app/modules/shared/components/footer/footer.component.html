@@ -7,55 +7,66 @@
           <div class="logo-icon">空</div>
           <span class="brand-name">KTMS</span>
         </div>
+
         <p class="brand-description">
-          Professional tournament management for martial arts organizations worldwide.
+          {{ 'FOOTER.DESCRIPTION' | translate }}
         </p>
       </div>
 
       <!-- Product -->
       <div class="footer-section">
-        <h4>Product</h4>
+        <h4>{{ 'FOOTER.PRODUCT.TITLE' | translate }}</h4>
         <ul>
-          <li><a href="#">Features</a></li>
-          <li><a href="#">Integrations</a></li>
-          <li><a href="#">FAQ</a></li>
+          <li><a href="#features">{{ 'FOOTER.PRODUCT.FEATURES' | translate }}</a></li>
+          <li><a href="#">{{ 'FOOTER.PRODUCT.INTEGRATIONS' | translate }}</a></li>
+          <li><a href="#">{{ 'FOOTER.PRODUCT.FAQ' | translate }}</a></li>
         </ul>
       </div>
 
       <!-- Company -->
       <div class="footer-section">
-        <h4>Company</h4>
+        <h4>{{ 'FOOTER.COMPANY.TITLE' | translate }}</h4>
         <ul>
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Careers</a></li>
-          <li><a href="#">Blog</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a href="#">{{ 'FOOTER.COMPANY.ABOUT_US' | translate }}</a></li>
+          <li><a href="#">{{ 'FOOTER.COMPANY.CAREERS' | translate }}</a></li>
+          <li><a href="#">{{ 'FOOTER.COMPANY.BLOG' | translate }}</a></li>
+          <li><a href="#contact">{{ 'FOOTER.COMPANY.CONTACT' | translate }}</a></li>
         </ul>
       </div>
 
       <!-- Connect -->
-      <div class="footer-section">
-        <h4>Connect</h4>
+      <div class="footer-section" id="contact">
+        <h4>{{ 'FOOTER.CONNECT.TITLE' | translate }}</h4>
+
         <div class="social-icons">
           <div class="facebook" (click)="openSocial('facebook')">
-            <img src="/assets/facebook.svg" alt="fb"/>
+            <img src="/assets/facebook.svg" alt="Facebook" />
           </div>
+
           <div class="instagram" (click)="openSocial('instagram')">
-            <img src="/assets/instagram.svg" alt="ig"/>
+            <img src="/assets/instagram.svg" alt="Instagram" />
           </div>
+
           <div class="youtube" (click)="openSocial('youtube')">
-            <img src="/assets/youtube.svg" alt="yt"/>
+            <img src="/assets/youtube.svg" alt="YouTube" />
           </div>
         </div>
+
         <div class="contact-mail">
-          <img src="/assets/mail.svg" alt="mail">
-          <p> info@ktms.com </p>
+          <img src="/assets/mail.svg" alt="Email" />
+          <p>info@ktms.com</p>
         </div>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <p>&copy; 2025 KTMS - Karate Tournaments Management System. All rights reserved. | Privacy Policy | Terms of Service</p>
+      <p>
+        {{ 'FOOTER.BOTTOM.COPYRIGHT' | translate }}
+        |
+        <a href="#">{{ 'FOOTER.BOTTOM.PRIVACY_POLICY' | translate }}</a>
+        |
+        <a href="#">{{ 'FOOTER.BOTTOM.TERMS_OF_SERVICE' | translate }}</a>
+      </p>
     </div>
   </div>
 </footer>

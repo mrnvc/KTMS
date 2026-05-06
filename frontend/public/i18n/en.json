@@ -3,6 +3,30 @@
     "TITLE": "KTMS Tournament System",
     "DESCRIPTION": "Manage tournaments, participants, and competitions."
   },
+  "FOOTER": {
+    "DESCRIPTION": "Professional tournament management for martial arts organizations worldwide.",
+    "PRODUCT": {
+      "TITLE": "Product",
+      "FEATURES": "Features",
+      "INTEGRATIONS": "Integrations",
+      "FAQ": "FAQ"
+    },
+    "COMPANY": {
+      "TITLE": "Company",
+      "ABOUT_US": "About Us",
+      "CAREERS": "Careers",
+      "BLOG": "Blog",
+      "CONTACT": "Contact"
+    },
+    "CONNECT": {
+      "TITLE": "Connect"
+    },
+    "BOTTOM": {
+      "COPYRIGHT": "© 2025 KTMS - Karate Tournaments Management System. All rights reserved.",
+      "PRIVACY_POLICY": "Privacy Policy",
+      "TERMS_OF_SERVICE": "Terms of Service"
+    }
+  },
   "LANDING": {
     "NAV": {
       "FEATURES": "Features",

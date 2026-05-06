@@ -3,6 +3,30 @@
     "TITLE": "KTMS Sistem Turnira",
     "DESCRIPTION": "Upravljajte turnirima, učesnicima i takmičenjima."
   },
+  "FOOTER": {
+    "DESCRIPTION": "Profesionalno upravljanje turnirima za organizacije borilačkih sportova širom svijeta.",
+    "PRODUCT": {
+      "TITLE": "Proizvod",
+      "FEATURES": "Funkcionalnosti",
+      "INTEGRATIONS": "Integracije",
+      "FAQ": "Česta pitanja"
+    },
+    "COMPANY": {
+      "TITLE": "Kompanija",
+      "ABOUT_US": "O nama",
+      "CAREERS": "Karijera",
+      "BLOG": "Blog",
+      "CONTACT": "Kontakt"
+    },
+    "CONNECT": {
+      "TITLE": "Povežite se"
+    },
+    "BOTTOM": {
+      "COPYRIGHT": "© 2025 KTMS - Sistem za upravljanje karate turnirima. Sva prava zadržana.",
+      "PRIVACY_POLICY": "Politika privatnosti",
+      "TERMS_OF_SERVICE": "Uslovi korištenja"
+    }
+  },
   "LANDING": {
     "NAV": {
       "FEATURES": "Funkcionalnosti",
