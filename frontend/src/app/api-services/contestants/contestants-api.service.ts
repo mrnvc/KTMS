@@ -39,7 +39,9 @@ export class ContestantsApiService {
         lastName,
         belt: item.belt,
         club: item.club,
-        category: ''
+        category: '',
+        phoneNumber: item.phoneNumber,
+        email: item.email
       };
     });
   }

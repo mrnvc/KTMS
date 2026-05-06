@@ -6,4 +6,6 @@ export interface Contestant {
   category: string;
   belt: string;
   user: string;
+  phoneNumber: string;
+  email: string;
 }

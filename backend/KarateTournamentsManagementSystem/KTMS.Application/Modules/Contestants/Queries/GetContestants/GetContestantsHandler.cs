@@ -1,5 +1,6 @@
 ﻿using KTMS.Application.Abstractions;
 using KTMS.Application.Modules.Contestants.Dtos;
+using KTMS.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -31,7 +32,9 @@ namespace KTMS.Application.Modules.Contestants.Queries.GetContestants
                     Id = c.Id,
                     Belt = c.Belt.Name,
                     Club = $"{c.Club.Name}, {c.Club.City.Name}, {c.Club.Country.Name}",
-                    User = $"{c.User.Name} {c.User.Surname}, {c.User.Role.Title}"
+                    User = $"{c.User.Name} {c.User.Surname}, {c.User.Role.Title}",
+                    PhoneNumber = c.User.PhoneNumber,
+                    Email = c.User.Email
 
                 }).ToListAsync(cancellationToken);
         }

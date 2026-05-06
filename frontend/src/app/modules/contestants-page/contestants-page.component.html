@@ -79,6 +79,8 @@
         <thead>
           <tr>
             <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
             <th>Club</th>
             <th>Belt</th>
             <th>Actions</th>
@@ -87,6 +89,8 @@
         <tbody>
           <tr *ngFor="let contestant of filteredContestants()">
             <td class="name">{{ getFullName(contestant) }}</td>
+            <td>{{ contestant.email }}</td>
+            <td>{{ contestant.phoneNumber | phoneFormat }}</td>
             <td>{{ contestant.club | clubWithoutCountry }}</td>
             <td>
               <span class="belt-badge" [ngClass]="contestant.belt.toLowerCase()">

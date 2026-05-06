@@ -339,10 +339,12 @@ export class ContestantsPageComponent implements OnInit, OnDestroy {
 
     autoTable(doc, {
       startY: 72,
-      head: [['#', 'Name', 'Club', 'Belt']],
+      head: [['#', 'Name', 'Email', 'Phone', 'Club', 'Belt']],
       body: contestants.map((contestant, index) => [
         index + 1,
         this.getFullName(contestant),
+        contestant.email,
+        contestant.phoneNumber,
         this.formatClubWithoutCountry(contestant.club),
         contestant.belt
       ]),
