@@ -3,7 +3,7 @@
   <header class="header">
     <div class="header__overlay"></div>
     <div class="header__content">
-      <h1>Registered Competitors</h1>
+      <h1>{{ 'CONTESTANTS.TITLE' | translate }}</h1>
     </div>
   </header>
 
@@ -11,43 +11,50 @@
   <section class="filters">
     <div class="filter-title">
       <mat-icon>filter_list</mat-icon>
-      <h3>Filter Competitors</h3>
+      <h3>{{ 'CONTESTANTS.FILTER_TITLE' | translate }}</h3>
     </div>
 
     <div class="filter-card">
       <div class="filter-grid">
         <!-- First Name -->
         <div class="filter-block">
-          <label>First Name</label>
-          <input type="text" placeholder="Search by name..." [ngModel]="firstNameFilter()"
-            (input)="onFirstNameChange($event.target.value)" />
+          <label>{{ 'CONTESTANTS.FIRST_NAME' | translate }}</label>
+          <input
+            type="text"
+            [placeholder]="'CONTESTANTS.SEARCH_BY_NAME' | translate"
+            [ngModel]="firstNameFilter()"
+            (input)="onFirstNameChange($any($event.target).value)"
+          />
         </div>
 
         <!-- Last Name -->
         <div class="filter-block">
-          <label>Last Name</label>
-          <input type="text" placeholder="Search by surname..." [ngModel]="lastNameFilter()"
-            (input)="onLastNameChange($event.target.value)" />
+          <label>{{ 'CONTESTANTS.LAST_NAME' | translate }}</label>
+          <input
+            type="text"
+            [placeholder]="'CONTESTANTS.SEARCH_BY_SURNAME' | translate"
+            [ngModel]="lastNameFilter()"
+            (input)="onLastNameChange($any($event.target).value)"
+          />
         </div>
 
         <!-- Belt -->
         <div class="filter-block">
-          <label>Belt</label>
-          <select [ngModel]="beltFilter()" (change)="onBeltChange($any($event).target.value)">
-            <option>All Belts</option>
+          <label>{{ 'CONTESTANTS.BELT' | translate }}</label>
+          <select [ngModel]="beltFilter()" (change)="onBeltChange($any($event.target).value)">
+            <option>{{ 'CONTESTANTS.ALL_BELTS' | translate }}</option>
             <option *ngFor="let belt of uniqueBelts()">{{ belt }}</option>
           </select>
         </div>
 
         <!-- Club -->
         <div class="filter-block">
-          <label>Club</label>
-          <select [ngModel]="clubFilter()" (change)="onClubChange($any($event).target.value)">
-            <option>All Clubs</option>
+          <label>{{ 'CONTESTANTS.CLUB' | translate }}</label>
+          <select [ngModel]="clubFilter()" (change)="onClubChange($any($event.target).value)">
+            <option>{{ 'CONTESTANTS.ALL_CLUBS' | translate }}</option>
             <option *ngFor="let club of uniqueClubs()">{{ club }}</option>
           </select>
         </div>
-
       </div>
     </div>
   </section>
@@ -56,12 +63,12 @@
   <div class="action-bar">
     <button mat-raised-button color="primary" class="add-contestant-btn" (click)="onAddContestant()">
       <mat-icon>add</mat-icon>
-      Add Contestant
+      {{ 'CONTESTANTS.ADD_CONTESTANT' | translate }}
     </button>
 
     <button mat-raised-button class="pdf-report-btn" (click)="generatePdfReport()">
       <mat-icon>picture_as_pdf</mat-icon>
-      Generate PDF
+      {{ 'CONTESTANTS.GENERATE_PDF' | translate }}
     </button>
   </div>
 
@@ -69,8 +76,7 @@
   <main class="content">
     <div class="content__top">
       <p class="muted">
-        Showing {{ filteredContestants().length }}
-        competitor{{ filteredContestants().length === 1 ? "" : "s" }}
+        {{ 'CONTESTANTS.SHOWING' | translate:{ count: filteredContestants().length } }}
       </p>
     </div>
 
@@ -78,14 +84,15 @@
       <table class="contestants-table">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Club</th>
-            <th>Belt</th>
-            <th>Actions</th>
+            <th>{{ 'CONTESTANTS.TABLE.NAME' | translate }}</th>
+            <th>{{ 'CONTESTANTS.TABLE.EMAIL' | translate }}</th>
+            <th>{{ 'CONTESTANTS.TABLE.PHONE' | translate }}</th>
+            <th>{{ 'CONTESTANTS.TABLE.CLUB' | translate }}</th>
+            <th>{{ 'CONTESTANTS.TABLE.BELT' | translate }}</th>
+            <th>{{ 'COMMON.ACTIONS' | translate }}</th>
           </tr>
         </thead>
+
         <tbody>
           <tr *ngFor="let contestant of filteredContestants()">
             <td class="name">{{ getFullName(contestant) }}</td>
@@ -98,13 +105,30 @@
               </span>
             </td>
             <td class="actions">
-              <button mat-icon-button matTooltip="Edit" (click)="onEditContestant(contestant)" class="edit-btn">
+              <button
+                mat-icon-button
+                [matTooltip]="'COMMON.EDIT' | translate"
+                (click)="onEditContestant(contestant)"
+                class="edit-btn"
+              >
                 <mat-icon>edit</mat-icon>
               </button>
-              <button mat-icon-button matTooltip="Delete" (click)="onDeleteContestant(contestant)" class="delete-btn">
+
+              <button
+                mat-icon-button
+                [matTooltip]="'COMMON.DELETE' | translate"
+                (click)="onDeleteContestant(contestant)"
+                class="delete-btn"
+              >
                 <mat-icon>delete</mat-icon>
               </button>
-              <button mat-icon-button matTooltip="Share QR" (click)="showQrCode(contestant)" class="qr-btn">
+
+              <button
+                mat-icon-button
+                [matTooltip]="'CONTESTANTS.SHARE_QR' | translate"
+                (click)="showQrCode(contestant)"
+                class="qr-btn"
+              >
                 <mat-icon>qr_code_2</mat-icon>
               </button>
             </td>
@@ -114,7 +138,7 @@
 
       <div *ngIf="filteredContestants().length === 0" class="empty-state">
         <mat-icon>person_search</mat-icon>
-        <p>No competitors found</p>
+        <p>{{ 'CONTESTANTS.NO_COMPETITORS_FOUND' | translate }}</p>
       </div>
     </div>
   </main>
@@ -123,7 +147,7 @@
     <div class="qr-modal">
       <div class="qr-modal__header">
         <div>
-          <h2>Share Contestant</h2>
+          <h2>{{ 'CONTESTANTS.SHARE_CONTESTANT' | translate }}</h2>
           <p>{{ selectedQrTitle }}</p>
         </div>
 
@@ -136,7 +160,7 @@
         <qrcode [qrdata]="selectedQrValue" [width]="260" [errorCorrectionLevel]="'M'"></qrcode>
 
         <p class="qr-info">
-          Scan this QR code to open contestant details.
+          {{ 'CONTESTANTS.QR_INFO' | translate }}
         </p>
       </div>
     </div>

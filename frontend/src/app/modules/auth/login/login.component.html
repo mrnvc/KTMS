@@ -11,14 +11,14 @@
     <!-- Logo & Brand -->
     <div class="auth-brand">
       <h1 class="brand-name">KTMS</h1>
-      <p class="brand-tagline">Dobrodošli nazad</p>
+      <p class="brand-tagline">{{ 'AUTH.LOGIN.WELCOME_BACK' | translate }}</p>
     </div>
 
     <!-- Login Card -->
     <mat-card class="auth-card mat-elevation-z8">
       <mat-card-header>
         <mat-card-title>{{ 'AUTH.LOGIN.TITLE' | translate }}</mat-card-title>
-        <mat-card-subtitle>Unesite vaše podatke za pristup</mat-card-subtitle>
+        <mat-card-subtitle>{{ 'AUTH.LOGIN.SUBTITLE' | translate }}</mat-card-subtitle>
       </mat-card-header>
 
       <mat-card-content>
@@ -36,15 +36,17 @@
               matInput
               formControlName="email"
               type="email"
-              placeholder="vasa.email@primjer.com"
+              [placeholder]="'AUTH.LOGIN.EMAIL_EXAMPLE_PLACEHOLDER' | translate"
               autocomplete="email"
             />
             <mat-icon matPrefix>person</mat-icon>
+
             <mat-error *ngIf="form.get('email')?.hasError('required')">
-              Email je obavezan
+              {{ 'AUTH.LOGIN.EMAIL_REQUIRED' | translate }}
             </mat-error>
+
             <mat-error *ngIf="form.get('email')?.hasError('email')">
-              Unesite validan email
+              {{ 'AUTH.LOGIN.EMAIL_INVALID' | translate }}
             </mat-error>
           </mat-form-field>
 
@@ -59,17 +61,19 @@
               autocomplete="current-password"
             />
             <mat-icon matPrefix>lock</mat-icon>
+
             <button
               mat-icon-button
               matSuffix
               type="button"
               (click)="hidePassword = !hidePassword"
-              [attr.aria-label]="'Hide password'"
+              [attr.aria-label]="'AUTH.LOGIN.HIDE_PASSWORD' | translate"
             >
               <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
+
             <mat-error *ngIf="form.get('password')?.hasError('required')">
-              Lozinka je obavezna
+              {{ 'AUTH.LOGIN.PASSWORD_REQUIRED' | translate }}
             </mat-error>
           </mat-form-field>
 
@@ -78,7 +82,10 @@
             <mat-checkbox formControlName="rememberMe" color="primary">
               {{ 'AUTH.LOGIN.REMEMBER_ME' | translate }}
             </mat-checkbox>
-            <a href="#" class="forgot-link">Zaboravili ste lozinku?</a>
+
+            <a href="#" class="forgot-link">
+              {{ 'AUTH.LOGIN.FORGOT_PASSWORD' | translate }}
+            </a>
           </div>
 
           <!-- Submit Button -->
@@ -94,26 +101,29 @@
                 <mat-icon>login</mat-icon>
                 {{ 'AUTH.LOGIN.BUTTON' | translate }}
               </ng-container>
+
               <ng-template #loadingTpl>
                 <mat-progress-spinner
                   mode="indeterminate"
                   diameter="20"
                   strokeWidth="3"
                 ></mat-progress-spinner>
-                <span>Prijava u toku...</span>
+                <span>{{ 'AUTH.LOGIN.LOADING_IN_PROGRESS' | translate }}</span>
               </ng-template>
             </button>
           </div>
 
           <!-- Divider -->
           <div class="divider">
-            <span>ili</span>
+            <span>{{ 'AUTH.LOGIN.OR' | translate }}</span>
           </div>
 
           <!-- Register Link -->
           <div class="register-prompt">
-            <span>Nemate nalog?</span>
-            <a routerLink="/auth/register" class="register-link">Registrujte se</a>
+            <span>{{ 'AUTH.LOGIN.NO_ACCOUNT' | translate }}</span>
+            <a routerLink="/auth/register" class="register-link">
+              {{ 'AUTH.LOGIN.REGISTER_LINK' | translate }}
+            </a>
           </div>
         </form>
       </mat-card-content>
@@ -123,7 +133,7 @@
     <div class="auth-footer">
       <a routerLink="/" class="back-link">
         <mat-icon>arrow_back</mat-icon>
-        Nazad na početnu
+        {{ 'AUTH.LOGIN.BACK_TO_HOME' | translate }}
       </a>
     </div>
   </div>

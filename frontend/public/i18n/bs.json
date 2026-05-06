@@ -6,13 +6,26 @@
   "AUTH": {
     "LOGIN": {
       "TITLE": "Prijava",
+      "WELCOME_BACK": "Dobrodošli nazad",
+      "SUBTITLE": "Unesite vaše podatke za pristup",
       "EMAIL_LABEL": "Email",
       "EMAIL_PLACEHOLDER": "Unesite email",
+      "EMAIL_EXAMPLE_PLACEHOLDER": "vasa.email@primjer.com",
+      "EMAIL_REQUIRED": "Email je obavezan",
+      "EMAIL_INVALID": "Unesite validan email",
       "PASSWORD_LABEL": "Lozinka",
       "PASSWORD_PLACEHOLDER": "Unesite lozinku",
+      "PASSWORD_REQUIRED": "Lozinka je obavezna",
+      "HIDE_PASSWORD": "Sakrij lozinku",
       "REMEMBER_ME": "Zapamti me",
+      "FORGOT_PASSWORD": "Zaboravili ste lozinku?",
       "BUTTON": "Prijavi se",
-      "LOADING": "Prijavljivanje..."
+      "LOADING": "Prijavljivanje...",
+      "LOADING_IN_PROGRESS": "Prijava u toku...",
+      "OR": "ili",
+      "NO_ACCOUNT": "Nemate nalog?",
+      "REGISTER_LINK": "Registrujte se",
+      "BACK_TO_HOME": "Nazad na početnu"
     },
     "REGISTER": {
       "TITLE": "Registracija",
@@ -20,14 +33,16 @@
       "EMAIL_PLACEHOLDER": "Unesite email",
       "PASSWORD_LABEL": "Lozinka",
       "PASSWORD_PLACEHOLDER": "Unesite lozinku",
-      "CONFIRM_PASSWORD_LABEL": "Potvrdi Lozinku",
+      "CONFIRM_PASSWORD_LABEL": "Potvrdi lozinku",
       "CONFIRM_PASSWORD_PLACEHOLDER": "Potvrdite lozinku",
       "BUTTON": "Registruj se",
       "LOADING": "Registracija..."
     },
     "LOGOUT": {
       "TITLE": "Odjava",
-      "MESSAGE": "Odjavljivanje sa sistema...",
+      "MESSAGE": "Da li ste sigurni da se želite odjaviti?",
+      "CONFIRM_BUTTON": "Odjavi se",
+      "CANCEL_BUTTON": "Otkaži",
       "REDIRECT_IN": "Preusmjeravanje za {{seconds}}s"
     }
   },
@@ -40,21 +55,45 @@
     },
     "MENU": {
       "TOURNAMENTS": "Turniri",
+      "CONTESTANTS": "Takmičari",
+      "JUDGES": "Sudije",
       "CITIES": "Gradovi",
       "GENDERS": "Polovi",
       "ROLES": "Uloge",
+      "CATALOG": "Katalog",
+      "ORDERS_SECTION": "Narudžbe",
       "SYSTEM": "SISTEM",
       "SETTINGS": "Postavke",
+      "TOGGLE_THEME": "Promijeni temu",
+      "ENABLE_NOTIFICATIONS": "Uključi notifikacije",
       "LOGOUT": "Odjava"
     }
   },
   "TOURNAMENTS": {
-    "TITLE": "Turniri",
-    "SUBTITLE": "Upravljanje turnirima",
+    "BACK_TO_HOME": "Nazad na početnu",
+    "TITLE": "Lista karate turnira",
+    "SUBTITLE": "Pregledajte nadolazeća i aktivna karate takmičenja. Pratite mečeve, turnirske žrijebove i omiljene takmičare.",
+    "ALL_TOURNAMENTS": "Svi turniri",
+    "ACTIVE": "Aktivni",
+    "COMPLETED": "Završeni",
+    "FILTER_BY_DATE_TIME": "Filtriranje po datumu i vremenu",
+    "DATE_RANGE": "Raspon datuma",
+    "TIME_RANGE": "Raspon vremena",
+    "FROM": "Od",
+    "TO": "Do",
+    "SHOWING": "Prikazano {{count}} turnira",
+    "STATUS_ACTIVE": "Aktivan",
+    "STATUS_COMPLETED": "Završen",
+    "STATUS_PLANNED": "Planiran",
+    "VIEW_DETAILS": "Pogledaj detalje",
+    "NO_TOURNAMENTS_FOUND": "Nema pronađenih turnira za odabrane filtere.",
+    "CLEAR_FILTERS": "Očisti filtere",
+    "MANAGE_TITLE": "Turniri",
+    "MANAGE_SUBTITLE": "Upravljanje turnirima",
     "SEARCH_PLACEHOLDER": "Pretraži turnire",
     "SEARCH_INPUT_PLACEHOLDER": "Unesite naziv turnira...",
-    "NEW_TOURNAMENT": "Novi Turnir",
-    "ADD_NEW": "Dodaj Turnir",
+    "NEW_TOURNAMENT": "Novi turnir",
+    "ADD_NEW": "Dodaj turnir",
     "LOADING": "Učitavanje turnira...",
     "NO_DATA": "Nema turnira za prikaz",
     "NO_DATA_FILTER": "Nema rezultata za pretragu",
@@ -62,8 +101,8 @@
       "NAME": "Naziv",
       "STATUS": "Status",
       "CITY": "Grad",
-      "START_DATE": "Datum Početka",
-      "END_DATE": "Datum Kraja",
+      "START_DATE": "Datum početka",
+      "END_DATE": "Datum kraja",
       "ACTIONS": "Akcije"
     },
     "ACTIONS": {
@@ -71,20 +110,20 @@
       "DELETE_TOOLTIP": "Obriši turnir"
     },
     "FORM": {
-      "NAME": "Naziv Turnira",
+      "NAME": "Naziv turnira",
       "NAME_PLACEHOLDER": "Unesite naziv turnira",
       "DESCRIPTION": "Opis",
       "DESCRIPTION_PLACEHOLDER": "Unesite opis",
       "CITY": "Grad",
-      "START_DATE": "Datum Početka",
-      "END_DATE": "Datum Kraja",
+      "START_DATE": "Datum početka",
+      "END_DATE": "Datum kraja",
       "STATUS": "Status",
       "CANCEL": "Otkaži",
       "SAVE": "Sačuvaj",
       "UPDATE": "Ažuriraj"
     },
     "DIALOGS": {
-      "DELETE_TITLE": "Brisanje Turnira",
+      "DELETE_TITLE": "Brisanje turnira",
       "DELETE_MESSAGE": "Da li ste sigurni da želite obrisati turnir \"{{name}}\"?",
       "SUCCESS_CREATE": "Turnir uspješno kreiran.",
       "SUCCESS_UPDATE": "Turnir uspješno ažuriran.",
@@ -99,8 +138,8 @@
     "SUBTITLE": "Upravljanje gradovima",
     "SEARCH_PLACEHOLDER": "Pretraži gradove",
     "SEARCH_INPUT_PLACEHOLDER": "Unesite naziv grada...",
-    "NEW_CITY": "Novi Grad",
-    "ADD_NEW": "Dodaj Grad",
+    "NEW_CITY": "Novi grad",
+    "ADD_NEW": "Dodaj grad",
     "LOADING": "Učitavanje gradova...",
     "NO_DATA": "Nema gradova za prikaz",
     "NO_DATA_FILTER": "Nema rezultata za pretragu",
@@ -114,7 +153,7 @@
       "DELETE_TOOLTIP": "Obriši grad"
     },
     "FORM": {
-      "NAME": "Naziv Grada",
+      "NAME": "Naziv grada",
       "NAME_PLACEHOLDER": "Unesite naziv grada",
       "COUNTRY": "Država",
       "COUNTRY_PLACEHOLDER": "Unesite državu",
@@ -123,7 +162,7 @@
       "UPDATE": "Ažuriraj"
     },
     "DIALOGS": {
-      "DELETE_TITLE": "Brisanje Grada",
+      "DELETE_TITLE": "Brisanje grada",
       "DELETE_MESSAGE": "Da li ste sigurni da želite obrisati grad \"{{name}}\"?",
       "SUCCESS_CREATE": "Grad uspješno kreiran.",
       "SUCCESS_UPDATE": "Grad uspješno ažuriran.",
@@ -138,8 +177,8 @@
     "SUBTITLE": "Upravljanje polovima",
     "SEARCH_PLACEHOLDER": "Pretraži polove",
     "SEARCH_INPUT_PLACEHOLDER": "Unesite naziv pola...",
-    "NEW_GENDER": "Novi Pol",
-    "ADD_NEW": "Dodaj Pol",
+    "NEW_GENDER": "Novi pol",
+    "ADD_NEW": "Dodaj pol",
     "LOADING": "Učitavanje polova...",
     "NO_DATA": "Nema polova za prikaz",
     "NO_DATA_FILTER": "Nema rezultata za pretragu",
@@ -152,14 +191,14 @@
       "DELETE_TOOLTIP": "Obriši pol"
     },
     "FORM": {
-      "NAME": "Naziv Pola",
+      "NAME": "Naziv pola",
       "NAME_PLACEHOLDER": "Unesite naziv pola",
       "CANCEL": "Otkaži",
       "SAVE": "Sačuvaj",
       "UPDATE": "Ažuriraj"
     },
     "DIALOGS": {
-      "DELETE_TITLE": "Brisanje Pola",
+      "DELETE_TITLE": "Brisanje pola",
       "DELETE_MESSAGE": "Da li ste sigurni da želite obrisati pol \"{{name}}\"?",
       "SUCCESS_CREATE": "Pol uspješno kreiran.",
       "SUCCESS_UPDATE": "Pol uspješno ažuriran.",
@@ -174,8 +213,8 @@
     "SUBTITLE": "Upravljanje ulogama",
     "SEARCH_PLACEHOLDER": "Pretraži uloge",
     "SEARCH_INPUT_PLACEHOLDER": "Unesite naziv uloge...",
-    "NEW_ROLE": "Nova Uloga",
-    "ADD_NEW": "Dodaj Ulogu",
+    "NEW_ROLE": "Nova uloga",
+    "ADD_NEW": "Dodaj ulogu",
     "LOADING": "Učitavanje uloga...",
     "NO_DATA": "Nema uloga za prikaz",
     "NO_DATA_FILTER": "Nema rezultata za pretragu",
@@ -189,7 +228,7 @@
       "DELETE_TOOLTIP": "Obriši ulogu"
     },
     "FORM": {
-      "NAME": "Naziv Uloge",
+      "NAME": "Naziv uloge",
       "NAME_PLACEHOLDER": "Unesite naziv uloge",
       "DESCRIPTION": "Opis",
       "DESCRIPTION_PLACEHOLDER": "Unesite opis",
@@ -198,7 +237,7 @@
       "UPDATE": "Ažuriraj"
     },
     "DIALOGS": {
-      "DELETE_TITLE": "Brisanje Uloge",
+      "DELETE_TITLE": "Brisanje uloge",
       "DELETE_MESSAGE": "Da li ste sigurni da želite obrisati ulogu \"{{name}}\"?",
       "SUCCESS_CREATE": "Uloga uspješno kreirana.",
       "SUCCESS_UPDATE": "Uloga uspješno ažurirana.",
@@ -211,7 +250,7 @@
   "COACH": "Trener",
   "CONTESTANT": "Takmičar",
   "ADMIN": "Admin",
- "COMMON": {
+  "COMMON": {
     "YES": "Da",
     "NO": "Ne",
     "CANCEL": "Otkaži",
@@ -228,7 +267,7 @@
     "CLOSE": "Zatvori",
     "CONFIRM": "Potvrdi",
     "REFRESH": "Osvježi",
-    "RETRY": "Pokušaj Ponovo",
+    "RETRY": "Pokušaj ponovo",
     "CLEAR": "Očisti",
     "RESET": "Resetuj",
     "APPLY": "Primijeni",
@@ -249,8 +288,8 @@
     "ADD": "Dodaj",
     "REMOVE": "Ukloni",
     "SELECT": "Odaberi",
-    "SELECT_ALL": "Odaberi Sve",
-    "DESELECT_ALL": "Poništi Sve",
+    "SELECT_ALL": "Odaberi sve",
+    "DESELECT_ALL": "Poništi sve",
     "ACTIONS": "Akcije",
     "STATUS": "Status",
     "ACTIVE": "Aktivan",
@@ -302,9 +341,9 @@
       "BACK": "Nazad"
     },
     "TITLES": {
-      "CONFIRM_DELETE": "Potvrdi Brisanje",
-      "CONFIRM_ACTION": "Potvrdi Akciju",
-      "UNSAVED_CHANGES": "Nesačuvane Izmjene",
+      "CONFIRM_DELETE": "Potvrdi brisanje",
+      "CONFIRM_ACTION": "Potvrdi akciju",
+      "UNSAVED_CHANGES": "Nesačuvane izmjene",
       "SUCCESS": "Uspjeh",
       "ERROR": "Greška",
       "WARNING": "Upozorenje",
@@ -384,6 +423,103 @@
     }
   },
   "CONTESTANTS": {
-    "TITLE": "Takmičari"
+    "TITLE": "Registrovani takmičari",
+    "FILTER_TITLE": "Filtriranje takmičara",
+    "FIRST_NAME": "Ime",
+    "LAST_NAME": "Prezime",
+    "SEARCH_BY_NAME": "Pretraži po imenu...",
+    "SEARCH_BY_SURNAME": "Pretraži po prezimenu...",
+    "BELT": "Pojas",
+    "CLUB": "Klub",
+    "ALL_BELTS": "Svi pojasevi",
+    "ALL_CLUBS": "Svi klubovi",
+    "ADD_CONTESTANT": "Dodaj takmičara",
+    "GENERATE_PDF": "Generiši PDF",
+    "SHOWING": "Prikazano {{count}} takmičara",
+    "NO_COMPETITORS_FOUND": "Nema pronađenih takmičara",
+    "SHARE_QR": "Podijeli QR",
+    "SHARE_CONTESTANT": "Podijeli takmičara",
+    "QR_INFO": "Skenirajte QR kod za otvaranje detalja takmičara.",
+    "TABLE": {
+      "NAME": "Ime i prezime",
+      "EMAIL": "Email",
+      "PHONE": "Telefon",
+      "CLUB": "Klub",
+      "BELT": "Pojas"
+    },
+    "ADD_FORM": {
+      "TITLE": "Dodaj takmičara",
+      "SAVING": "Spremanje takmičara...",
+      "ENTER_FIRST_NAME": "Unesite ime",
+      "ENTER_LAST_NAME": "Unesite prezime",
+      "ENTER_PHONE": "Unesite broj telefona",
+      "ENTER_EMAIL": "Unesite email",
+      "DATE_OF_BIRTH": "Datum rođenja",
+      "USERNAME": "Korisničko ime",
+      "ENTER_USERNAME": "Unesite korisničko ime",
+      "PASSWORD": "Lozinka",
+      "ENTER_PASSWORD": "Unesite lozinku",
+      "GENDER": "Pol",
+      "SELECT_GENDER": "Odaberite pol",
+      "CITY": "Grad",
+      "SELECT_CITY": "Odaberite grad",
+      "SELECT_BELT": "Odaberite pojas",
+      "SELECT_CLUB": "Odaberite klub",
+      "CLEAR_DRAFT": "Očisti nacrt",
+      "SAVE_CONTESTANT": "Sačuvaj takmičara"
+    },
+    "EDIT_FORM": {
+      "TITLE": "Uredi takmičara",
+      "UPDATING": "Ažuriranje takmičara...",
+      "UPDATING_SHORT": "Ažuriranje...",
+      "UPDATE_CONTESTANT": "Ažuriraj takmičara"
+    }
+  },
+  "JUDGES": {
+    "TITLE": "Registrovane sudije",
+    "FILTER_TITLE": "Filtriranje sudija",
+    "FIRST_NAME": "Ime",
+    "LAST_NAME": "Prezime",
+    "LICENSE": "Licenca",
+    "RANK": "Rang",
+    "SEARCH_BY_NAME": "Pretraži po imenu...",
+    "SEARCH_BY_SURNAME": "Pretraži po prezimenu...",
+    "SEARCH_BY_LICENSE": "Pretraži po licenci...",
+    "ALL_RANKS": "Svi rangovi",
+    "ADD_JUDGE": "Dodaj sudiju",
+    "SHOWING": "Prikazano {{count}} sudija",
+    "NO_JUDGES_FOUND": "Nema pronađenih sudija",
+    "NOT_ASSIGNED": "Nije dodijeljeno",
+    "TABLE": {
+      "NAME": "Ime i prezime",
+      "EMAIL": "Email",
+      "PHONE": "Telefon",
+      "LICENSE": "Licenca",
+      "RANK": "Rang"
+    },
+    "ADD_FORM": {
+      "TITLE": "Dodaj sudiju",
+      "ENTER_FIRST_NAME": "Unesite ime",
+      "ENTER_LAST_NAME": "Unesite prezime",
+      "ENTER_PHONE": "Unesite broj telefona",
+      "ENTER_EMAIL": "Unesite email",
+      "DATE_OF_BIRTH": "Datum rođenja",
+      "USERNAME": "Korisničko ime",
+      "ENTER_USERNAME": "Unesite korisničko ime",
+      "PASSWORD": "Lozinka",
+      "ENTER_PASSWORD": "Unesite lozinku",
+      "GENDER": "Pol",
+      "SELECT_GENDER": "Odaberite pol",
+      "CITY": "Grad",
+      "SELECT_CITY": "Odaberite grad",
+      "ENTER_LICENSE": "Unesite licencu",
+      "ENTER_RANK": "Unesite rang, npr. nacionalni",
+      "CLEAR_DRAFT": "Očisti nacrt",
+      "SAVE_JUDGE": "Sačuvaj sudiju"
+    },
+    "EDIT_FORM": {
+      "TITLE": "Uredi sudiju",
+      "UPDATE_JUDGE": "Ažuriraj sudiju"
+    }
   }
 }

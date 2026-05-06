@@ -1,6 +1,6 @@
 <div class="dialog">
   <div class="dialog-header">
-    <h2>Add Judge</h2>
+    <h2>{{ 'JUDGES.ADD_FORM.TITLE' | translate }}</h2>
 
     <button type="button" class="close-btn" (click)="onCancel()" [disabled]="isLoading">
       <mat-icon>close</mat-icon>
@@ -11,13 +11,21 @@
     <form [formGroup]="form" (ngSubmit)="save()">
       <div class="form-row">
         <mat-form-field appearance="outline" class="half-width">
-          <mat-label>First Name</mat-label>
+          <mat-label>{{ 'JUDGES.FIRST_NAME' | translate }}</mat-label>
 
-          <input matInput type="text" [formControl]="firstNameSearchControl" placeholder="Enter first name"
-            [matAutocomplete]="firstNameAuto" (focus)="filteredFirstNames = firstNames" />
+          <input
+            matInput
+            type="text"
+            [formControl]="firstNameSearchControl"
+            [placeholder]="'JUDGES.ADD_FORM.ENTER_FIRST_NAME' | translate"
+            [matAutocomplete]="firstNameAuto"
+            (focus)="filteredFirstNames = firstNames"
+          />
 
-          <mat-autocomplete #firstNameAuto="matAutocomplete"
-            (optionSelected)="onFirstNameSelected($event.option.value)">
+          <mat-autocomplete
+            #firstNameAuto="matAutocomplete"
+            (optionSelected)="onFirstNameSelected($event.option.value)"
+          >
             <mat-option *ngFor="let firstName of filteredFirstNames" [value]="firstName">
               {{ firstName }}
             </mat-option>
@@ -31,12 +39,21 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="half-width">
-          <mat-label>Last Name</mat-label>
+          <mat-label>{{ 'JUDGES.LAST_NAME' | translate }}</mat-label>
 
-          <input matInput type="text" [formControl]="lastNameSearchControl" placeholder="Enter last name"
-            [matAutocomplete]="lastNameAuto" (focus)="filteredLastNames = lastNames" />
+          <input
+            matInput
+            type="text"
+            [formControl]="lastNameSearchControl"
+            [placeholder]="'JUDGES.ADD_FORM.ENTER_LAST_NAME' | translate"
+            [matAutocomplete]="lastNameAuto"
+            (focus)="filteredLastNames = lastNames"
+          />
 
-          <mat-autocomplete #lastNameAuto="matAutocomplete" (optionSelected)="onLastNameSelected($event.option.value)">
+          <mat-autocomplete
+            #lastNameAuto="matAutocomplete"
+            (optionSelected)="onLastNameSelected($event.option.value)"
+          >
             <mat-option *ngFor="let lastName of filteredLastNames" [value]="lastName">
               {{ lastName }}
             </mat-option>
@@ -52,8 +69,13 @@
 
       <div class="form-row">
         <mat-form-field appearance="outline" class="half-width">
-          <mat-label>Phone Number</mat-label>
-          <input matInput type="text" formControlName="phoneNumber" placeholder="Enter phone number" />
+          <mat-label>{{ 'JUDGES.TABLE.PHONE' | translate }}</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="phoneNumber"
+            [placeholder]="'JUDGES.ADD_FORM.ENTER_PHONE' | translate"
+          />
           <mat-icon matSuffix>phone</mat-icon>
           <mat-error *ngIf="hasError('phoneNumber')">
             {{ getErrorMessage('phoneNumber') }}
@@ -61,8 +83,13 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="half-width">
-          <mat-label>Email</mat-label>
-          <input matInput type="email" formControlName="email" placeholder="Enter email" />
+          <mat-label>{{ 'JUDGES.TABLE.EMAIL' | translate }}</mat-label>
+          <input
+            matInput
+            type="email"
+            formControlName="email"
+            [placeholder]="'JUDGES.ADD_FORM.ENTER_EMAIL' | translate"
+          />
           <mat-icon matSuffix>mail</mat-icon>
           <mat-error *ngIf="hasError('email')">
             {{ getErrorMessage('email') }}
@@ -72,7 +99,7 @@
 
       <div class="form-row">
         <mat-form-field appearance="outline" class="half-width">
-          <mat-label>Date of Birth</mat-label>
+          <mat-label>{{ 'JUDGES.ADD_FORM.DATE_OF_BIRTH' | translate }}</mat-label>
           <input matInput type="date" formControlName="dateOfBirth" [max]="today" />
           <mat-error *ngIf="hasError('dateOfBirth')">
             {{ getErrorMessage('dateOfBirth') }}
@@ -80,8 +107,13 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="half-width">
-          <mat-label>Username</mat-label>
-          <input matInput type="text" formControlName="username" placeholder="Enter username" />
+          <mat-label>{{ 'JUDGES.ADD_FORM.USERNAME' | translate }}</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="username"
+            [placeholder]="'JUDGES.ADD_FORM.ENTER_USERNAME' | translate"
+          />
           <mat-icon matSuffix>account_circle</mat-icon>
           <mat-error *ngIf="hasError('username')">
             {{ getErrorMessage('username') }}
@@ -91,8 +123,13 @@
 
       <div class="form-row">
         <mat-form-field appearance="outline" class="half-width">
-          <mat-label>Password</mat-label>
-          <input matInput type="password" formControlName="password" placeholder="Enter password" />
+          <mat-label>{{ 'JUDGES.ADD_FORM.PASSWORD' | translate }}</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="password"
+            [placeholder]="'JUDGES.ADD_FORM.ENTER_PASSWORD' | translate"
+          />
           <mat-icon matSuffix>lock</mat-icon>
           <mat-error *ngIf="hasError('password')">
             {{ getErrorMessage('password') }}
@@ -100,9 +137,11 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="half-width">
-          <mat-label>Gender</mat-label>
+          <mat-label>{{ 'JUDGES.ADD_FORM.GENDER' | translate }}</mat-label>
           <mat-select formControlName="genderId">
-            <mat-option [value]="null" disabled>Select gender</mat-option>
+            <mat-option [value]="null" disabled>
+              {{ 'JUDGES.ADD_FORM.SELECT_GENDER' | translate }}
+            </mat-option>
             <mat-option *ngFor="let gender of genders" [value]="gender.id">
               {{ gender.name }}
             </mat-option>
@@ -116,9 +155,11 @@
 
       <div class="form-row">
         <mat-form-field appearance="outline" class="half-width">
-          <mat-label>City</mat-label>
+          <mat-label>{{ 'JUDGES.ADD_FORM.CITY' | translate }}</mat-label>
           <mat-select formControlName="cityId">
-            <mat-option [value]="null" disabled>Select city</mat-option>
+            <mat-option [value]="null" disabled>
+              {{ 'JUDGES.ADD_FORM.SELECT_CITY' | translate }}
+            </mat-option>
             <mat-option *ngFor="let city of cities" [value]="city.id">
               {{ city.name }}
             </mat-option>
@@ -130,8 +171,14 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="half-width">
-          <mat-label>License</mat-label>
-          <input matInput type="text" formControlName="license" placeholder="Enter license" appUppercaseInput/>
+          <mat-label>{{ 'JUDGES.LICENSE' | translate }}</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="license"
+            [placeholder]="'JUDGES.ADD_FORM.ENTER_LICENSE' | translate"
+            appUppercaseInput
+          />
           <mat-icon matSuffix>verified</mat-icon>
           <mat-error *ngIf="hasError('license')">
             {{ getErrorMessage('license') }}
@@ -140,12 +187,21 @@
       </div>
 
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Rank</mat-label>
+        <mat-label>{{ 'JUDGES.RANK' | translate }}</mat-label>
 
-        <input matInput type="text" [formControl]="rankSearchControl" placeholder="Enter rank, for example National"
-          [matAutocomplete]="rankAuto" (focus)="filteredRanks = ranks" />
+        <input
+          matInput
+          type="text"
+          [formControl]="rankSearchControl"
+          [placeholder]="'JUDGES.ADD_FORM.ENTER_RANK' | translate"
+          [matAutocomplete]="rankAuto"
+          (focus)="filteredRanks = ranks"
+        />
 
-        <mat-autocomplete #rankAuto="matAutocomplete" (optionSelected)="onRankSelected($event.option.value)">
+        <mat-autocomplete
+          #rankAuto="matAutocomplete"
+          (optionSelected)="onRankSelected($event.option.value)"
+        >
           <mat-option *ngFor="let rank of filteredRanks" [value]="rank">
             {{ rank }}
           </mat-option>
@@ -159,20 +215,25 @@
       </mat-form-field>
 
       <div class="form-actions">
-        <button type="button" mat-stroked-button color="warn" (click)="clearDraft()"
-          [disabled]="isLoading || !hasDraft">
+        <button
+          type="button"
+          mat-stroked-button
+          color="warn"
+          (click)="clearDraft()"
+          [disabled]="isLoading || !hasDraft"
+        >
           <mat-icon>delete_sweep</mat-icon>
-          Clear Draft
+          {{ 'JUDGES.ADD_FORM.CLEAR_DRAFT' | translate }}
         </button>
 
         <button type="button" mat-stroked-button (click)="onCancel()" [disabled]="isLoading">
           <mat-icon>close</mat-icon>
-          Cancel
+          {{ 'COMMON.CANCEL' | translate }}
         </button>
 
         <button type="submit" mat-raised-button color="primary" [disabled]="isLoading">
           <mat-icon>save</mat-icon>
-          Save Judge
+          {{ 'JUDGES.ADD_FORM.SAVE_JUDGE' | translate }}
         </button>
       </div>
     </form>

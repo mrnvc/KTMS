@@ -3,7 +3,7 @@
   <header class="header">
     <div class="header__overlay"></div>
     <div class="header__content">
-      <h1>Registered Judges</h1>
+      <h1>{{ 'JUDGES.TITLE' | translate }}</h1>
     </div>
   </header>
 
@@ -11,17 +11,17 @@
   <section class="filters">
     <div class="filter-title">
       <mat-icon>filter_list</mat-icon>
-      <h3>Filter Judges</h3>
+      <h3>{{ 'JUDGES.FILTER_TITLE' | translate }}</h3>
     </div>
 
     <div class="filter-card">
       <div class="filter-grid">
         <!-- First Name -->
         <div class="filter-block">
-          <label>First Name</label>
+          <label>{{ 'JUDGES.FIRST_NAME' | translate }}</label>
           <input
             type="text"
-            placeholder="Search by name..."
+            [placeholder]="'JUDGES.SEARCH_BY_NAME' | translate"
             [ngModel]="firstNameFilter()"
             (input)="onFirstNameChange($any($event.target).value)"
           />
@@ -29,10 +29,10 @@
 
         <!-- Last Name -->
         <div class="filter-block">
-          <label>Last Name</label>
+          <label>{{ 'JUDGES.LAST_NAME' | translate }}</label>
           <input
             type="text"
-            placeholder="Search by surname..."
+            [placeholder]="'JUDGES.SEARCH_BY_SURNAME' | translate"
             [ngModel]="lastNameFilter()"
             (input)="onLastNameChange($any($event.target).value)"
           />
@@ -40,10 +40,10 @@
 
         <!-- License -->
         <div class="filter-block">
-          <label>License</label>
+          <label>{{ 'JUDGES.LICENSE' | translate }}</label>
           <input
             type="text"
-            placeholder="Search by license..."
+            [placeholder]="'JUDGES.SEARCH_BY_LICENSE' | translate"
             [ngModel]="licenseFilter()"
             (input)="onLicenseChange($any($event.target).value)"
           />
@@ -51,12 +51,12 @@
 
         <!-- Rank -->
         <div class="filter-block">
-          <label>Rank</label>
+          <label>{{ 'JUDGES.RANK' | translate }}</label>
           <select
             [ngModel]="rankFilter()"
             (change)="onRankChange($any($event.target).value)"
           >
-            <option>All Ranks</option>
+            <option>{{ 'JUDGES.ALL_RANKS' | translate }}</option>
             <option *ngFor="let rank of uniqueRanks()">{{ rank }}</option>
           </select>
         </div>
@@ -73,7 +73,7 @@
       (click)="onAddJudge()"
     >
       <mat-icon>add</mat-icon>
-      Add Judge
+      {{ 'JUDGES.ADD_JUDGE' | translate }}
     </button>
   </div>
 
@@ -81,8 +81,7 @@
   <main class="content">
     <div class="content__top">
       <p class="muted">
-        Showing {{ filteredJudges().length }}
-        judge{{ filteredJudges().length === 1 ? "" : "s" }}
+        {{ 'JUDGES.SHOWING' | translate:{ count: filteredJudges().length } }}
       </p>
     </div>
 
@@ -90,12 +89,12 @@
       <table class="judges-table">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>License</th>
-            <th>Rank</th>
-            <th>Actions</th>
+            <th>{{ 'JUDGES.TABLE.NAME' | translate }}</th>
+            <th>{{ 'JUDGES.TABLE.EMAIL' | translate }}</th>
+            <th>{{ 'JUDGES.TABLE.PHONE' | translate }}</th>
+            <th>{{ 'JUDGES.TABLE.LICENSE' | translate }}</th>
+            <th>{{ 'JUDGES.TABLE.RANK' | translate }}</th>
+            <th>{{ 'COMMON.ACTIONS' | translate }}</th>
           </tr>
         </thead>
 
@@ -107,13 +106,13 @@
             <td>{{ judge.license | judgeLicenseFormat }}</td>
             <td>
               <span class="rank-badge">
-                {{ judge.rank || 'Not assigned' }}
+                {{ judge.rank || ('JUDGES.NOT_ASSIGNED' | translate) }}
               </span>
             </td>
             <td class="actions">
               <button
                 mat-icon-button
-                matTooltip="Edit"
+                [matTooltip]="'COMMON.EDIT' | translate"
                 (click)="onEditJudge(judge)"
                 class="edit-btn"
               >
@@ -122,7 +121,7 @@
 
               <button
                 mat-icon-button
-                matTooltip="Delete"
+                [matTooltip]="'COMMON.DELETE' | translate"
                 (click)="onDeleteJudge(judge)"
                 class="delete-btn"
               >
@@ -135,7 +134,7 @@
 
       <div *ngIf="filteredJudges().length === 0" class="empty-state">
         <mat-icon>gavel</mat-icon>
-        <p>No judges found</p>
+        <p>{{ 'JUDGES.NO_JUDGES_FOUND' | translate }}</p>
       </div>
     </div>
   </main>

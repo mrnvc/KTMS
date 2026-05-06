@@ -3,20 +3,20 @@
     <mat-icon>logout</mat-icon>
   </div>
 
-  <h2>Logout</h2>
+  <h2>{{ 'AUTH.LOGOUT.TITLE' | translate }}</h2>
 
   <p>
-    Are you sure you want to log out of your account?
+    {{ 'AUTH.LOGOUT.MESSAGE' | translate }}
   </p>
 
   <div class="logout-actions">
     <button mat-stroked-button type="button" (click)="cancel()">
-      Cancel
+      {{ 'AUTH.LOGOUT.CANCEL_BUTTON' | translate }}
     </button>
 
     <button mat-raised-button color="warn" type="button" (click)="logout()">
       <mat-icon>logout</mat-icon>
-      Logout
+      {{ 'AUTH.LOGOUT.CONFIRM_BUTTON' | translate }}
     </button>
   </div>
 </div>

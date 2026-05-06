@@ -5,16 +5,15 @@
     <div class="header__content">
       <div class="back-wrap">
         <app-back-button
-          label="Back to Home"
+          [label]="'TOURNAMENTS.BACK_TO_HOME' | translate"
           fallbackUrl="/"
           [forceFallback]="true"
         ></app-back-button>
       </div>
 
-      <h1>List of Karate Tournaments</h1>
+      <h1>{{ 'TOURNAMENTS.TITLE' | translate }}</h1>
       <p>
-        Explore upcoming and ongoing karate competitions. Watch live matches, view tournament brackets, and follow your
-        favorite competitors.
+        {{ 'TOURNAMENTS.SUBTITLE' | translate }}
       </p>
     </div>
   </header>
@@ -28,7 +27,7 @@
         [class.tab--active]="statusFilter() === 'All'"
         (click)="setStatus('All')"
       >
-        All Tournaments
+        {{ 'TOURNAMENTS.ALL_TOURNAMENTS' | translate }}
       </button>
 
       <button
@@ -37,7 +36,7 @@
         [class.tab--active]="statusFilter() === 'Active'"
         (click)="setStatus('Active')"
       >
-        Active
+        {{ 'TOURNAMENTS.ACTIVE' | translate }}
       </button>
 
       <button
@@ -46,25 +45,25 @@
         [class.tab--active]="statusFilter() === 'Completed'"
         (click)="setStatus('Completed')"
       >
-        Completed
+        {{ 'TOURNAMENTS.COMPLETED' | translate }}
       </button>
     </div>
 
     <div class="filter-card">
-      <h3>Filter by Date &amp; Time</h3>
+      <h3>{{ 'TOURNAMENTS.FILTER_BY_DATE_TIME' | translate }}</h3>
 
       <div class="filter-grid">
         <!-- Date Range -->
         <div class="filter-block">
-          <div class="filter-title">📅 Date Range</div>
+          <div class="filter-title">📅 {{ 'TOURNAMENTS.DATE_RANGE' | translate }}</div>
           <div class="two-cols">
             <div class="field">
-              <label>From</label>
+              <label>{{ 'TOURNAMENTS.FROM' | translate }}</label>
               <input type="date" [ngModel]="dateFromFilter()" (ngModelChange)="dateFromFilter.set($event)" />
             </div>
 
             <div class="field">
-              <label>To</label>
+              <label>{{ 'TOURNAMENTS.TO' | translate }}</label>
               <input type="date" [ngModel]="dateToFilter()" (ngModelChange)="dateToFilter.set($event)" />
             </div>
           </div>
@@ -72,15 +71,15 @@
 
         <!-- Time Range -->
         <div class="filter-block">
-          <div class="filter-title">🕒 Time Range</div>
+          <div class="filter-title">🕒 {{ 'TOURNAMENTS.TIME_RANGE' | translate }}</div>
           <div class="two-cols">
             <div class="field">
-              <label>From</label>
+              <label>{{ 'TOURNAMENTS.FROM' | translate }}</label>
               <input type="time" [ngModel]="timeFromFilter()" (ngModelChange)="timeFromFilter.set($event)" />
             </div>
 
             <div class="field">
-              <label>To</label>
+              <label>{{ 'TOURNAMENTS.TO' | translate }}</label>
               <input type="time" [ngModel]="timeToFilter()" (ngModelChange)="timeToFilter.set($event)" />
             </div>
           </div>
@@ -93,8 +92,7 @@
   <main class="content">
     <div class="content__top">
       <p class="muted">
-        Showing {{ filteredAndSortedTournaments().length }}
-        tournament{{ filteredAndSortedTournaments().length === 1 ? "" : "s" }}
+        {{ 'TOURNAMENTS.SHOWING' | translate:{ count: filteredAndSortedTournaments().length } }}
       </p>
     </div>
 
@@ -108,7 +106,13 @@
               </div>
 
               <span class="badge" [class.badge--active]="t.status === 'active'">
-                {{ (t.status ?? "")[0]?.toUpperCase() + (t.status ?? "").slice(1) }}
+                {{
+                  t.status === 'active'
+                    ? ('TOURNAMENTS.STATUS_ACTIVE' | translate)
+                    : t.status === 'completed'
+                      ? ('TOURNAMENTS.STATUS_COMPLETED' | translate)
+                      : ('TOURNAMENTS.STATUS_PLANNED' | translate)
+                }}
               </span>
             </div>
 
@@ -118,7 +122,7 @@
               <div class="row"><span>📍</span> <span>{{ t.location }}</span></div>
 
               <button class="primary-btn" type="button" (click)="onTournamentClick(t)">
-                View Details
+                {{ 'TOURNAMENTS.VIEW_DETAILS' | translate }}
               </button>
             </div>
           </article>
@@ -126,8 +130,10 @@
       </div>
     } @else {
       <div class="empty">
-        <p>No tournaments found matching your filters.</p>
-        <button class="outline-btn" type="button" (click)="clearFilters()">Clear Filters</button>
+        <p>{{ 'TOURNAMENTS.NO_TOURNAMENTS_FOUND' | translate }}</p>
+        <button class="outline-btn" type="button" (click)="clearFilters()">
+          {{ 'TOURNAMENTS.CLEAR_FILTERS' | translate }}
+        </button>
       </div>
     }
   </main>

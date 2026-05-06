@@ -1,6 +1,6 @@
 <div class="dialog" animate.enter="dialog-enter">
   <div class="dialog-header">
-    <h2>Edit Contestant</h2>
+    <h2>{{ 'CONTESTANTS.EDIT_FORM.TITLE' | translate }}</h2>
 
     <button type="button" class="close-btn" (click)="onCancel()">
       <mat-icon>close</mat-icon>
@@ -11,18 +11,26 @@
     <form [formGroup]="form" (ngSubmit)="save()" autocomplete="on">
       <div *ngIf="isLoading" class="loading-overlay">
         <mat-spinner diameter="45"></mat-spinner>
-        <p>Updating contestant...</p>
+        <p>{{ 'CONTESTANTS.EDIT_FORM.UPDATING' | translate }}</p>
       </div>
 
       <div class="form-row">
         <mat-form-field appearance="outline" class="half-width">
-          <mat-label>First Name</mat-label>
+          <mat-label>{{ 'CONTESTANTS.FIRST_NAME' | translate }}</mat-label>
 
-          <input matInput type="text" [formControl]="firstNameSearchControl" placeholder="Enter first name"
-            [matAutocomplete]="firstNameAuto" (focus)="filteredFirstNames = firstNames" />
+          <input
+            matInput
+            type="text"
+            [formControl]="firstNameSearchControl"
+            [placeholder]="'CONTESTANTS.ADD_FORM.ENTER_FIRST_NAME' | translate"
+            [matAutocomplete]="firstNameAuto"
+            (focus)="filteredFirstNames = firstNames"
+          />
 
-          <mat-autocomplete #firstNameAuto="matAutocomplete"
-            (optionSelected)="onFirstNameSelected($event.option.value)">
+          <mat-autocomplete
+            #firstNameAuto="matAutocomplete"
+            (optionSelected)="onFirstNameSelected($event.option.value)"
+          >
             <mat-option *ngFor="let firstName of filteredFirstNames" [value]="firstName">
               {{ firstName }}
             </mat-option>
@@ -35,15 +43,22 @@
           </mat-error>
         </mat-form-field>
 
-
-
         <mat-form-field appearance="outline" class="half-width">
-          <mat-label>Last Name</mat-label>
+          <mat-label>{{ 'CONTESTANTS.LAST_NAME' | translate }}</mat-label>
 
-          <input matInput type="text" [formControl]="lastNameSearchControl" placeholder="Enter last name"
-            [matAutocomplete]="lastNameAuto" (focus)="filteredLastNames = lastNames" />
+          <input
+            matInput
+            type="text"
+            [formControl]="lastNameSearchControl"
+            [placeholder]="'CONTESTANTS.ADD_FORM.ENTER_LAST_NAME' | translate"
+            [matAutocomplete]="lastNameAuto"
+            (focus)="filteredLastNames = lastNames"
+          />
 
-          <mat-autocomplete #lastNameAuto="matAutocomplete" (optionSelected)="onLastNameSelected($event.option.value)">
+          <mat-autocomplete
+            #lastNameAuto="matAutocomplete"
+            (optionSelected)="onLastNameSelected($event.option.value)"
+          >
             <mat-option *ngFor="let lastName of filteredLastNames" [value]="lastName">
               {{ lastName }}
             </mat-option>
@@ -59,9 +74,14 @@
 
       <div class="form-row">
         <mat-form-field appearance="outline" class="half-width">
-          <mat-label>Phone Number</mat-label>
-          <input matInput type="text" formControlName="phoneNumber" placeholder="Enter phone number"
-            autocomplete="tel" />
+          <mat-label>{{ 'CONTESTANTS.TABLE.PHONE' | translate }}</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="phoneNumber"
+            [placeholder]="'CONTESTANTS.ADD_FORM.ENTER_PHONE' | translate"
+            autocomplete="tel"
+          />
           <mat-icon matSuffix>phone</mat-icon>
           <mat-error *ngIf="hasError('phoneNumber')">
             {{ getErrorMessage('phoneNumber') }}
@@ -69,8 +89,14 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="half-width">
-          <mat-label>Email</mat-label>
-          <input matInput type="email" formControlName="email" placeholder="Enter email" autocomplete="email" />
+          <mat-label>{{ 'CONTESTANTS.TABLE.EMAIL' | translate }}</mat-label>
+          <input
+            matInput
+            type="email"
+            formControlName="email"
+            [placeholder]="'CONTESTANTS.ADD_FORM.ENTER_EMAIL' | translate"
+            autocomplete="email"
+          />
           <mat-icon matSuffix>mail</mat-icon>
           <mat-error *ngIf="hasError('email')">
             {{ getErrorMessage('email') }}
@@ -80,7 +106,7 @@
 
       <div class="form-row">
         <mat-form-field appearance="outline" class="half-width">
-          <mat-label>Date of Birth</mat-label>
+          <mat-label>{{ 'CONTESTANTS.ADD_FORM.DATE_OF_BIRTH' | translate }}</mat-label>
           <input matInput type="date" formControlName="dateOfBirth" [max]="today" autocomplete="bday" />
           <mat-error *ngIf="hasError('dateOfBirth')">
             {{ getErrorMessage('dateOfBirth') }}
@@ -88,8 +114,14 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="half-width">
-          <mat-label>Username</mat-label>
-          <input matInput type="text" formControlName="username" placeholder="Enter username" autocomplete="username" />
+          <mat-label>{{ 'CONTESTANTS.ADD_FORM.USERNAME' | translate }}</mat-label>
+          <input
+            matInput
+            type="text"
+            formControlName="username"
+            [placeholder]="'CONTESTANTS.ADD_FORM.ENTER_USERNAME' | translate"
+            autocomplete="username"
+          />
           <mat-icon matSuffix>account_circle</mat-icon>
           <mat-error *ngIf="hasError('username')">
             {{ getErrorMessage('username') }}
@@ -99,9 +131,11 @@
 
       <div class="form-row">
         <mat-form-field appearance="outline" class="half-width">
-          <mat-label>Gender</mat-label>
+          <mat-label>{{ 'CONTESTANTS.ADD_FORM.GENDER' | translate }}</mat-label>
           <mat-select formControlName="genderId">
-            <mat-option [value]="null" disabled>Select gender</mat-option>
+            <mat-option [value]="null" disabled>
+              {{ 'CONTESTANTS.ADD_FORM.SELECT_GENDER' | translate }}
+            </mat-option>
             <mat-option *ngFor="let gender of genders" [value]="gender.id">
               {{ gender.name }}
             </mat-option>
@@ -113,9 +147,11 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="half-width">
-          <mat-label>City</mat-label>
+          <mat-label>{{ 'CONTESTANTS.ADD_FORM.CITY' | translate }}</mat-label>
           <mat-select formControlName="cityId">
-            <mat-option [value]="null" disabled>Select city</mat-option>
+            <mat-option [value]="null" disabled>
+              {{ 'CONTESTANTS.ADD_FORM.SELECT_CITY' | translate }}
+            </mat-option>
             <mat-option *ngFor="let city of cities" [value]="city.id">
               {{ city.name }}
             </mat-option>
@@ -129,9 +165,11 @@
 
       <div class="form-row">
         <mat-form-field appearance="outline" class="half-width">
-          <mat-label>Belt</mat-label>
+          <mat-label>{{ 'CONTESTANTS.BELT' | translate }}</mat-label>
           <mat-select formControlName="beltId">
-            <mat-option [value]="null" disabled>Select belt</mat-option>
+            <mat-option [value]="null" disabled>
+              {{ 'CONTESTANTS.ADD_FORM.SELECT_BELT' | translate }}
+            </mat-option>
             <mat-option *ngFor="let belt of belts" [value]="belt.id">
               {{ belt.name }}
             </mat-option>
@@ -143,9 +181,11 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="half-width">
-          <mat-label>Club</mat-label>
+          <mat-label>{{ 'CONTESTANTS.CLUB' | translate }}</mat-label>
           <mat-select formControlName="clubId">
-            <mat-option [value]="null" disabled>Select club</mat-option>
+            <mat-option [value]="null" disabled>
+              {{ 'CONTESTANTS.ADD_FORM.SELECT_CLUB' | translate }}
+            </mat-option>
             <mat-option *ngFor="let club of clubs" [value]="club.id">
               {{ club.name }}
             </mat-option>
@@ -160,12 +200,16 @@
       <div class="form-actions">
         <button type="button" mat-stroked-button (click)="onCancel()">
           <mat-icon>close</mat-icon>
-          Cancel
+          {{ 'COMMON.CANCEL' | translate }}
         </button>
 
         <button type="submit" mat-raised-button color="primary">
           <mat-icon>save</mat-icon>
-          {{ isLoading ? 'Updating...' : 'Update Contestant' }}
+          {{
+            isLoading
+              ? ('CONTESTANTS.EDIT_FORM.UPDATING_SHORT' | translate)
+              : ('CONTESTANTS.EDIT_FORM.UPDATE_CONTESTANT' | translate)
+          }}
         </button>
       </div>
     </form>
