@@ -21,8 +21,16 @@ export class AdminDashboardComponent {
   currentLang: string;
 
   languages = [
-    { code: 'bs', name: 'Bosanski', flag: '🇧🇦' },
-    { code: 'en', name: 'English', flag: '🇬🇧' }
+    {
+      code: 'bs',
+      name: 'Bosanski',
+      flagUrl: 'https://flagcdn.com/w40/ba.png'
+    },
+    {
+      code: 'en',
+      name: 'English',
+      flagUrl: 'https://flagcdn.com/w40/gb.png'
+    }
   ];
 
   constructor() {

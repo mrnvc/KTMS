@@ -3,6 +3,48 @@
     "TITLE": "KTMS Sistem Turnira",
     "DESCRIPTION": "Upravljajte turnirima, učesnicima i takmičenjima."
   },
+  "LANDING": {
+    "NAV": {
+      "FEATURES": "Funkcionalnosti",
+      "TOURNAMENTS": "Turniri",
+      "CONTACT": "Kontakt",
+      "LOGIN": "Prijava"
+    },
+    "HERO": {
+      "SUBTITLE": "Upravljajte turnirima precizno i jednostavno",
+      "DESCRIPTION": "Pojednostavite organizaciju karate turnira od registracije do proglašenja pobjednika. Sistem je namijenjen klubovima, savezima i organizatorima turnira.",
+      "REGISTER_NOW": "Registrujte se",
+      "WATCH_AS_GUEST": "Gledaj kao gost"
+    },
+    "FEATURES": {
+      "LABEL": "Turniri",
+      "DESCRIPTION": "Sveobuhvatni alati posebno dizajnirani za upravljanje karate turnirima",
+      "COMPETITOR_MANAGEMENT": {
+        "TITLE": "Upravljanje takmičarima",
+        "TEXT": "Jednostavno registrujte, kategorizirajte i pratite sve učesnike kroz organizovan sistem."
+      },
+      "BRACKET_GENERATION": {
+        "TITLE": "Generisanje žrijeba",
+        "TEXT": "Brzo kreirajte turnirske žrijebove uz jasnu organizaciju takmičara i mečeva."
+      },
+      "EVENT_SCHEDULING": {
+        "TITLE": "Raspored događaja",
+        "TEXT": "Koordinirajte više borilišta i kategorija kroz pregledan raspored takmičenja."
+      },
+      "REAL_TIME_SCORING": {
+        "TITLE": "Rezultati u realnom vremenu",
+        "TEXT": "Pratite rezultate, sudijske odluke i promjene tokom turnira u realnom vremenu."
+      },
+      "COMPLIANCE_SAFETY": {
+        "TITLE": "Sigurnost i pravila",
+        "TEXT": "Pratite potrebne podatke o takmičarima, pojasevima i pravilima takmičenja."
+      },
+      "LIVE_UPDATES": {
+        "TITLE": "Obavještenja uživo",
+        "TEXT": "Informišite takmičare, trenere i gledaoce putem brzih obavještenja."
+      }
+    }
+  },
   "AUTH": {
     "LOGIN": {
       "TITLE": "Prijava",
@@ -29,14 +71,32 @@
     },
     "REGISTER": {
       "TITLE": "Registracija",
+      "SUBTITLE": "Kreirajte novi nalog",
+      "DESCRIPTION": "Unesite podatke za registraciju",
+      "NAME_LABEL": "Ime",
+      "NAME_PLACEHOLDER": "Unesite ime",
+      "SURNAME_LABEL": "Prezime",
+      "SURNAME_PLACEHOLDER": "Unesite prezime",
       "EMAIL_LABEL": "Email",
       "EMAIL_PLACEHOLDER": "Unesite email",
+      "PHONE_LABEL": "Broj telefona",
+      "PHONE_PLACEHOLDER": "Unesite broj telefona",
+      "DATE_OF_BIRTH_LABEL": "Datum rođenja",
+      "USERNAME_LABEL": "Korisničko ime",
+      "USERNAME_PLACEHOLDER": "Unesite korisničko ime",
+      "GENDER_LABEL": "Pol",
+      "SELECT_GENDER": "Odaberite pol",
+      "CITY_LABEL": "Grad",
+      "SELECT_CITY": "Odaberite grad",
       "PASSWORD_LABEL": "Lozinka",
       "PASSWORD_PLACEHOLDER": "Unesite lozinku",
       "CONFIRM_PASSWORD_LABEL": "Potvrdi lozinku",
       "CONFIRM_PASSWORD_PLACEHOLDER": "Potvrdite lozinku",
+      "PASSWORDS_DO_NOT_MATCH": "Lozinke se ne podudaraju",
       "BUTTON": "Registruj se",
-      "LOADING": "Registracija..."
+      "LOADING": "Registracija...",
+      "ALREADY_HAVE_ACCOUNT": "Već imate nalog?",
+      "LOGIN_LINK": "Prijavite se"
     },
     "LOGOUT": {
       "TITLE": "Odjava",

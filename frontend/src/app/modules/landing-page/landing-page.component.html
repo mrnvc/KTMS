@@ -5,109 +5,123 @@
   </div>
 
   <nav class="nav-links">
-    <a href="">Features</a> <!--dodati linkove-->
-    <a href="">Tournaments</a> <!--dodati linkove-->
-    <a href="">Contact</a> <!--dodati linkove-->
+    <a href="#features">{{ 'LANDING.NAV.FEATURES' | translate }}</a>
+    <a (click)="goToTournaments()">{{ 'LANDING.NAV.TOURNAMENTS' | translate }}</a>
+    <a href="#contact">{{ 'LANDING.NAV.CONTACT' | translate }}</a>
   </nav>
 
-  <button (click)="goToLogin()" class="login-btn">Login</button>
+  <div class="navbar-actions">
+    <button mat-stroked-button [matMenuTriggerFor]="landingLangMenu" class="language-btn">
+      <img class="flag-icon" [src]="getCurrentLanguage()?.flagUrl" [alt]="getCurrentLanguage()?.name" />
+      <span class="language-name">{{ getCurrentLanguage()?.name }}</span>
+      <span class="dropdown-arrow">▾</span>
+    </button>
+
+    <mat-menu #landingLangMenu="matMenu">
+      <button mat-menu-item *ngFor="let lang of languages" (click)="switchLanguage(lang.code)">
+        <img class="flag-icon" [src]="lang.flagUrl" [alt]="lang.name" />
+        <span class="language-name">{{ lang.name }}</span>
+        <span class="check-icon" *ngIf="currentLang === lang.code">✓</span>
+      </button>
+    </mat-menu>
+
+    <button (click)="goToLogin()" class="login-btn">
+      {{ 'LANDING.NAV.LOGIN' | translate }}
+    </button>
+  </div>
 </header>
 
 <section class="hero">
   <div class="overlay"></div>
 
   <div class="hero-content">
-    <p class="subtitle">Master Tournament Management with Precision</p>
+    <p class="subtitle">{{ 'LANDING.HERO.SUBTITLE' | translate }}</p>
 
     <h2>
-      Streamline your karate tournaments from registration to champion
-      declaration. Built for dojos, federations, and tournament organizers
-      worldwide.
+      {{ 'LANDING.HERO.DESCRIPTION' | translate }}
     </h2>
 
-    <br>
+    <br />
 
     <div class="actions">
-      <button (click)="goToRegister()" class="register-btn">Register Now</button>
-      <button (click)="watchAsGuest()" class="guest-btn">Watch as Guest</button>
+      <button (click)="goToRegister()" class="register-btn">
+        {{ 'LANDING.HERO.REGISTER_NOW' | translate }}
+      </button>
+
+      <button (click)="watchAsGuest()" class="guest-btn">
+        {{ 'LANDING.HERO.WATCH_AS_GUEST' | translate }}
+      </button>
     </div>
   </div>
 </section>
 
-<section class="features-section">
+<section class="features-section" id="features">
   <div class="features-header">
-    <span class="subtitle">Tournaments</span>
+    <span class="subtitle">{{ 'LANDING.FEATURES.LABEL' | translate }}</span>
     <p>
-      Comprehensive tools designed specifically for karate tournament management
+      {{ 'LANDING.FEATURES.DESCRIPTION' | translate }}
     </p>
   </div>
 
   <div class="features-grid">
     <div class="feature-card">
       <div class="icon">
-        <img src="/assets/users.svg" alt="Competitor Management" />
+        <img src="/assets/users.svg" [alt]="'LANDING.FEATURES.COMPETITOR_MANAGEMENT.TITLE' | translate" />
       </div>
-      <h3>Competitor Management</h3>
+      <h3>{{ 'LANDING.FEATURES.COMPETITOR_MANAGEMENT.TITLE' | translate }}</h3>
       <p>
-        Effortlessly register, categorize, and track all participants with
-        automated weight and age division sorting.
+        {{ 'LANDING.FEATURES.COMPETITOR_MANAGEMENT.TEXT' | translate }}
       </p>
     </div>
 
     <div class="feature-card highlighted">
       <div class="icon">
-        <img src="/assets/trophy.svg" alt="Bracket Generation" />
+        <img src="/assets/trophy.svg" [alt]="'LANDING.FEATURES.BRACKET_GENERATION.TITLE' | translate" />
       </div>
-      <h3>Bracket Generation</h3>
+      <h3>{{ 'LANDING.FEATURES.BRACKET_GENERATION.TITLE' | translate }}</h3>
       <p>
-        Instantly create tournament brackets with automatic seeding and fair
-        matchmaking algorithms.
+        {{ 'LANDING.FEATURES.BRACKET_GENERATION.TEXT' | translate }}
       </p>
     </div>
 
     <div class="feature-card">
       <div class="icon">
-        <img src="/assets/calendar.svg" alt="Event Scheduling" />
+        <img src="/assets/calendar.svg" [alt]="'LANDING.FEATURES.EVENT_SCHEDULING.TITLE' | translate" />
       </div>
-      <h3>Event Scheduling</h3>
+      <h3>{{ 'LANDING.FEATURES.EVENT_SCHEDULING.TITLE' | translate }}</h3>
       <p>
-        Coordinate multiple rings and categories simultaneously with intelligent
-        scheduling to minimize conflicts.
+        {{ 'LANDING.FEATURES.EVENT_SCHEDULING.TEXT' | translate }}
       </p>
     </div>
 
     <div class="feature-card">
       <div class="icon">
-        <img src="/assets/chart.svg" alt="Real-Time Scoring" />
+        <img src="/assets/chart.svg" [alt]="'LANDING.FEATURES.REAL_TIME_SCORING.TITLE' | translate" />
       </div>
-      <h3>Real-Time Scoring</h3>
+      <h3>{{ 'LANDING.FEATURES.REAL_TIME_SCORING.TITLE' | translate }}</h3>
       <p>
-        Digital scorekeeping with instant updates, judge panels, and live
-        result displays.
+        {{ 'LANDING.FEATURES.REAL_TIME_SCORING.TEXT' | translate }}
       </p>
     </div>
 
     <div class="feature-card">
       <div class="icon">
-        <img src="/assets/shield.svg" alt="Compliance & Safety" />
+        <img src="/assets/shield.svg" [alt]="'LANDING.FEATURES.COMPLIANCE_SAFETY.TITLE' | translate" />
       </div>
-      <h3>Compliance & Safety</h3>
+      <h3>{{ 'LANDING.FEATURES.COMPLIANCE_SAFETY.TITLE' | translate }}</h3>
       <p>
-        Track medical clearances, belt certifications, and federation
-        compliance.
+        {{ 'LANDING.FEATURES.COMPLIANCE_SAFETY.TEXT' | translate }}
       </p>
     </div>
 
     <div class="feature-card">
       <div class="icon">
-        <img src="/assets/clock.svg" alt="Live Updates" />
+        <img src="/assets/clock.svg" [alt]="'LANDING.FEATURES.LIVE_UPDATES.TITLE' | translate" />
       </div>
-      <h3>Live Updates</h3>
+      <h3>{{ 'LANDING.FEATURES.LIVE_UPDATES.TITLE' | translate }}</h3>
       <p>
-        Keep participants, coaches, and spectators informed with real-time
-        notifications.
+        {{ 'LANDING.FEATURES.LIVE_UPDATES.TEXT' | translate }}
       </p>
     </div>
   </div>
 </section>
-

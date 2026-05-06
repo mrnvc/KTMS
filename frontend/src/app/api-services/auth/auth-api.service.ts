@@ -1,14 +1,15 @@
-import {inject, Injectable} from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   LoginCommand,
   LoginCommandDto,
   LogoutCommand,
   RefreshTokenCommand,
-  RefreshTokenCommandDto
+  RefreshTokenCommandDto,
+  RegisterCommand
 } from './auth-api.model';
-import {Observable, tap} from 'rxjs';
-import {environment} from '../../../enviroments/enviroment';
-import {HttpClient} from '@angular/common/http';
+import { Observable, tap } from 'rxjs';
+import { environment } from '../../../enviroments/enviroment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 
@@ -44,6 +45,10 @@ export class AuthApiService {
 
   isLoggedIn(): boolean {
     return !!this.getToken();
+  }
+
+  register(payload: RegisterCommand): Observable<number> {
+    return this.http.post<number>(`${this.baseUrl}/register`, payload);
   }
 
   /**

@@ -61,15 +61,19 @@ export interface LogoutCommand {
  * Command for POST /Auth/register
  * Corresponds to: RegisterUserCommand.cs
  */
-export interface RegisterRequest {
+export interface RegisterCommand {
+  user: RegisterUserDto;
+}
+
+export interface RegisterUserDto {
   roleId: number;
   cityId: number;
   genderId: number;
   name: string;
   surname: string;
   phoneNumber: string;
-  email: string;
-  dateOfBirth: string; // DateOnly → YYYY-MM-DD
+  dateOfBirth: string;
   username: string;
+  email: string;
   password: string;
 }

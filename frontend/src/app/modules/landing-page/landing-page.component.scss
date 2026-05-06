@@ -5,6 +5,7 @@
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
 }
+
 //end of global
 
 //first part of landing page
@@ -132,13 +133,14 @@
         cursor: pointer;
       }
 
-      .guest-btn:hover{
+      .guest-btn:hover {
         background-color: white;
         color: black;
       }
     }
   }
 }
+
 //end of first part of landing page
 
 
@@ -228,5 +230,57 @@ $icon-bg: #1e3a8a;
     }
   }
 }
+
 //end of features section
 
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.language-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 12px;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.45) !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+
+  mat-icon {
+    color: #ffffff;
+  }
+}
+
+.flag-icon {
+  width: 22px;
+  height: 16px;
+  object-fit: cover;
+  border-radius: 3px;
+  margin-right: 8px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.language-name {
+  margin-left: 4px;
+}
+
+.dropdown-arrow {
+  color: #ffffff;
+  font-size: 16px;
+  margin-left: 4px;
+  line-height: 1;
+}
+
+.check-space {
+  width: 18px;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.check-icon {
+  color: #111827;
+  font-weight: 700;
+}

@@ -32,8 +32,8 @@ $sidebar-width: 280px;
     flex-direction: column;
 
     mat-sidenav-content {
-        overflow: visible !important;
-      }
+      overflow: visible !important;
+    }
 
     // Sidebar Header
     .sidebar-header {
@@ -172,14 +172,36 @@ $sidebar-width: 280px;
             background: rgba(255, 255, 255, 0.25);
           }
 
-          .language-name{
-            font-size: 14px;
+          .flag-icon {
+            width: 22px;
+            height: 16px;
+            object-fit: cover;
+            border-radius: 3px;
+            margin-right: 8px;
+            display: inline-block;
+            vertical-align: middle;
+          }
+
+          .language-name {
             margin-left: 4px;
           }
 
-          .flag-icon {
-            font-size: 20px;
-            margin-right: 8px;
+          .dropdown-arrow {
+            color: #ffffff;
+            font-size: 16px;
+            margin-left: 4px;
+            line-height: 1;
+          }
+
+          .check-space {
+            width: 18px;
+            display: inline-block;
+            margin-right: 6px;
+          }
+
+          .check-icon {
+            color: #111827;
+            font-weight: 700;
           }
 
           mat-icon {
@@ -273,11 +295,9 @@ $sidebar-width: 280px;
 
         // Active State
         &.active {
-          background: linear-gradient(
-              135deg,
+          background: linear-gradient(135deg,
               rgba($primary-color, 0.15) 0%,
-              rgba($accent-color, 0.1) 100%
-          );
+              rgba($accent-color, 0.1) 100%);
           color: $primary-color;
           font-weight: 600;
           box-shadow: 0 2px 8px rgba($primary-color, 0.15);
@@ -311,11 +331,9 @@ $sidebar-width: 280px;
           }
 
           &:hover {
-            background: linear-gradient(
-                135deg,
+            background: linear-gradient(135deg,
                 rgba($error-color, 0.15) 0%,
-                rgba($error-color, 0.1) 100%
-            );
+                rgba($error-color, 0.1) 100%);
             border-color: rgba($error-color, 0.3);
             transform: translateX(4px);
 
@@ -335,10 +353,10 @@ $sidebar-width: 280px;
   }
 
   // Main Content
-    .main-content {
-      background: linear-gradient(135deg, #f0f5fb 0%, #e3ecf7 100%);
-      min-height: 100vh;
-      overflow: visible;
+  .main-content {
+    background: linear-gradient(135deg, #f0f5fb 0%, #e3ecf7 100%);
+    min-height: 100vh;
+    overflow: visible;
 
     // Custom scrollbar
     &::-webkit-scrollbar {
@@ -400,11 +418,9 @@ $sidebar-width: 280px;
       }
 
       &.active-lang {
-        background: linear-gradient(
-            135deg,
+        background: linear-gradient(135deg,
             rgba($primary-color, 0.1) 0%,
-            rgba($accent-color, 0.05) 100%
-        );
+            rgba($accent-color, 0.05) 100%);
         color: $primary-color;
         font-weight: 600;
       }
@@ -477,6 +493,7 @@ $sidebar-width: 280px;
     transform: translateX(-100%);
     opacity: 0;
   }
+
   to {
     transform: translateX(0);
     opacity: 1;
@@ -497,11 +514,9 @@ $sidebar-width: 280px;
       border-right-color: #3a4255;
 
       .sidebar-header {
-        background: linear-gradient(
-            135deg,
+        background: linear-gradient(135deg,
             darken($primary-color, 15%) 0%,
-            darken($primary-dark, 15%) 100%
-        );
+            darken($primary-dark, 15%) 100%);
       }
 
       mat-nav-list {
@@ -513,11 +528,9 @@ $sidebar-width: 280px;
           }
 
           &.active {
-            background: linear-gradient(
-                135deg,
+            background: linear-gradient(135deg,
                 rgba($primary-color, 0.25) 0%,
-                rgba($accent-color, 0.15) 100%
-            );
+                rgba($accent-color, 0.15) 100%);
           }
         }
 
@@ -537,6 +550,7 @@ $sidebar-width: 280px;
 @media (prefers-color-scheme: dark) {
   .sidenav-container .sidenav {
     mat-nav-list {
+
       // Fix for invisible text in dark mode
       a[mat-list-item] {
         .mdc-list-item__primary-text {

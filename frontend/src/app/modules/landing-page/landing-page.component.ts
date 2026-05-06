@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import {AuthApiService} from '../../api-services/auth/auth-api.service';
+import { TranslateService } from '@ngx-translate/core';
+import { AuthApiService } from '../../api-services/auth/auth-api.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -9,9 +10,38 @@ import {AuthApiService} from '../../api-services/auth/auth-api.service';
   styleUrl: './landing-page.component.scss',
 })
 export class LandingPageComponent {
-  constructor(private router: Router, private auth: AuthApiService) { }
+  currentLang: string = localStorage.getItem('language') || 'bs';
 
-  goToLogin() {
+  languages = [
+    {
+      code: 'bs',
+      name: 'Bosanski',
+      flagUrl: 'https://flagcdn.com/w40/ba.png'
+    },
+    {
+      code: 'en',
+      name: 'English',
+      flagUrl: 'https://flagcdn.com/w40/gb.png'
+    }
+  ];
+
+  constructor(
+    private router: Router,
+    private auth: AuthApiService,
+    private translate: TranslateService
+  ) { }
+
+  switchLanguage(lang: string): void {
+    this.currentLang = lang;
+    localStorage.setItem('language', lang);
+    this.translate.use(lang);
+  }
+
+  getCurrentLanguage() {
+    return this.languages.find(lang => lang.code === this.currentLang);
+  }
+
+  goToLogin(): void {
     this.router.navigate(['/login']);
   }
 

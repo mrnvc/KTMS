@@ -15,6 +15,7 @@ namespace KTMS.API.Controllers
         {
             _mediator = mediator;
         }
+        [AllowAnonymous]
 
         [HttpGet("GetGenders")]
         public async Task<IActionResult> GetGenders()
