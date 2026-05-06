@@ -149,3 +149,20 @@ Desktop.ini
 *.local
 *.userprefs
 *.bak~
+
+
+# Firebase service account keys
+*.firebase-adminsdk-*.json
+*firebase-adminsdk*.json
+**/*firebase-adminsdk*.json
+
+# Local Firebase config files
+firebase-service-account.json
+**/firebase-service-account.json
+
+# Do not push real frontend environment with Firebase keys
+frontend/src/enviroments/enviroment.local.ts
+frontend/src/enviroments/environment.local.ts
+
+frontend/src/enviroments/enviroment.local.backup.ts
+frontend/src/enviroments/enviroment.local.ts

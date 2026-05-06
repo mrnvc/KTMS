@@ -85,6 +85,11 @@
         <span matListItemTitle>Toggle Theme</span>
       </a>
 
+      <a mat-list-item (click)="enableNotifications()" class="notifications-item">
+        <mat-icon matListItemIcon>notifications</mat-icon>
+        <span matListItemTitle>Enable Notifications</span>
+      </a>
+
       <a mat-list-item routerLink="/admin/settings" routerLinkActive="active">
         <mat-icon matListItemIcon>settings</mat-icon>
         <span matListItemTitle>{{ 'ADMIN_PANEL.MENU.SETTINGS' | translate }}</span>

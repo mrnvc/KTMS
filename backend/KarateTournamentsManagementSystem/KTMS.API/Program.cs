@@ -1,6 +1,9 @@
-﻿using KTMS.API;
+﻿using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using KTMS.API;
 using KTMS.API.Configuration;
 using KTMS.API.Middleware;
+using KTMS.API.Services;
 using KTMS.Application;
 using KTMS.Application.Abstractions;
 using KTMS.Infrastructure;
@@ -60,6 +63,9 @@ public partial class Program
                     sqlOptions => sqlOptions.MigrationsAssembly("KTMS.Infrastructure"))
             );
 
+            // Firebase notification service
+            builder.Services.AddScoped<IFirebaseNotificationService, FirebaseNotificationService>();
+
             // IAppDbContext so DI can resolve it in handlers
             builder.Services.AddScoped<IAppDbContext>(provider =>
                 provider.GetRequiredService<DatabaseContext>());
@@ -85,6 +91,19 @@ public partial class Program
                 .AddAPI(builder.Configuration, builder.Environment)
                 .AddInfrastructure(builder.Configuration, builder.Environment)
                 .AddApplication();
+
+            // ---------------------------------------------------------
+            // FIREBASE NOTIFICATION SERVICE
+            // ---------------------------------------------------------
+            var firebaseServiceAccountPath = builder.Configuration["Firebase:ServiceAccountPath"];
+
+            if (!string.IsNullOrWhiteSpace(firebaseServiceAccountPath) && FirebaseApp.DefaultInstance == null)
+            {
+                FirebaseApp.Create(new AppOptions
+                {
+                    Credential = GoogleCredential.FromFile(firebaseServiceAccountPath)
+                });
+            }
 
             var app = builder.Build();
 
