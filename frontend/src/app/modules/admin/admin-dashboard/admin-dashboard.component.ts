@@ -3,6 +3,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthFacadeService } from '../../../core/services/auth/auth-facade.service';
 import { ThemeService } from '../../../core/services/theme.service';
 import { FirebaseMessagingService } from '../../../core/services/firebase-messaging.service';
+import { MatDialog } from '@angular/material/dialog';
+import { LogoutComponent } from '../../auth/logout/logout.component';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -13,6 +15,7 @@ import { FirebaseMessagingService } from '../../../core/services/firebase-messag
 export class AdminDashboardComponent {
   private translate = inject(TranslateService);
   private themeService = inject(ThemeService);
+  private readonly dialog = inject(MatDialog);
   auth = inject(AuthFacadeService);
 
   currentLang: string;
@@ -50,5 +53,15 @@ export class AdminDashboardComponent {
       console.log('Copy this token to Swagger:', token);
       alert('FCM token generated. Check console.');
     }
+  }
+
+  openLogoutDialog(): void {
+    this.dialog.open(LogoutComponent, {
+      width: '420px',
+      maxWidth: '95vw',
+      disableClose: true,
+      panelClass: 'logout-dialog-panel',
+      autoFocus: false
+    });
   }
 }

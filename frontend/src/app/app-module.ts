@@ -36,6 +36,7 @@ import { QRCodeComponent } from 'angularx-qrcode';
 import { JudgesPageComponent } from './modules/judges-page/judges-page.component';
 import { AddJudgeFormComponent } from './modules/judges-page/add-judge-form/add-judge-form.component';
 import { EditJudgeFormComponent } from './modules/judges-page/edit-judge-form/edit-judge-form.component';
+import { LogoutComponent } from './modules/auth/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { EditJudgeFormComponent } from './modules/judges-page/edit-judge-form/ed
     JudgesPageComponent,
     AddJudgeFormComponent,
     JudgeLicenseFormatPipe,
-    EditJudgeFormComponent
+    EditJudgeFormComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

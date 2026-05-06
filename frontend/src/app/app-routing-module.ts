@@ -8,6 +8,7 @@ import { RegisterComponent } from './modules/auth/register/register.component';
 import { AdminDashboardComponent } from './modules/admin/admin-dashboard/admin-dashboard.component';
 import { myAuthGuard, myAuthData } from './core/guards/my-auth-guard';
 import { JudgesPageComponent } from './modules/judges-page/judges-page.component';
+import { LogoutComponent } from './modules/auth/logout/logout.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: "tournaments", component: TournamentsPageComponent },
   { path: "tournaments/:status", component: TournamentsPageComponent },
   {
-    path: 'admin', component: AdminDashboardComponent, canActivate: [myAuthGuard], data: myAuthData({ requireAuth: true, requireAdmin: true }), children: [
+    path: 'admin', component: AdminDashboardComponent, canActivate: [myAuthGuard], data: myAuthData({ requireAuth: true, requireAdmin: true }), 
+    children: [
       { path: 'tournaments', component: TournamentsPageComponent },
       { path: 'contestants', component: ContestantsPageComponent },
       { path: 'judges', component: JudgesPageComponent },

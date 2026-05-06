@@ -96,7 +96,7 @@
       </a>
 
       <!-- LOGOUT -->
-      <a mat-list-item routerLink="/auth/logout" routerLinkActive="active" class="logout-item">
+      <a mat-list-item (click)="openLogoutDialog()" class="logout-item">
         <mat-icon matListItemIcon>logout</mat-icon>
         <span matListItemTitle>{{ 'ADMIN_PANEL.MENU.LOGOUT' | translate }}</span>
       </a>
